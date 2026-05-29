@@ -1,0 +1,102 @@
+@media(max-width:600px){
+
+    #contenido{
+        padding:15px;
+    }
+
+    .menu{
+        gap:8px;
+        padding:12px;
+    }
+
+    .menu button{
+        font-size:13px;
+        padding:9px 11px;
+    }
+
+    .partido{
+        padding:12px;
+    }
+
+    .equipo{
+        width:95px;
+    }
+
+    .equipo p{
+        font-size:12px;
+    }
+
+    .marcador{
+        font-size:20px;
+    }
+
+    .detalle-partido{
+        padding:15px;
+    }
+
+    .equipo-detalle img{
+        width:85px;
+        height:56px;
+    }
+
+    .equipo-detalle h2{
+        font-size:20px;
+    }
+
+    .marcador-detalle{
+        font-size:26px;
+    }
+
+    .ranking-card{
+        padding:12px;
+    }
+
+    .ranking-pos{
+        width:40px;
+        font-size:22px;
+    }
+
+    .ranking-user{
+        font-size:16px;
+    }
+
+    .ranking-puntos{
+        font-size:13px;
+        max-width:45%;
+        white-space:normal;
+        overflow-wrap:anywhere;
+    }
+
+    .usuario-pronostico{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .usuario-score{
+        width:100%;
+        min-width:0;
+        align-items:flex-start;
+        text-align:left;
+    }
+
+    h1{
+        font-size:40px;
+    }
+
+    h2{
+        font-size:30px;
+    }
+
+    h3{
+        font-size:22px;
+    }
+
+    .hero-logo{
+        max-width:190px;
+        margin-top:18px;
+    }
+
+    .hero-logo img{
+        max-width:180px;
+    }
+}
