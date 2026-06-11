@@ -90,7 +90,8 @@ async function cargarUsuarios(){
 
         return {
             id: Number(obj["IDUsuario"]),
-            nombre: obj["Nombre"]
+            nombre: obj["Nombre"],
+            paga: (obj["Paga"] || "No").trim().toLowerCase() === "si"
         };
     });
 }

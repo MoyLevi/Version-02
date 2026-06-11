@@ -1,12 +1,75 @@
+function crearHTMLRanking(lista){
+
+    return lista.map((u, index) => {
+
+        let medalla = "";
+
+        if(index === 0) medalla = "🥇";
+        if(index === 1) medalla = "🥈";
+        if(index === 2) medalla = "🥉";
+
+        const posicionActual = index + 1;
+        const posicionAnterior = rankingAnterior[u.nombre];
+
+        let movimiento = "—";
+        let movimientoClase = "mov-neutral";
+
+        if(posicionAnterior){
+            if(posicionActual < posicionAnterior){
+                movimiento = "⬆";
+                movimientoClase = "mov-up";
+            }
+            else if(posicionActual > posicionAnterior){
+                movimiento = "⬇";
+                movimientoClase = "mov-down";
+            }
+        }
+
+        const porcentaje = u.jugados > 0
+            ? Math.round((u.puntos / (u.jugados * 3)) * 100)
+            : 0;
+
+        return `
+            <div class="ranking-card ranking-card-detallado" onclick="verDetalleUsuario(${u.id})">
+                <div class="ranking-pos">${medalla || posicionActual}</div>
+
+                <div class="ranking-user">
+                    ${u.nombre}
+                    <span>${porcentaje}% efectividad</span>
+                </div>
+
+                <div class="ranking-mov ${movimientoClase}">${movimiento}</div>
+                <div class="ranking-puntos">${u.puntos} pts</div>
+            </div>
+        `;
+    }).join("");
+}
+
+
 function mostrarTabla(){
 
     const ranking = getRanking();
+
+    const rankingPagados = ranking.filter(u => u.paga);
+    const rankingTodos = ranking;
 
     let html = `
         <h1>TABLA <span class="titulo-acento">GENERAL</span></h1>
         <p class="subtexto">Toca un usuario para ver cómo se formaron sus puntos.</p>
 
+        <h2>🏆 TABLA <span class="titulo-acento">PRINCIPAL</span></h2>
+        <p class="subtexto">Solo participan usuarios con pago registrado.</p>
         <div class="tabla-ranking">
+            ${crearHTMLRanking(rankingPagados)}
+        </div>
+
+        <h2>🎮 TABLA <span class="titulo-acento">RECREATIVA</span></h2>
+        <p class="subtexto">Incluye a todos los usuarios.</p>
+        <div class="tabla-ranking">
+            ${crearHTMLRanking(rankingTodos)}
+        </div>
+
+        ${getFooterCopyright()}
     `;
 
     ranking.forEach((u, index) => {
