@@ -1,5 +1,10 @@
 function mostrarInicio(){
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
     const ranking = getRanking();
     const lider = ranking[0];
 

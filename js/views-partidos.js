@@ -1,5 +1,10 @@
 function mostrarPartidos(tipoFiltro = "todos", valorFiltro = "todos"){
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
     ultimoFiltroPartidos = {
     tipo: tipoFiltro,
     valor: valorFiltro

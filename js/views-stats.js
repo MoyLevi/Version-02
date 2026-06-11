@@ -1,5 +1,10 @@
 function mostrarEstadisticas(){
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
     const ranking = getRanking();
     const mejorDiferencias = [...ranking].sort((a,b) => b.diferencias - a.diferencias)[0];
 

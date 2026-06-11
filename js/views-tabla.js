@@ -34,6 +34,11 @@ function crearHTMLRanking(lista){
 
 function mostrarTabla(tipo = "principal"){
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
     tipoTablaActual = tipo;
 
     const ranking = getRanking();
@@ -81,6 +86,11 @@ function mostrarTabla(tipo = "principal"){
 }
 
 function verDetalleUsuario(idUser, pagina = 1){
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
     const usuarioActual = usuarios.find(u => u.id === idUser);
     const nombre = usuarioActual ? usuarioActual.nombre : `Usuario ${idUser}`;
