@@ -66,7 +66,11 @@ function mostrarInicio(){
                 </div>
 
                 <div class="marcador-box">
-                    <div class="marcador">VS</div>
+                    <div class="marcador">
+                        ${p.status === "En vivo" && p.golesLoc !== "" && p.golesVis !== "" 
+                            ? `${p.golesLoc}-${p.golesVis}` 
+                            : "VS"}
+                    </div>
                     ${p.status === "En vivo" ? `<div class="status-mini status-vivo">En vivo</div>` : ""}
                 </div>
 
