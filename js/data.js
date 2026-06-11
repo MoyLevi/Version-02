@@ -91,7 +91,12 @@ async function cargarUsuarios(){
         return {
             id: Number(obj["IDUsuario"]),
             nombre: obj["Nombre"],
-            paga: (obj["Paga"] || "No").trim().toLowerCase() === "si"
+            paga: (obj["Paga"] || "No").trim().toLowerCase() === "si",
+            campeon: obj["Campeon"] || "",
+            segundo: obj["Segundo"] || "",
+            tercero: obj["Tercero"] || "",
+            goleador: obj["Goleador"] || "",
+            sorpresa: obj["Sorpresa"] || ""
         };
     });
 }

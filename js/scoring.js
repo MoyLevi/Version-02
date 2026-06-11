@@ -41,19 +41,18 @@ function getResumenUsuario(idUser){
     const lista = picks.filter(p => p.idUser === idUser);
 
     return lista.reduce((acc, pick) => {
-const partido = partidos.find(p => p.id === pick.partidoId);
-const puntos = partido ? getPuntos(partido, pick) : 0;
-const jugado = partidoFinalizado(partido);
+        const partido = partidos.find(p => p.id === pick.partidoId);
+        const puntos = partido ? getPuntos(partido, pick) : 0;
+        const jugado = partidoFinalizado(partido);
 
-acc.jugados += jugado ? 1 : 0;
-
+        acc.jugados += jugado ? 1 : 0;
         acc.puntos += puntos;
         acc.pronosticos += 1;
         acc.aciertos += puntos > 0 ? 1 : 0;
         acc.exactos += puntos === 3 ? 1 : 0;
         acc.diferencias += puntos === 2 ? 1 : 0;
         acc.ganadores += puntos === 1 ? 1 : 0;
-        acc.fallos += partidoFinalizado(partido) && puntos === 0 ? 1 : 0;
+        acc.fallos += jugado && puntos === 0 ? 1 : 0;
 
         return acc;
     }, {
@@ -73,6 +72,11 @@ function getRanking(){
         id: u.id,
         nombre: u.nombre,
         paga: u.paga,
+        campeon: u.campeon,
+        segundo: u.segundo,
+        tercero: u.tercero,
+        goleador: u.goleador,
+        sorpresa: u.sorpresa,
         ...getResumenUsuario(u.id)
     })).sort((a, b) => b.puntos - a.puntos);
 }

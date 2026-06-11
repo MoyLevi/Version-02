@@ -100,3 +100,29 @@
         max-width:180px;
     }
 }
+
+@media(max-width:600px){
+    .tabs-especiales,
+    .tabs-tabla{
+        gap:8px;
+    }
+
+    .tabs-especiales button,
+    .tabs-tabla button{
+        padding:10px 12px;
+        font-size:13px;
+    }
+
+    .especial-row{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .especial-row strong{
+        text-align:left;
+    }
+
+    .picks-especiales-usuario{
+        grid-template-columns:1fr;
+    }
+}

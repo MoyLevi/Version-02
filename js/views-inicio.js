@@ -1,10 +1,5 @@
 function mostrarInicio(){
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
     const ranking = getRanking();
     const lider = ranking[0];
 
@@ -26,18 +21,16 @@ function mostrarInicio(){
             <button onclick="compartirApp()">📤 Compartir quiniela</button>
         </div>
 
-<div class="refresh-container">
+        <div class="refresh-container">
+            <p class="ultima-actualizacion">
+                Última actualización: ${formatearFechaHora(ultimaActualizacion)}
+            </p>
 
-    <p class="ultima-actualizacion">
-        Última actualización: ${formatearFechaHora(ultimaActualizacion)}
-    </p>
-
-    <button class="btn-refresh" onclick="actualizarDatos()">
-        <span id="balonRefresh">⚽</span>
-        Actualizar datos
-    </button>
-
-</div>
+            <button class="btn-refresh" onclick="actualizarDatos()">
+                <span id="balonRefresh">⚽</span>
+                Actualizar datos
+            </button>
+        </div>
 
         <div class="inicio-grid">
             <div class="inicio-card">

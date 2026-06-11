@@ -528,6 +528,7 @@
     }
 }
 
+/* TABS TABLA */
 .tabs-tabla{
     max-width:650px;
     margin:20px auto;
@@ -554,4 +555,113 @@
 .tabs-tabla .tab-activa{
     background:#2563eb;
     box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+/* PRONÓSTICOS ESPECIALES */
+.tabs-especiales{
+    max-width:900px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-especiales button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:14px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tabs-especiales button:hover{
+    background:#475569;
+    transform:translateY(-1px);
+}
+
+.tabs-especiales .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.especiales-resumen-grid .stat-card h2{
+    font-size:28px;
+    overflow-wrap:anywhere;
+}
+
+.especiales-layout{
+    max-width:950px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:18px;
+}
+
+.especial-panel{
+    background:#1e293b;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.especial-panel h3{
+    margin-top:0;
+}
+
+.especial-row{
+    background:#334155;
+    margin:10px 0;
+    padding:12px 14px;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.especial-row span{
+    color:#e2e8f0;
+}
+
+.especial-row strong{
+    text-align:right;
+    overflow-wrap:anywhere;
+}
+
+.especial-row-conteo strong{
+    color:#38bdf8;
+}
+
+.picks-especiales-usuario{
+    max-width:900px;
+    margin:20px auto 25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:12px;
+}
+
+.picks-especiales-usuario div{
+    background:#1e293b;
+    border-radius:15px;
+    padding:14px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.picks-especiales-usuario strong{
+    display:block;
+    color:#38bdf8;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.picks-especiales-usuario span{
+    display:block;
+    color:#e2e8f0;
+    font-weight:bold;
+    overflow-wrap:anywhere;
 }

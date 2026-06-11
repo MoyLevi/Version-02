@@ -85,6 +85,22 @@ function mostrarTabla(tipo = "principal"){
     `;
 }
 
+function getTextoEspecial(valor){
+    return valor && valor.trim() !== "" ? valor : "Sin pick";
+}
+
+function crearHTMLPicksEspecialesUsuario(usuario){
+    return `
+        <div class="picks-especiales-usuario">
+            <div><strong>🏆 Campeón</strong><span>${getTextoEspecial(usuario?.campeon)}</span></div>
+            <div><strong>🥈 Segundo</strong><span>${getTextoEspecial(usuario?.segundo)}</span></div>
+            <div><strong>🥉 Tercero</strong><span>${getTextoEspecial(usuario?.tercero)}</span></div>
+            <div><strong>⚽ Goleador</strong><span>${getTextoEspecial(usuario?.goleador)}</span></div>
+            <div><strong>🌟 Sorpresa</strong><span>${getTextoEspecial(usuario?.sorpresa)}</span></div>
+        </div>
+    `;
+}
+
 function verDetalleUsuario(idUser, pagina = 1){
 
     window.scrollTo({
@@ -99,8 +115,9 @@ function verDetalleUsuario(idUser, pagina = 1){
 
     paginaDetalleUsuario = pagina;
 
-    const totalPaginas = Math.ceil(lista.length / picksPorPagina);
-    const inicio = (pagina - 1) * picksPorPagina;
+    const totalPaginas = Math.max(1, Math.ceil(lista.length / picksPorPagina));
+    const paginaSegura = Math.min(Math.max(pagina, 1), totalPaginas);
+    const inicio = (paginaSegura - 1) * picksPorPagina;
     const fin = inicio + picksPorPagina;
     const listaPagina = lista.slice(inicio, fin);
     
@@ -110,6 +127,8 @@ function verDetalleUsuario(idUser, pagina = 1){
         <button onclick="mostrarTabla(tipoTablaActual)" class="btnVolver">⬅ Volver</button>
 
         <h1>👤 ${nombre}</h1>
+
+        ${crearHTMLPicksEspecialesUsuario(usuarioActual)}
 
         <div class="resumen-usuario">
             <div><strong>${resumen.puntos}</strong><span>Puntos</span></div>
@@ -178,17 +197,17 @@ function verDetalleUsuario(idUser, pagina = 1){
     html += `
         <div class="paginacion">
             <button 
-                onclick="verDetalleUsuario(${idUser}, ${pagina - 1})" 
-                ${pagina <= 1 ? "disabled" : ""}
+                onclick="verDetalleUsuario(${idUser}, ${paginaSegura - 1})" 
+                ${paginaSegura <= 1 ? "disabled" : ""}
             >
                 ⬅ Anterior
             </button>
 
-            <span>Página ${pagina} de ${totalPaginas}</span>
+            <span>Página ${paginaSegura} de ${totalPaginas}</span>
 
             <button 
-                onclick="verDetalleUsuario(${idUser}, ${pagina + 1})" 
-                ${pagina >= totalPaginas ? "disabled" : ""}
+                onclick="verDetalleUsuario(${idUser}, ${paginaSegura + 1})" 
+                ${paginaSegura >= totalPaginas ? "disabled" : ""}
             >
                 Siguiente ➡
             </button>

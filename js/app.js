@@ -1,7 +1,7 @@
 btnInicio.addEventListener("click", mostrarInicio);
 btnPartidos.addEventListener("click", mostrarPartidos);
 btnTabla.addEventListener("click", () => mostrarTabla("principal"));
-btnEstadisticas.addEventListener("click", mostrarEstadisticas);
+btnEstadisticas.addEventListener("click", () => mostrarEstadisticas("campeon"));
 
 async function actualizarDatos(){
 
