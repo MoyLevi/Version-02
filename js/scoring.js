@@ -72,6 +72,7 @@ function getRanking(){
     return usuarios.map(u => ({
         id: u.id,
         nombre: u.nombre,
+        paga: u.paga,
         ...getResumenUsuario(u.id)
     })).sort((a, b) => b.puntos - a.puntos);
 }
