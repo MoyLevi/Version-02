@@ -527,3 +527,31 @@
         transform:translateY(0);
     }
 }
+
+.tabs-tabla{
+    max-width:650px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-tabla button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:14px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.tabs-tabla button:hover{
+    background:#475569;
+}
+
+.tabs-tabla .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}

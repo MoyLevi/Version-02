@@ -1,29 +1,17 @@
+let tipoTablaActual = "principal";
+
 function crearHTMLRanking(lista){
+
+    if(lista.length === 0){
+        return `<p class="subtexto">No hay usuarios en esta tabla.</p>`;
+    }
 
     return lista.map((u, index) => {
 
         let medalla = "";
-
         if(index === 0) medalla = "🥇";
         if(index === 1) medalla = "🥈";
         if(index === 2) medalla = "🥉";
-
-        const posicionActual = index + 1;
-        const posicionAnterior = rankingAnterior[u.nombre];
-
-        let movimiento = "—";
-        let movimientoClase = "mov-neutral";
-
-        if(posicionAnterior){
-            if(posicionActual < posicionAnterior){
-                movimiento = "⬆";
-                movimientoClase = "mov-up";
-            }
-            else if(posicionActual > posicionAnterior){
-                movimiento = "⬇";
-                movimientoClase = "mov-down";
-            }
-        }
 
         const porcentaje = u.jugados > 0
             ? Math.round((u.puntos / (u.jugados * 3)) * 100)
@@ -31,100 +19,65 @@ function crearHTMLRanking(lista){
 
         return `
             <div class="ranking-card ranking-card-detallado" onclick="verDetalleUsuario(${u.id})">
-                <div class="ranking-pos">${medalla || posicionActual}</div>
+                <div class="ranking-pos">${medalla || index + 1}</div>
 
                 <div class="ranking-user">
                     ${u.nombre}
                     <span>${porcentaje}% efectividad</span>
                 </div>
 
-                <div class="ranking-mov ${movimientoClase}">${movimiento}</div>
                 <div class="ranking-puntos">${u.puntos} pts</div>
             </div>
         `;
     }).join("");
 }
 
+function mostrarTabla(tipo = "principal"){
 
-function mostrarTabla(){
+    tipoTablaActual = tipo;
 
     const ranking = getRanking();
-
-    const rankingPagados = ranking.filter(u => u.paga);
+    const rankingPagados = ranking.filter(u => u.paga === true);
     const rankingTodos = ranking;
 
-    let html = `
-        <h1>TABLA <span class="titulo-acento">GENERAL</span></h1>
-        <p class="subtexto">Toca un usuario para ver cómo se formaron sus puntos.</p>
+    const listaActual = tipo === "principal" ? rankingPagados : rankingTodos;
 
-        <h2>🏆 TABLA <span class="titulo-acento">PRINCIPAL</span></h2>
-        <p class="subtexto">Solo participan usuarios con pago registrado.</p>
-        <div class="tabla-ranking">
-            ${crearHTMLRanking(rankingPagados)}
+    const titulo = tipo === "principal"
+        ? `TABLA <span class="titulo-acento">PRINCIPAL</span>`
+        : `TABLA <span class="titulo-acento">RECREATIVA</span>`;
+
+    const descripcion = tipo === "principal"
+        ? "Solo usuarios con pago registrado."
+        : "Incluye a todos los usuarios.";
+
+    contenido.innerHTML = `
+        <h1>${titulo}</h1>
+        <p class="subtexto">${descripcion}</p>
+
+        <div class="tabs-tabla">
+            <button 
+                class="${tipo === "principal" ? "tab-activa" : ""}" 
+                onclick="mostrarTabla('principal')"
+            >
+                🏆 Principal
+            </button>
+
+            <button 
+                class="${tipo === "recreativa" ? "tab-activa" : ""}" 
+                onclick="mostrarTabla('recreativa')"
+            >
+                🎮 Recreativa
+            </button>
         </div>
 
-        <h2>🎮 TABLA <span class="titulo-acento">RECREATIVA</span></h2>
-        <p class="subtexto">Incluye a todos los usuarios.</p>
+        <p class="subtexto">Toca un usuario para ver cómo se formaron sus puntos.</p>
+
         <div class="tabla-ranking">
-            ${crearHTMLRanking(rankingTodos)}
+            ${crearHTMLRanking(listaActual)}
         </div>
 
         ${getFooterCopyright()}
     `;
-
-    ranking.forEach((u, index) => {
-
-        let medalla = "";
-
-        if(index === 0) medalla = "🥇";
-        if(index === 1) medalla = "🥈";
-        if(index === 2) medalla = "🥉";
-
-        const posicionActual = index + 1;
-        const posicionAnterior = rankingAnterior[u.nombre];
-
-let movimiento = "—";
-let movimientoClase = "mov-neutral";
-
-if(posicionAnterior){
-    if(posicionActual < posicionAnterior){
-        movimiento = "⬆";
-        movimientoClase = "mov-up";
-    }
-    else if(posicionActual > posicionAnterior){
-        movimiento = "⬇";
-        movimientoClase = "mov-down";
-    }
-}
-
-        const porcentaje = u.jugados > 0
-            ? Math.round((u.puntos / (u.jugados * 3)) * 100)
-            : 0;
-
-        html += `
-            <div class="ranking-card ranking-card-detallado" onclick="verDetalleUsuario(${u.id})">
-                <div class="ranking-pos">${medalla || posicionActual}</div>
-
-                <div class="ranking-user">
-                    ${u.nombre}
-                    <span>${porcentaje}% efectividad</span>
-                </div>
-
-                <div class="ranking-mov ${movimientoClase}">${movimiento}</div>
-                <div class="ranking-puntos">${u.puntos} pts</div>
-            </div>
-        `;
-    });
-
-    rankingAnterior = {};
-    ranking.forEach((u, index) => {
-        rankingAnterior[u.nombre] = index + 1;
-    });
-
-    html += `</div>`;
-    html += getFooterCopyright();
-
-    contenido.innerHTML = html;
 }
 
 function verDetalleUsuario(idUser, pagina = 1){
@@ -144,7 +97,7 @@ function verDetalleUsuario(idUser, pagina = 1){
     const resumen = getResumenUsuario(idUser);
 
     let html = `
-        <button onclick="mostrarTabla()" class="btnVolver">⬅ Volver</button>
+        <button onclick="mostrarTabla(tipoTablaActual)" class="btnVolver">⬅ Volver</button>
 
         <h1>👤 ${nombre}</h1>
 
@@ -166,7 +119,6 @@ function verDetalleUsuario(idUser, pagina = 1){
     listaPagina.forEach(r => {
 
         const partido = partidos.find(p => p.id === r.partidoId);
-
         if(!partido) return;
 
         const jugado = partidoFinalizado(partido);
@@ -176,26 +128,26 @@ function verDetalleUsuario(idUser, pagina = 1){
         let tipo = "Por jugar";
         let clasePuntos = "pts-pendiente";
 
-if(jugado){
-    textoPuntos = `${puntos} pts`;
+        if(jugado){
+            textoPuntos = `${puntos} pts`;
 
-    if(puntos === 3){
-        tipo = "Marcador exacto";
-        clasePuntos = "pts-exacto";
-    }
-    else if(puntos === 2){
-        tipo = "Diferencia + ganador";
-        clasePuntos = "pts-diferencia";
-    }
-    else if(puntos === 1){
-        tipo = "Ganador";
-        clasePuntos = "pts-ganador";
-    }
-    else{
-        tipo = "Fallo";
-        clasePuntos = "pts-fallo";
-    }
-}
+            if(puntos === 3){
+                tipo = "Marcador exacto";
+                clasePuntos = "pts-exacto";
+            }
+            else if(puntos === 2){
+                tipo = "Diferencia + ganador";
+                clasePuntos = "pts-diferencia";
+            }
+            else if(puntos === 1){
+                tipo = "Ganador";
+                clasePuntos = "pts-ganador";
+            }
+            else{
+                tipo = "Fallo";
+                clasePuntos = "pts-fallo";
+            }
+        }
 
         html += `
             <div class="usuario-pronostico">
