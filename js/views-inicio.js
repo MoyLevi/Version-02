@@ -32,12 +32,10 @@ function mostrarInicio(){
             </button>
         </div>
 
-        <div class="reglas-card">
-            <h2>🏆 REGLAS Y PREMIOS</h2>
-            <p>Consulta el sistema de puntuación completo de la quiniela.</p>
-            <button onclick="mostrarReglasPremios()">Ver infografía</button>
+        <div class="premios-card" onclick="mostrarReglasPremios()">
+            <span>🏆 Premios</span>
+            <span>➜</span>
         </div>
-
 
         <div class="inicio-grid">
             <div class="inicio-card">
@@ -114,7 +112,11 @@ function mostrarReglasPremios(){
         const imagen = document.getElementById("imgReglas");
         const visor = document.getElementById("visorReglas");
 
-        if(imagen && visor && window.Panzoom){
+        if(!imagen || !visor || !window.Panzoom){
+            return;
+        }
+
+        const iniciarZoom = () => {
             const panzoom = Panzoom(imagen, {
                 maxScale: 5,
                 minScale: 1,
@@ -122,10 +124,12 @@ function mostrarReglasPremios(){
             });
 
             visor.addEventListener("wheel", panzoom.zoomWithWheel);
+        };
 
-            visor.addEventListener("pointerdown", () => {
-                visor.style.touchAction = "none";
-            });
+        if(imagen.complete){
+            iniciarZoom();
+        } else {
+            imagen.onload = iniciarZoom;
         }
     }, 100);
 

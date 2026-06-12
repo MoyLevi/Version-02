@@ -839,3 +839,32 @@
 .grupos-ko-grid button:hover{
     background:#475569;
 }
+
+.premios-card{
+    max-width:650px;
+    margin:15px auto;
+    padding:14px 18px;
+    background:#1e293b;
+    border-radius:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    font-weight:bold;
+    border-left:4px solid #facc15;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.premios-card:hover{
+    background:#334155;
+    transform:translateY(-1px);
+}
+
+.premios-card span:first-child{
+    font-size:18px;
+}
+
+.premios-card span:last-child{
+    color:#facc15;
+    font-size:20px;
+}
