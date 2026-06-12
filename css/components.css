@@ -868,3 +868,21 @@
     color:#facc15;
     font-size:20px;
 }
+
+.btn-premios{
+    background:#facc15 !important;
+    color:#0f172a !important;
+    border:none;
+    padding:13px 22px !important;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:800;
+    box-shadow:0 8px 20px rgba(250,204,21,.25);
+    font-size:15px;
+}
+
+.btn-premios:hover{
+    background:#fde047 !important;
+    transform:scale(1.03);
+}
+

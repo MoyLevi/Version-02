@@ -32,9 +32,10 @@ function mostrarInicio(){
             </button>
         </div>
 
-        <div class="premios-card" onclick="mostrarReglasPremios()">
-            <span>🏆 Premios</span>
-            <span>➜</span>
+        <div class="acciones-app">
+            <button class="btn-premios" onclick="mostrarReglasPremios()">
+                🏆 Premios
+            </button>
         </div>
 
         <div class="inicio-grid">
