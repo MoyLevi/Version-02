@@ -1,3 +1,6 @@
+let scrollFechas = 0;
+let fechaSeleccionadaScroll = null;
+
 const fechasMundial = [
     "11/06/2026","12/06/2026","13/06/2026","14/06/2026","15/06/2026",
     "16/06/2026","17/06/2026","18/06/2026","19/06/2026","20/06/2026",
@@ -67,6 +70,12 @@ function getFechaHoyDisponible(){
 function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = null){
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const fechasScrollActual = document.querySelector(".fechas-scroll");
+
+    if(fechasScrollActual){
+        scrollFechas = fechasScrollActual.scrollLeft;
+    }
 
     if(tipoFiltro === "hoy"){
         valorFiltro = getFechaHoyDisponible();
@@ -154,7 +163,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
                         return `
                             <button 
-                                class="${valorFiltro === f ? "filtro-activo" : ""}"
+                                class="${valorFiltro === f ? "filtro-activo fecha-activa" : ""}"
                                 onclick="mostrarPartidos('fecha', '${f}', 'fechas')"
                             >
                                 ${dia}
@@ -225,6 +234,28 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
     html += getFooterCopyright();
     contenido.innerHTML = html;
+
+    setTimeout(() => {
+
+        const fechasScroll = document.querySelector(".fechas-scroll");
+        const fechaActiva = document.querySelector(".fecha-activa");
+
+        if(fechasScroll){
+
+            if(fechaActiva){
+                const left = fechaActiva.offsetLeft 
+                    - (fechasScroll.clientWidth / 2) 
+                    + (fechaActiva.clientWidth / 2);
+
+                fechasScroll.scrollLeft = left;
+            }
+            else{
+                fechasScroll.scrollLeft = scrollFechas;
+            }
+        }
+
+    }, 10);
+    
 }
 
 
