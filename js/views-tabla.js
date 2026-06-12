@@ -101,12 +101,7 @@ function crearHTMLPicksEspecialesUsuario(usuario){
     `;
 }
 
-function verDetalleUsuario(idUser, pagina = 1){
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false){
 
     const usuarioActual = usuarios.find(u => u.id === idUser);
     const nombre = usuarioActual ? usuarioActual.nombre : `Usuario ${idUser}`;
@@ -138,7 +133,9 @@ function verDetalleUsuario(idUser, pagina = 1){
             <div><strong>${resumen.fallos}</strong><span>Fallos</span></div>
         </div>
 
-        <h2>DESGLOSE <span class="titulo-acento">DE PRONÓSTICOS</span></h2>
+        <h2 id="tituloPronosticos">
+            DESGLOSE <span class="titulo-acento">DE PRONÓSTICOS</span>
+        </h2>
     `;
 
     if(lista.length === 0){
@@ -197,7 +194,7 @@ function verDetalleUsuario(idUser, pagina = 1){
     html += `
         <div class="paginacion">
             <button 
-                onclick="verDetalleUsuario(${idUser}, ${paginaSegura - 1})" 
+                onclick="verDetalleUsuario(${idUser}, ${paginaSegura - 1}, true)" 
                 ${paginaSegura <= 1 ? "disabled" : ""}
             >
                 ⬅ Anterior
@@ -206,7 +203,7 @@ function verDetalleUsuario(idUser, pagina = 1){
             <span>Página ${paginaSegura} de ${totalPaginas}</span>
 
             <button 
-                onclick="verDetalleUsuario(${idUser}, ${paginaSegura + 1})" 
+                onclick="verDetalleUsuario(${idUser}, ${paginaSegura + 1}, true)" 
                 ${paginaSegura >= totalPaginas ? "disabled" : ""}
             >
                 Siguiente ➡
@@ -216,4 +213,19 @@ function verDetalleUsuario(idUser, pagina = 1){
 
     html += getFooterCopyright();
     contenido.innerHTML = html;
-}
+
+    if(scrollPronosticos){
+
+        setTimeout(() => {
+
+            const titulo = document.getElementById("tituloPronosticos");
+
+            if(titulo){
+                titulo.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        }, 50);
+}}
