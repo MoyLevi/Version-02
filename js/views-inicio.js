@@ -32,6 +32,13 @@ function mostrarInicio(){
             </button>
         </div>
 
+        <div class="reglas-card">
+            <h2>🏆 REGLAS Y PREMIOS</h2>
+            <p>Consulta el sistema de puntuación completo de la quiniela.</p>
+            <button onclick="mostrarReglasPremios()">Ver infografía</button>
+        </div>
+
+
         <div class="inicio-grid">
             <div class="inicio-card">
                 <h2>${usuarios.length}</h2>
@@ -76,4 +83,54 @@ function mostrarInicio(){
 
         ${getFooterCopyright()}
     `;
+}
+
+function mostrarReglasPremios(){
+
+    contenido.innerHTML = `
+        <button onclick="mostrarInicio()" class="btnVolver">⬅ Regresar</button>
+
+        <h1>REGLAS <span class="titulo-acento">Y PREMIOS</span></h1>
+
+        <p class="subtexto">Puedes hacer zoom con dos dedos en el celular.</p>
+
+        <div class="visor-reglas" id="visorReglas">
+            <img 
+                src="img/reglas-premios.png" 
+                alt="Sistema de puntuación y premios"
+                class="img-reglas"
+                id="imgReglas"
+            >
+        </div>
+
+        <a class="btn-descargar-reglas" href="img/reglas-premios.png" download>
+            📥 Descargar imagen
+        </a>
+
+        ${getFooterCopyright()}
+    `;
+
+    setTimeout(() => {
+        const imagen = document.getElementById("imgReglas");
+        const visor = document.getElementById("visorReglas");
+
+        if(imagen && visor && window.Panzoom){
+            const panzoom = Panzoom(imagen, {
+                maxScale: 5,
+                minScale: 1,
+                contain: "outside"
+            });
+
+            visor.addEventListener("wheel", panzoom.zoomWithWheel);
+
+            visor.addEventListener("pointerdown", () => {
+                visor.style.touchAction = "none";
+            });
+        }
+    }, 100);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }

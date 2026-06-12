@@ -665,3 +665,61 @@
     font-weight:bold;
     overflow-wrap:anywhere;
 }
+
+.reglas-card{
+    max-width:650px;
+    margin:25px auto;
+    background:#1e293b;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #facc15;
+}
+
+.reglas-card h2{
+    margin-top:0;
+}
+
+.reglas-card p{
+    color:#cbd5e1;
+}
+
+.reglas-card button,
+.btn-descargar-reglas{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    border:none;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.reglas-card button:hover,
+.btn-descargar-reglas:hover{
+    background:#1d4ed8;
+}
+
+.visor-reglas{
+    max-width:1000px;
+    height:75vh;
+    margin:25px auto;
+    overflow:hidden;
+    border-radius:18px;
+    background:#020617;
+    padding:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    touch-action:none;
+}
+
+.img-reglas{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:12px;
+    cursor:grab;
+}
