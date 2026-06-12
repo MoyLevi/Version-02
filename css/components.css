@@ -795,3 +795,47 @@
 .ko-grid{
     grid-template-columns:repeat(auto-fit, minmax(80px, 1fr));
 }
+
+
+.filtro-tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:14px;
+}
+
+.filtro-tabs button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.filtro-tabs button:hover{
+    background:#475569;
+}
+
+.grupos-ko-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(48px, 1fr));
+    gap:8px;
+    margin-top:14px;
+}
+
+.grupos-ko-grid button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.grupos-ko-grid button:hover{
+    background:#475569;
+}

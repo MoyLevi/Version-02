@@ -11,12 +11,12 @@ const fechasMundial = [
 const gruposMundial = ["A","B","C","D","E","F","G","H","I","J","K","L"];
 
 const etapasKO = [
-    { label:"R32", value:"Ronda32" },
-    { label:"Oct", value:"Octavos" },
-    { label:"Cua", value:"Cuartos" },
+    { label:"32", value:"Ronda32" },
+    { label:"8s", value:"Octavos" },
+    { label:"4s", value:"Cuartos" },
     { label:"Sem", value:"Semifinal" },
     { label:"3°", value:"Tercero" },
-    { label:"Final", value:"Final" }
+    { label:"Fin", value:"Final" }
 ];
 
 function normalizarTextoFecha(texto){
@@ -63,7 +63,8 @@ function getFechaHoyDisponible(){
 }
 
 
-function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null){
+
+function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = null){
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -82,7 +83,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null){
         partidosFiltrados = partidos.filter(p => fechaAppCoincide(p.fecha, valorFiltro));
     }
 
-    if(tipoFiltro === "grupo" && valorFiltro !== "todos"){
+    if(tipoFiltro === "grupo"){
         partidosFiltrados = partidos.filter(p =>
             p.loc?.charAt(0) === valorFiltro ||
             p.vis?.charAt(0) === valorFiltro
@@ -90,15 +91,27 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null){
     }
 
     if(tipoFiltro === "ko"){
-        partidosFiltrados = partidos.filter(p => p.stage === valorFiltro || p.Stage === valorFiltro);
+        partidosFiltrados = partidos.filter(p =>
+            p.stage === valorFiltro ||
+            p.Stage === valorFiltro
+        );
     }
 
     if(tipoFiltro === "todos"){
         partidosFiltrados = partidos;
     }
 
+    let tituloFiltro = "Partidos";
+
+    if(tipoFiltro === "hoy") tituloFiltro = "Partidos de hoy";
+    if(tipoFiltro === "todos") tituloFiltro = "Todos los partidos";
+    if(tipoFiltro === "fecha") tituloFiltro = `Partidos del ${valorFiltro}`;
+    if(tipoFiltro === "grupo") tituloFiltro = `Grupo ${valorFiltro}`;
+    if(tipoFiltro === "ko") tituloFiltro = valorFiltro;
+
     let html = `
         <h1>PARTIDOS <span class="titulo-acento">FILTRADOS</span></h1>
+        <p class="subtexto">${tituloFiltro}</p>
 
         <div class="filtros-botones">
 
@@ -118,48 +131,60 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null){
                 </button>
             </div>
 
-            <h3>📅 Fechas</h3>
+            <div class="filtro-tabs">
+                <button 
+                    class="${panelActivo === "fechas" ? "filtro-activo" : ""}"
+                    onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'fechas')"
+                >
+                    📅 Fechas
+                </button>
 
-            <div class="fechas-scroll">
-                ${fechasMundial.map(f => {
-                    const dia = f.split("/")[0];
+                <button 
+                    class="${panelActivo === "grupos" ? "filtro-activo" : ""}"
+                    onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'grupos')"
+                >
+                    🏆 Grupos / KO
+                </button>
+            </div>
 
-                    return `
+            ${panelActivo === "fechas" ? `
+                <div class="fechas-scroll">
+                    ${fechasMundial.map(f => {
+                        const dia = f.split("/")[0];
+
+                        return `
+                            <button 
+                                class="${valorFiltro === f ? "filtro-activo" : ""}"
+                                onclick="mostrarPartidos('fecha', '${f}', 'fechas')"
+                            >
+                                ${dia}
+                            </button>
+                        `;
+                    }).join("")}
+                </div>
+            ` : ""}
+
+            ${panelActivo === "grupos" ? `
+                <div class="grupos-ko-grid">
+                    ${gruposMundial.map(g => `
                         <button 
-                            class="${valorFiltro === f ? "filtro-activo" : ""}"
-                            onclick="mostrarPartidos('fecha', '${f}')"
+                            class="${tipoFiltro === "grupo" && valorFiltro === g ? "filtro-activo" : ""}"
+                            onclick="mostrarPartidos('grupo', '${g}', 'grupos')"
                         >
-                            ${dia}
+                            ${g}
                         </button>
-                    `;
-                }).join("")}
-            </div>
+                    `).join("")}
 
-            <h3>🏆 Grupos</h3>
-
-            <div class="grupos-grid">
-                ${gruposMundial.map(g => `
-                    <button 
-                        class="${tipoFiltro === "grupo" && valorFiltro === g ? "filtro-activo" : ""}"
-                        onclick="mostrarPartidos('grupo', '${g}')"
-                    >
-                        ${g}
-                    </button>
-                `).join("")}
-            </div>
-
-            <h3>⚔️ Knockout</h3>
-
-            <div class="ko-grid">
-                ${etapasKO.map(e => `
-                    <button 
-                        class="${tipoFiltro === "ko" && valorFiltro === e.value ? "filtro-activo" : ""}"
-                        onclick="mostrarPartidos('ko', '${e.value}')"
-                    >
-                        ${e.label}
-                    </button>
-                `).join("")}
-            </div>
+                    ${etapasKO.map(e => `
+                        <button 
+                            class="${tipoFiltro === "ko" && valorFiltro === e.value ? "filtro-activo" : ""}"
+                            onclick="mostrarPartidos('ko', '${e.value}', 'grupos')"
+                        >
+                            ${e.label}
+                        </button>
+                    `).join("")}
+                </div>
+            ` : ""}
 
         </div>
     `;
@@ -201,6 +226,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null){
     html += getFooterCopyright();
     contenido.innerHTML = html;
 }
+
 
 function verPartido(id){
 
