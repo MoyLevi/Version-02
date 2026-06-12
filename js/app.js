@@ -1,5 +1,5 @@
 btnInicio.addEventListener("click", mostrarInicio);
-btnPartidos.addEventListener("click", mostrarPartidos);
+btnPartidos.addEventListener("click", () => mostrarPartidos("hoy"));
 btnTabla.addEventListener("click", () => mostrarTabla("principal"));
 btnEstadisticas.addEventListener("click", () => mostrarEstadisticas("campeon"));
 

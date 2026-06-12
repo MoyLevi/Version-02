@@ -723,3 +723,75 @@
     border-radius:12px;
     cursor:grab;
 }
+
+
+.filtros-botones{
+    max-width:850px;
+    margin:20px auto 25px;
+    background:#1e293b;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.filtros-botones h3{
+    margin:18px 0 10px;
+    text-align:left;
+    color:#e2e8f0;
+}
+
+.filtro-rapido{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.filtro-rapido button,
+.fechas-scroll button,
+.grupos-grid button,
+.ko-grid button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:bold;
+    cursor:pointer;
+    min-width:48px;
+}
+
+.filtro-rapido button:hover,
+.fechas-scroll button:hover,
+.grupos-grid button:hover,
+.ko-grid button:hover{
+    background:#475569;
+}
+
+.filtro-activo{
+    background:#2563eb !important;
+    box-shadow:0 8px 20px rgba(37,99,235,.28);
+}
+
+.fechas-scroll{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:8px 2px 12px;
+    scrollbar-width:thin;
+}
+
+.fechas-scroll button{
+    flex:0 0 auto;
+}
+
+.grupos-grid,
+.ko-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(55px, 1fr));
+    gap:8px;
+}
+
+.ko-grid{
+    grid-template-columns:repeat(auto-fit, minmax(80px, 1fr));
+}
