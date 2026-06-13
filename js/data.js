@@ -126,3 +126,28 @@ async function cargarPicks(){
         };
     });
 }
+
+async function cargarLugaresPro(){
+
+    const res = await fetch(urlLugaresPro);
+    const text = await res.text();
+
+    const data = parseCSV(text);
+    const headers = data[0];
+
+    lugaresPro = data.slice(1).map(r => {
+
+        const obj = {};
+
+        headers.forEach((h, i) => {
+            obj[h.trim()] = (r[i] || "").trim();
+        });
+
+        return {
+            idLug: Number(obj["IDLug"]),
+            idUsuario: Number(obj["IDUsuario"]),
+            lug: obj["Lug"],
+            lugares: obj["Lugares"]
+        };
+    });
+}

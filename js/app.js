@@ -21,6 +21,7 @@ async function actualizarDatos(){
         await cargarPartidos();
         await cargarUsuarios();
         await cargarPicks();
+        await cargarLugaresPro();
 
         actualizarTimestamp();
         mostrarInicio();
@@ -44,6 +45,7 @@ async function iniciarApp(){
         await cargarPartidos();
         await cargarUsuarios();
         await cargarPicks();
+        await cargarLugaresPro();
 
         actualizarTimestamp();
         mostrarInicio();

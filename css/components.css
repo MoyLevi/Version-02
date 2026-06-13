@@ -886,3 +886,115 @@
     transform:scale(1.03);
 }
 
+/* DETALLE USUARIO - PICKS ESPECIALES Y CLASIFICADOS */
+
+.picks-especiales-grid-compacto{
+    max-width:850px;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.pick-especial-usuario-card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:14px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #facc15;
+    overflow-wrap:anywhere;
+}
+
+.pick-especial-usuario-card strong{
+    display:block;
+    color:#38bdf8;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.pick-especial-usuario-card span{
+    display:block;
+    color:#e2e8f0;
+    font-weight:bold;
+    overflow-wrap:anywhere;
+    line-height:1.25;
+}
+
+.pick-especial-largo{
+    grid-column:span 1;
+}
+
+.tabs-detalle-usuario{
+    max-width:700px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-detalle-usuario button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.tabs-detalle-usuario button:hover{
+    background:#475569;
+}
+
+.tabs-detalle-usuario .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.clasificados-grid{
+    max-width:900px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(185px, 1fr));
+    gap:12px;
+}
+
+.clasificado-card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.clasificado-card h3{
+    margin:0 0 8px;
+    color:#38bdf8;
+}
+
+.clasificado-card p{
+    margin:6px 0;
+    color:#e2e8f0;
+    overflow-wrap:anywhere;
+}
+
+@media(max-width:600px){
+    .picks-especiales-grid-compacto{
+        grid-template-columns:repeat(auto-fit, minmax(145px, 1fr));
+    }
+
+    .pick-especial-usuario-card{
+        padding:12px;
+    }
+
+    .pick-especial-usuario-card strong{
+        font-size:13px;
+    }
+
+    .pick-especial-usuario-card span{
+        font-size:14px;
+    }
+
+    .clasificados-grid{
+        grid-template-columns:1fr;
+    }
+}
