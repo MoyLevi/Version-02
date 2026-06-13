@@ -998,3 +998,281 @@
         grid-template-columns:1fr;
     }
 }
+
+/* MEJORAS: DETALLE USUARIO / STATS CLASIFICADOS / FECHA FILTRADA */
+
+.filtro-resultado-titulo{
+    max-width:850px;
+    margin:18px auto 14px;
+    text-align:center;
+    color:#e2e8f0;
+    font-weight:800;
+    font-size:18px;
+}
+
+.clasificados-comunidad-grid{
+    max-width:950px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:16px;
+}
+
+.clasificado-comunidad-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.clasificado-comunidad-card h3{
+    margin:0 0 12px;
+    color:#38bdf8;
+}
+
+.clasificado-comunidad-bloque{
+    background:#0f172a;
+    border-radius:14px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.clasificado-comunidad-bloque h4{
+    margin:0 0 8px;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.clasificado-comunidad-row{
+    background:#334155;
+    margin:8px 0;
+    padding:10px 12px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.clasificado-comunidad-row span,
+.clasificado-comunidad-row strong{
+    overflow-wrap:anywhere;
+}
+
+.clasificado-comunidad-row strong{
+    color:#38bdf8;
+    text-align:right;
+    white-space:nowrap;
+}
+
+@media(max-width:600px){
+    .filtro-resultado-titulo{
+        font-size:16px;
+        margin-top:16px;
+    }
+
+    .clasificados-comunidad-grid{
+        grid-template-columns:1fr;
+    }
+
+    .clasificado-comunidad-row{
+        align-items:flex-start;
+    }
+}
+
+/* BANDERAS MINI - ALINEACIÓN CORREGIDA */
+
+.pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:7px;
+    line-height:1;
+    vertical-align:middle;
+    min-width:0;
+}
+
+.pais-con-bandera span{
+    line-height:1.15;
+    display:inline-block;
+}
+
+.flag-mini{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center;
+    flex-shrink:0;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);
+    display:block;
+}
+
+/* Detalle usuario: 1° bandera país perfectamente centrado */
+.clasificado-card p{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    line-height:1.2;
+}
+
+.clasificado-card p strong{
+    min-width:30px;
+    text-align:right;
+    line-height:1;
+    flex-shrink:0;
+}
+
+.clasificado-card p .pais-con-bandera{
+    margin-left:0;
+}
+
+/* Stats comunitarias: bandera + país centrados verticalmente */
+.clasificado-comunidad-row > span:first-child{
+    display:flex;
+    align-items:center;
+    min-width:0;
+}
+
+.clasificado-comunidad-row .pais-con-bandera{
+    justify-content:flex-start;
+}
+
+.stat-pais-favorito{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow-wrap:anywhere;
+}
+
+.stat-pais-favorito .pais-con-bandera{
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+@media(max-width:600px){
+    .flag-mini{
+        width:20px;
+        height:20px;
+    }
+
+    .pais-con-bandera{
+        gap:6px;
+    }
+
+    .clasificado-card p strong{
+        min-width:28px;
+    }
+}
+
+
+/* STANDINGS - RÉCORDS */
+.records-grid{
+    max-width:900px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:14px;
+}
+
+.record-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.record-card:nth-child(1){
+    border-left-color:#facc15;
+}
+
+.record-card:nth-child(2){
+    border-left-color:#22c55e;
+}
+
+.record-card:nth-child(3){
+    border-left-color:#60a5fa;
+}
+
+.record-card:nth-child(4){
+    border-left-color:#a78bfa;
+}
+
+.record-card:nth-child(5){
+    border-left-color:#fb923c;
+}
+
+.record-icono{
+    width:48px;
+    min-width:48px;
+    height:48px;
+    border-radius:15px;
+    background:#334155;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.record-info{
+    flex:1;
+    min-width:0;
+}
+
+.record-info span{
+    display:block;
+    color:#cbd5e1;
+    font-size:13px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.record-info strong{
+    display:block;
+    color:white;
+    font-size:18px;
+    overflow-wrap:anywhere;
+    line-height:1.25;
+}
+
+.record-info small{
+    display:block;
+    color:#94a3b8;
+    margin-top:5px;
+    font-size:12px;
+}
+
+@media(max-width:600px){
+    .records-grid{
+        grid-template-columns:1fr;
+    }
+
+    .record-card{
+        padding:14px;
+    }
+
+    .record-info strong{
+        font-size:16px;
+    }
+}
+
+
+/* AJUSTE TÍTULO STATS */
+.titulo-stats-principal{
+    text-align:center;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(46px, 8vw, 68px);
+    letter-spacing:2px;
+    line-height:1;
+    margin:35px auto 18px;
+    text-transform:uppercase;
+}
+
+.titulo-stats-principal{
+    font-size:52px !important;
+}

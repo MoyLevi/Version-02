@@ -48,6 +48,22 @@ function fechaAppCoincide(fechaPartido, fechaFiltro){
     return texto.includes(diaNum) && texto.includes(mesTexto);
 }
 
+
+function formatearFechaFiltroBonita(fechaFiltro){
+    if(!fechaFiltro) return "Partidos";
+
+    const [dia, mes, anio] = fechaFiltro.split("/").map(Number);
+    const fecha = new Date(anio, mes - 1, dia);
+
+    const texto = fecha.toLocaleDateString("es-MX", {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+    });
+
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
 function getFechaHoyDisponible(){
     const hoy = new Date();
     hoy.setHours(0,0,0,0);
@@ -112,15 +128,14 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
     let tituloFiltro = "Partidos";
 
-    if(tipoFiltro === "hoy") tituloFiltro = "Partidos de hoy";
+    if(tipoFiltro === "hoy") tituloFiltro = formatearFechaFiltroBonita(valorFiltro);
     if(tipoFiltro === "todos") tituloFiltro = "Todos los partidos";
-    if(tipoFiltro === "fecha") tituloFiltro = `Partidos del ${valorFiltro}`;
+    if(tipoFiltro === "fecha") tituloFiltro = formatearFechaFiltroBonita(valorFiltro);
     if(tipoFiltro === "grupo") tituloFiltro = `Grupo ${valorFiltro}`;
     if(tipoFiltro === "ko") tituloFiltro = valorFiltro;
 
     let html = `
         <h1>PARTIDOS <span class="titulo-acento">FILTRADOS</span></h1>
-        <p class="subtexto">${tituloFiltro}</p>
 
         <div class="filtros-botones">
 
@@ -196,6 +211,8 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
             ` : ""}
 
         </div>
+
+        <p class="filtro-resultado-titulo">${tituloFiltro}</p>
     `;
 
     if(partidosFiltrados.length === 0){

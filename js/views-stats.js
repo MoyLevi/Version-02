@@ -23,6 +23,11 @@ const categoriasEspeciales = {
         titulo: "Sorpresa",
         icono: "🌟",
         campo: "sorpresa"
+    },
+    clasificados: {
+        titulo: "Clasificados",
+        icono: "🏆",
+        campo: null
     }
 };
 
@@ -30,6 +35,22 @@ let categoriaEspecialActual = "campeon";
 
 function normalizarPickEspecial(valor){
     return valor && valor.trim() !== "" ? valor.trim() : "Sin pick";
+}
+
+function crearHTMLPaisConBandera(nombre){
+
+    const pais = (nombre || "").trim();
+
+    if(!pais || pais === "-"){
+        return `<span>-</span>`;
+    }
+
+    return `
+        <span class="pais-con-bandera">
+            <img src="${getFlag(pais)}" alt="${pais}" class="flag-mini">
+            <span>${pais}</span>
+        </span>
+    `;
 }
 
 function getResumenEspecial(categoria){
@@ -72,7 +93,104 @@ function crearHTMLBotonesEspeciales(categoriaActiva){
     `;
 }
 
+
+function getLugaresProGrupos(){
+    return lugaresPro.filter(x => /^[A-L][12]$/.test(x.lug));
+}
+
+function contarValores(lista, selector){
+    const conteo = {};
+
+    lista.forEach(item => {
+        const valor = normalizarPickEspecial(selector(item));
+        conteo[valor] = (conteo[valor] || 0) + 1;
+    });
+
+    return Object.entries(conteo)
+        .sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
+}
+
+function crearHTMLTopConteo(ordenados, total, limite = 3){
+    if(ordenados.length === 0){
+        return `<p class="subtexto">Sin picks capturados.</p>`;
+    }
+
+    return ordenados.slice(0, limite).map(([equipo, cantidad]) => {
+        const porcentaje = total > 0
+            ? Math.round((cantidad / total) * 100)
+            : 0;
+
+        return `
+            <div class="clasificado-comunidad-row">
+                <span>${crearHTMLPaisConBandera(equipo)}</span>
+                <strong>${cantidad} · ${porcentaje}%</strong>
+            </div>
+        `;
+    }).join("");
+}
+
+function crearHTMLClasificadosComunidad(){
+    const lugaresGrupo = getLugaresProGrupos();
+    const totalUsuarios = new Set(lugaresGrupo.map(x => x.idUsuario)).size;
+    const conteoGeneral = contarValores(lugaresGrupo, x => x.lugares);
+    const favorito = conteoGeneral[0] || ["Sin pick", 0];
+    const grupos = "ABCDEFGHIJKL".split("");
+
+    return `
+        <h1 class="titulo-stats-principal">PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
+
+        ${crearHTMLBotonesEspeciales("clasificados")}
+
+        <div class="stats-grid especiales-resumen-grid">
+            <div class="stat-card">
+                <h2>🏆</h2>
+                <p>Clasificados</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 class="stat-pais-favorito">${crearHTMLPaisConBandera(favorito[0])}</h2>
+                <p>Equipo más elegido · ${favorito[1]} picks</p>
+            </div>
+
+            <div class="stat-card">
+                <h2>${totalUsuarios}</h2>
+                <p>Usuarios con picks de clasificados</p>
+            </div>
+        </div>
+
+        <div class="clasificados-comunidad-grid">
+            ${grupos.map(g => {
+                const picksPrimero = lugaresGrupo.filter(x => x.lug === `${g}1`);
+                const picksSegundo = lugaresGrupo.filter(x => x.lug === `${g}2`);
+                const topPrimero = contarValores(picksPrimero, x => x.lugares);
+                const topSegundo = contarValores(picksSegundo, x => x.lugares);
+
+                return `
+                    <div class="clasificado-comunidad-card">
+                        <h3>Grupo ${g}</h3>
+
+                        <div class="clasificado-comunidad-bloque">
+                            <h4>1° lugar más elegido</h4>
+                            ${crearHTMLTopConteo(topPrimero, picksPrimero.length)}
+                        </div>
+
+                        <div class="clasificado-comunidad-bloque">
+                            <h4>2° lugar más elegido</h4>
+                            ${crearHTMLTopConteo(topSegundo, picksSegundo.length)}
+                        </div>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+    `;
+}
+
 function crearHTMLEspecial(categoria){
+
+    if(categoria === "clasificados"){
+        return crearHTMLClasificadosComunidad();
+    }
+
     const resumen = getResumenEspecial(categoria);
     const porcentajeFavorito = resumen.total > 0
         ? Math.round((resumen.favoritoCantidad / resumen.total) * 100)
@@ -101,7 +219,7 @@ function crearHTMLEspecial(categoria){
     }).join("");
 
     return `
-        <h2>PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h2>
+        <h1 class="titulo-stats-principal">PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
 
         ${crearHTMLBotonesEspeciales(categoria)}
 
@@ -147,120 +265,8 @@ function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual){
         ? categoriaEspecial
         : "campeon";
 
-    const ranking = getRanking();
-    const mejorDiferencias = [...ranking].sort((a,b) => b.diferencias - a.diferencias)[0];
-
-    const totalPicks = picks.length;
-
-    const exactos = picks.filter(p => {
-        const partido = partidos.find(x => x.id === p.partidoId);
-        return partido && getPuntos(partido, p) === 3;
-    }).length;
-
-    const difs = picks.filter(p => {
-        const partido = partidos.find(x => x.id === p.partidoId);
-        return partido && getPuntos(partido, p) === 2;
-    }).length;
-
-    const wins = picks.filter(p => {
-        const partido = partidos.find(x => x.id === p.partidoId);
-        return partido && getPuntos(partido, p) === 1;
-    }).length;
-
-    const fallos = picks.filter(p => {
-        const partido = partidos.find(x => x.id === p.partidoId);
-        return partidoFinalizado(partido) && getPuntos(partido, p) === 0;
-    }).length;
-
-    const mejorExactos = [...ranking].sort((a,b) => b.exactos - a.exactos)[0];
-    const mejorGanadores = [...ranking].sort((a,b) => b.ganadores - a.ganadores)[0];
-
-    let efectividadPorPartido = {};
-
-    picks.forEach(p => {
-
-        const partido = partidos.find(x => x.id === p.partidoId);
-
-        if(!partido || !partidoFinalizado(partido)){
-            return;
-        }
-
-        const puntos = getPuntos(partido, p);
-
-        if(!efectividadPorPartido[p.partidoId]){
-            efectividadPorPartido[p.partidoId] = {
-                puntosGanados: 0,
-                picks: 0,
-                efectividad: 0
-            };
-        }
-
-        efectividadPorPartido[p.partidoId].puntosGanados += puntos;
-        efectividadPorPartido[p.partidoId].picks += 1;
-    });
-
-    Object.keys(efectividadPorPartido).forEach(idPartido => {
-        const item = efectividadPorPartido[idPartido];
-        const puntosDisponibles = item.picks * 3;
-
-        item.efectividad = puntosDisponibles > 0
-            ? item.puntosGanados / puntosDisponibles
-            : 0;
-    });
-
-    const partidoMasAciertosId = Object.entries(efectividadPorPartido)
-        .sort((a,b) => b[1].efectividad - a[1].efectividad)[0]?.[0];
-
-    const partidoMasAciertos = partidos.find(p => p.id === Number(partidoMasAciertosId));
-
-    const totalAciertosPartido = partidoMasAciertosId
-        ? `${Math.round(efectividadPorPartido[partidoMasAciertosId].efectividad * 100)}%`
-        : "-";
-
     contenido.innerHTML = `
         ${crearHTMLEspecial(categoriaEspecialActual)}
-
-        <h1>DATOS <span class="titulo-acento">DESTACADOS</span></h1>
-
-        <div class="stats-grid">
-            <div class="stat-card"><h2>${totalPicks}</h2><p>Picks</p></div>
-            <div class="stat-card"><h2>${exactos}</h2><p>Exactos</p></div>
-            <div class="stat-card"><h2>${difs}</h2><p>Diferencia + ganador</p></div>
-            <div class="stat-card"><h2>${wins}</h2><p>Ganadores</p></div>
-            <div class="stat-card"><h2>${fallos}</h2><p>Fallos</p></div>
-        </div>
-
-        <h2>RÉCORDS <span class="titulo-acento">ACTUALES</span></h2>
-
-        <div class="tabla-ranking">
-            <div class="ranking-card">
-                <div class="ranking-pos">🎯</div>
-                <div class="ranking-user">Mejor en exactos</div>
-                <div class="ranking-puntos">${mejorExactos ? `${mejorExactos.nombre} · ${mejorExactos.exactos}` : "-"}</div>
-            </div>
-
-            <div class="ranking-card">
-                <div class="ranking-pos">✅</div>
-                <div class="ranking-user">Mejor en ganadores</div>
-                <div class="ranking-puntos">${mejorGanadores ? `${mejorGanadores.nombre} · ${mejorGanadores.ganadores}` : "-"}</div>
-            </div>
-
-            <div class="ranking-card">
-                <div class="ranking-pos">📐</div>
-                <div class="ranking-user">Mejor en diferencia</div>
-                <div class="ranking-puntos">
-                    ${mejorDiferencias ? `${mejorDiferencias.nombre} · ${mejorDiferencias.diferencias}` : "-"}
-                </div>
-            </div>
-
-            <div class="ranking-card">
-                <div class="ranking-pos">🔥</div>
-                <div class="ranking-user">Partido con más aciertos</div>
-                <div class="ranking-puntos">
-                    ${partidoMasAciertos ? `${partidoMasAciertos.local} vs ${partidoMasAciertos.visita} · ${totalAciertosPartido}` : "-"}
-                </div>
-            </div>
-        </div>
 
         ${getFooterCopyright()}
     `;
