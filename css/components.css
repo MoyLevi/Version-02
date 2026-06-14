@@ -1338,3 +1338,125 @@
         padding:9px 10px;
     }
 }
+
+/* MEJORAS STAGE 2 PRE-KO: DETALLE, RÉCORDS Y GRUPOS */
+.paginacion-detalle{
+    margin-top:16px;
+    margin-bottom:18px;
+}
+
+.record-card-clickable{
+    cursor:pointer;
+    transition:.2s;
+}
+
+.record-card-clickable:hover{
+    background:#334155;
+    transform:translateY(-2px);
+}
+
+.grupos-standings-tabs{
+    max-width:760px;
+    margin:18px auto 22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(46px, 1fr));
+    gap:8px;
+}
+
+.grupos-standings-tabs button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.grupos-standings-tabs button:hover{
+    background:#475569;
+}
+
+.grupo-standings-card{
+    max-width:900px;
+    margin:24px auto 35px;
+    background:#1e293b;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.grupo-standings-card h2{
+    margin-top:0;
+    text-align:center;
+}
+
+.tabla-grupo-real{
+    width:100%;
+    overflow-x:auto;
+}
+
+.tabla-grupo-header,
+.tabla-grupo-row{
+    display:grid;
+    grid-template-columns:42px minmax(180px, 1fr) 55px 55px 55px 55px;
+    gap:8px;
+    align-items:center;
+    padding:10px 12px;
+}
+
+.tabla-grupo-header{
+    color:#cbd5e1;
+    font-size:13px;
+    font-weight:bold;
+    border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.tabla-grupo-row{
+    background:#334155;
+    border-radius:12px;
+    margin:8px 0;
+    color:#e2e8f0;
+}
+
+.tabla-grupo-row strong{
+    color:#facc15;
+    font-size:18px;
+}
+
+.equipo-grupo-nombre{
+    min-width:0;
+    overflow-wrap:anywhere;
+}
+
+.especial-row .pais-con-bandera,
+.especial-row-conteo .pais-con-bandera,
+.stat-pais-favorito .pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    vertical-align:middle;
+}
+
+.especial-row > span:first-child{
+    display:flex;
+    align-items:center;
+    min-width:0;
+}
+
+.especial-row strong .pais-con-bandera{
+    justify-content:flex-end;
+}
+
+@media(max-width:600px){
+    .tabla-grupo-header,
+    .tabla-grupo-row{
+        grid-template-columns:34px minmax(130px, 1fr) 45px 42px 42px 42px;
+        font-size:13px;
+        padding:9px 8px;
+    }
+
+    .grupo-standings-card{
+        padding:14px;
+    }
+}

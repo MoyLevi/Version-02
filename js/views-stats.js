@@ -55,6 +55,20 @@ function crearHTMLPaisConBandera(nombre){
     `;
 }
 
+function esCategoriaPaisEspecial(categoria){
+    return ["campeon", "segundo", "tercero", "sorpresa"].includes(categoria);
+}
+
+function crearHTMLPickEspecialConBandera(categoria, valor){
+    const pick = normalizarPickEspecial(valor);
+
+    if(!esCategoriaPaisEspecial(categoria) || pick === "Sin pick"){
+        return pick;
+    }
+
+    return crearHTMLPaisConBandera(pick);
+}
+
 function getResumenEspecial(categoria){
     const config = categoriasEspeciales[categoria];
     const conteo = {};
@@ -239,7 +253,7 @@ function crearHTMLEspecial(categoria){
         .map(u => `
             <div class="especial-row">
                 <span>${u.nombre}</span>
-                <strong>${normalizarPickEspecial(u[resumen.config.campo])}</strong>
+                <strong>${crearHTMLPickEspecialConBandera(categoria, u[resumen.config.campo])}</strong>
             </div>
         `).join("");
 
@@ -250,7 +264,7 @@ function crearHTMLEspecial(categoria){
 
         return `
             <div class="especial-row especial-row-conteo">
-                <span>${pick}</span>
+                <span>${crearHTMLPickEspecialConBandera(categoria, pick)}</span>
                 <strong>${cantidad} · ${porcentaje}%</strong>
             </div>
         `;
@@ -270,7 +284,7 @@ function crearHTMLEspecial(categoria){
             </div>
 
             <div class="stat-card">
-                <h2>${resumen.favorito}</h2>
+                <h2 class="stat-pais-favorito">${crearHTMLPickEspecialConBandera(categoria, resumen.favorito)}</h2>
                 <p>Favorito de la comunidad · ${resumen.favoritoCantidad} picks · ${porcentajeFavorito}%</p>
             </div>
 
