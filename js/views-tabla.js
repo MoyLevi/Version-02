@@ -1,10 +1,107 @@
 let tipoTablaActual = "principal";
 
-function crearHTMLRanking(lista){
+function getRankingStorageKey(tipo){
+    return `quinielaRanking_${tipo}`;
+}
+
+function getFirmaRanking(lista){
+    return JSON.stringify(lista.map(u => ({
+        id: u.id,
+        puntos: u.puntos,
+        exactos: u.exactos,
+        diferencias: u.diferencias,
+        ganadores: u.ganadores,
+        fallos: u.fallos
+    })));
+}
+
+function getPosicionesRanking(lista){
+    return lista.reduce((acc, u, index) => {
+        acc[u.id] = index + 1;
+        return acc;
+    }, {});
+}
+
+function prepararHistorialRanking(tipo, lista){
+
+    const key = getRankingStorageKey(tipo);
+    const firmaActual = getFirmaRanking(lista);
+    const posicionesActuales = getPosicionesRanking(lista);
+
+    let cache = null;
+
+    try{
+        cache = JSON.parse(localStorage.getItem(key));
+    }
+    catch(e){
+        cache = null;
+    }
+
+    if(!cache || !cache.actual){
+        cache = {
+            firma: firmaActual,
+            anterior: null,
+            actual: posicionesActuales
+        };
+    }
+    else if(cache.firma !== firmaActual){
+        cache = {
+            firma: firmaActual,
+            anterior: cache.actual,
+            actual: posicionesActuales
+        };
+    }
+
+    try{
+        localStorage.setItem(key, JSON.stringify(cache));
+    }
+    catch(e){
+        // Si localStorage falla, simplemente mostramos posiciones sin movimiento.
+    }
+
+    return cache.anterior || {};
+}
+
+function getMovimientoRanking(posAnterior, posActual){
+
+    if(!posAnterior){
+        return {
+            icono: "—",
+            clase: "mov-neutral",
+            titulo: "Sin historial previo"
+        };
+    }
+
+    if(posActual < posAnterior){
+        return {
+            icono: "↑",
+            clase: "mov-up",
+            titulo: `Subió de ${posAnterior}° a ${posActual}°`
+        };
+    }
+
+    if(posActual > posAnterior){
+        return {
+            icono: "↓",
+            clase: "mov-down",
+            titulo: `Bajó de ${posAnterior}° a ${posActual}°`
+        };
+    }
+
+    return {
+        icono: "—",
+        clase: "mov-neutral",
+        titulo: "Se mantuvo"
+    };
+}
+
+function crearHTMLRanking(lista, tipo = "principal"){
 
     if(lista.length === 0){
         return `<p class="subtexto">No hay usuarios en esta tabla.</p>`;
     }
+
+    const posicionesAnteriores = prepararHistorialRanking(tipo, lista);
 
     return lista.map((u, index) => {
 
@@ -13,17 +110,24 @@ function crearHTMLRanking(lista){
         if(index === 1) medalla = "🥈";
         if(index === 2) medalla = "🥉";
 
+        const posicionActual = index + 1;
+        const movimiento = getMovimientoRanking(posicionesAnteriores[u.id], posicionActual);
+
         const porcentaje = u.jugados > 0
             ? Math.round((u.puntos / (u.jugados * 3)) * 100)
             : 0;
 
         return `
             <div class="ranking-card ranking-card-detallado" onclick="verDetalleUsuario(${u.id})">
-                <div class="ranking-pos">${medalla || index + 1}</div>
+                <div class="ranking-pos">${medalla || posicionActual}</div>
 
                 <div class="ranking-user">
                     ${u.nombre}
                     <span>${porcentaje}% efectividad</span>
+                </div>
+
+                <div class="ranking-mov ${movimiento.clase}" title="${movimiento.titulo}">
+                    ${movimiento.icono}
                 </div>
 
                 <div class="ranking-puntos">${u.puntos} pts</div>
@@ -282,7 +386,7 @@ function mostrarTabla(tipo = "principal"){
         <p class="subtexto">Toca un usuario para ver cómo se formaron sus puntos.</p>
 
         <div class="tabla-ranking">
-            ${crearHTMLRanking(listaActual)}
+            ${crearHTMLRanking(listaActual, tipo)}
         </div>
 
         ${getFooterCopyright()}

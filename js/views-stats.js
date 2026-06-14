@@ -86,7 +86,7 @@ function crearHTMLBotonesEspeciales(categoriaActiva){
             ${Object.entries(categoriasEspeciales).map(([key, cat]) => `
                 <button 
                     class="${categoriaActiva === key ? "tab-activa" : ""}"
-                    onclick="mostrarEstadisticas('${key}')"
+                    onclick="mostrarEstadisticas('${key}', 'conteo', grupoClasificadosActual, true)"
                 >
                     ${cat.icono} ${cat.titulo}
                 </button>
@@ -100,14 +100,14 @@ function crearHTMLBotonesVistaEspecial(categoria, vistaActiva){
         <div class="tabs-mini-estadisticas">
             <button
                 class="${vistaActiva === "conteo" ? "tab-activa" : ""}"
-                onclick="mostrarEstadisticas('${categoria}', 'conteo')"
+                onclick="mostrarEstadisticas('${categoria}', 'conteo', grupoClasificadosActual, true)"
             >
                 📊 Conteo General
             </button>
 
             <button
                 class="${vistaActiva === "usuarios" ? "tab-activa" : ""}"
-                onclick="mostrarEstadisticas('${categoria}', 'usuarios')"
+                onclick="mostrarEstadisticas('${categoria}', 'usuarios', grupoClasificadosActual, true)"
             >
                 👥 Picks por Usuario
             </button>
@@ -158,7 +158,7 @@ function crearHTMLBotonesGruposClasificados(grupoActivo){
             ${grupos.map(g => `
                 <button
                     class="${grupoActivo === g ? "filtro-activo" : ""}"
-                    onclick="mostrarEstadisticas('clasificados', 'conteo', '${g}')"
+                    onclick="mostrarEstadisticas('clasificados', 'conteo', '${g}', true)"
                 >
                     ${g}
                 </button>
@@ -298,12 +298,16 @@ function crearHTMLEspecial(categoria){
     `;
 }
 
-function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual, vistaEspecial = "conteo", grupoClasificados = grupoClasificadosActual){
+function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual, vistaEspecial = "conteo", grupoClasificados = grupoClasificadosActual, conservarScroll = false){
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    const scrollActual = window.scrollY || document.documentElement.scrollTop || 0;
+
+    if(!conservarScroll){
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 
     categoriaEspecialActual = categoriasEspeciales[categoriaEspecial]
         ? categoriaEspecial
@@ -320,4 +324,13 @@ function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual, vistaE
 
         ${getFooterCopyright()}
     `;
+
+    if(conservarScroll){
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: scrollActual,
+                behavior: "auto"
+            });
+        });
+    }
 }
