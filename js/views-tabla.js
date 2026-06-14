@@ -267,8 +267,8 @@ function crearHTMLTabsTabla(tipo, grupo = "A"){
         <div class="tabs-tabla">
             <button class="${tipo === "principal" ? "tab-activa" : ""}" onclick="mostrarTabla('principal')">🏆 Principal</button>
             <button class="${tipo === "recreativa" ? "tab-activa" : ""}" onclick="mostrarTabla('recreativa')">🎮 Recreativa</button>
-            <button class="${tipo === "grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('grupos', '${grupo}')">📊 Grupos</button>
-            <button class="${tipo === "records" ? "tab-activa" : ""}" onclick="mostrarTabla('records')">📈 Récords</button>
+            <button class="${tipo === "grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('grupos', '${grupo}')">🌐 Grupos</button>
+            <button class="${tipo === "records" ? "tab-activa" : ""}" onclick="mostrarTabla('records')">👑 Récords</button>
         </div>
     `;
 }
@@ -374,7 +374,7 @@ function crearHTMLTablaGrupos(grupo = "A"){
 
     return `
         <h1>TABLA <span class="titulo-acento">DE GRUPOS</span></h1>
-        <p class="subtexto">Puntos reales del Mundial: victoria 3 pts, empate 1 pt, derrota 0 pts. Desempate por diferencia de goles.</p>
+        <p class="subtexto">Puntos Reales del Mundial.</p>
 
         ${crearHTMLTabsTabla("grupos", grupoSeguro)}
         ${crearHTMLBotonesGruposTabla(grupoSeguro)}
@@ -437,7 +437,7 @@ function crearHTMLDetalleRecordUsuarios(tipo){
     const lista = getRankingRecord(tipo);
 
     return `
-        <button onclick="mostrarTabla('records')" class="btnVolver">⬅ Volver</button>
+        <button onclick="volverARecordsMarcas()" class="btnVolver">⬅ Volver</button>
         <h1>${config.icono} ${config.titulo}</h1>
         <p class="subtexto">${config.ayuda}</p>
 
@@ -489,18 +489,51 @@ function getEfectividadPartidosOrdenada(){
         .sort((a,b) => b.porcentaje - a.porcentaje || b.puntosGanados - a.puntosGanados || a.partido.id - b.partido.id);
 }
 
-function crearHTMLDetalleRecordEfectividad(){
+function crearHTMLPaginacionRecordEfectividad(paginaSegura, totalPaginas, totalItems, inicio, fin){
+    return `
+        <div class="paginacion paginacion-detalle">
+            <button 
+                onclick="mostrarDetalleRecord('efectividad', ${paginaSegura - 1}, true)" 
+                ${paginaSegura <= 1 ? "disabled" : ""}
+            >
+                ⬅ Anterior
+            </button>
+
+            <span>Página ${paginaSegura} de ${totalPaginas} · ${inicio + 1}-${fin} de ${totalItems}</span>
+
+            <button 
+                onclick="mostrarDetalleRecord('efectividad', ${paginaSegura + 1}, true)" 
+                ${paginaSegura >= totalPaginas ? "disabled" : ""}
+            >
+                Siguiente ➡
+            </button>
+        </div>
+    `;
+}
+
+function crearHTMLDetalleRecordEfectividad(pagina = 1){
     const lista = getEfectividadPartidosOrdenada();
+    const itemsPorPagina = 10;
+    const totalPaginas = Math.max(1, Math.ceil(lista.length / itemsPorPagina));
+    const paginaSegura = Math.min(Math.max(Number(pagina) || 1, 1), totalPaginas);
+    const inicio = (paginaSegura - 1) * itemsPorPagina;
+    const fin = Math.min(inicio + itemsPorPagina, lista.length);
+    const listaPagina = lista.slice(inicio, fin);
+    const paginacionHTML = lista.length > 0
+        ? crearHTMLPaginacionRecordEfectividad(paginaSegura, totalPaginas, lista.length, inicio, fin)
+        : "";
 
     return `
-        <button onclick="mostrarTabla('records')" class="btnVolver">⬅ Volver</button>
-        <h1>🔥 MAYOR <span class="titulo-acento">EFECTIVIDAD</span></h1>
+        <button onclick="volverARecordsMarcas()" class="btnVolver">⬅ Volver</button>
+        <h1 id="tituloRecordEfectividad">🔥 MAYOR <span class="titulo-acento">EFECTIVIDAD</span></h1>
         <p class="subtexto">Partidos ordenados por puntos ganados / puntos disponibles.</p>
 
+        ${paginacionHTML}
+
         <div class="tabla-ranking">
-            ${lista.length === 0 ? `<p class="subtexto">Aún no hay partidos finalizados con picks.</p>` : lista.map((item, index) => `
+            ${lista.length === 0 ? `<p class="subtexto">Aún no hay partidos finalizados con picks.</p>` : listaPagina.map((item, index) => `
                 <div class="ranking-card ranking-card-detallado" onclick="verPartido(${item.partido.id})">
-                    <div class="ranking-pos">${index + 1}</div>
+                    <div class="ranking-pos">${inicio + index + 1}</div>
                     <div class="ranking-user">
                         ${item.partido.local} vs ${item.partido.visita}
                         <span>${item.puntosGanados}/${item.puntosDisponibles} pts posibles</span>
@@ -510,15 +543,50 @@ function crearHTMLDetalleRecordEfectividad(){
             `).join("")}
         </div>
 
+        ${paginacionHTML}
+
         ${getFooterCopyright()}
     `;
 }
 
-function mostrarDetalleRecord(tipo){
-    window.scrollTo({ top: 0, behavior: "smooth" });
+function volverARecordsMarcas(){
+    mostrarTabla("records", "A", false);
+
+    setTimeout(() => {
+        const titulo = document.getElementById("marcasDestacadas");
+
+        if(titulo){
+            const y = titulo.getBoundingClientRect().top + window.scrollY - 85;
+            window.scrollTo({
+                top: Math.max(0, y),
+                behavior: "smooth"
+            });
+        }
+    }, 60);
+}
+
+function mostrarDetalleRecord(tipo, pagina = 1, scrollTitulo = false){
+    if(!scrollTitulo){
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     if(tipo === "efectividad"){
-        contenido.innerHTML = crearHTMLDetalleRecordEfectividad();
+        contenido.innerHTML = crearHTMLDetalleRecordEfectividad(pagina);
+
+        if(scrollTitulo){
+            setTimeout(() => {
+                const titulo = document.getElementById("tituloRecordEfectividad");
+
+                if(titulo){
+                    const y = titulo.getBoundingClientRect().top + window.scrollY - 85;
+                    window.scrollTo({
+                        top: Math.max(0, y),
+                        behavior: "smooth"
+                    });
+                }
+            }, 50);
+        }
+
         return;
     }
 
@@ -542,13 +610,14 @@ function crearHTMLRecordsTabla(){
 
     return `
         <h1>RÉCORDS <span class="titulo-acento">ACTUALES</span></h1>
-        <p class="subtexto">Líderes y marcas destacadas de la quiniela. Toca una tarjeta para ver el detalle completo.</p>
+        <p class="subtexto">Marcas destacadas de la quiniela.</p>
 
         ${crearHTMLTabsTabla("records")}
 
         ${crearHTMLDatosDestacados()}
 
-        <h2>RÉCORDS <span class="titulo-acento">ACTUALES</span></h2>
+        <h2 id="marcasDestacadas">MARCAS <span class="titulo-acento">DESTACADAS</span></h2>
+        <p class="subtexto">Toca una tarjeta para ver el detalle completo.</p>
 
         <div class="records-grid">
             ${crearHTMLRecordCard(
@@ -599,12 +668,14 @@ function crearHTMLRecordsTabla(){
     `;
 }
 
-function mostrarTabla(tipo = "principal", grupo = "A"){
+function mostrarTabla(tipo = "principal", grupo = "A", hacerScroll = true){
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    if(hacerScroll){
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 
     tipoTablaActual = tipo;
 
