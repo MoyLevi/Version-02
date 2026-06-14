@@ -499,7 +499,7 @@ function crearHTMLPaginacionRecordEfectividad(paginaSegura, totalPaginas, totalI
                 ⬅ Anterior
             </button>
 
-            <span>Página ${paginaSegura} de ${totalPaginas} · ${inicio + 1}-${fin} de ${totalItems}</span>
+            <span>Página ${paginaSegura} de ${totalPaginas}</span>
 
             <button 
                 onclick="mostrarDetalleRecord('efectividad', ${paginaSegura + 1}, true)" 
