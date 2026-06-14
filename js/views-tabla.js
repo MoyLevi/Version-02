@@ -236,12 +236,21 @@ function getDatosDestacados(){
         return partidoFinalizado(partido) && getPuntos(partido, p) === 0;
     }).length;
 
+    const golesMarcados = partidos.reduce((total, partido) => {
+        if(!partidoFinalizado(partido)){
+            return total;
+        }
+
+        return total + Number(partido.golesLoc) + Number(partido.golesVis);
+    }, 0);
+
     return {
         totalPicks,
         exactos,
         diferencias,
         ganadores,
-        fallos
+        fallos,
+        golesMarcados
     };
 }
 
@@ -258,6 +267,7 @@ function crearHTMLDatosDestacados(){
             <div class="stat-card"><h2>${datos.diferencias}</h2><p>Diferencia + ganador</p></div>
             <div class="stat-card"><h2>${datos.ganadores}</h2><p>Ganadores</p></div>
             <div class="stat-card"><h2>${datos.fallos}</h2><p>Fallos</p></div>
+            <div class="stat-card"><h2>${datos.golesMarcados}</h2><p>Goles marcados</p></div>
         </div>
     `;
 }
