@@ -22,6 +22,9 @@ async function actualizarDatos(){
         await cargarUsuarios();
         await cargarPicks();
         await cargarLugaresPro();
+        await cargarKnockout();
+        await cargarRankKO();
+        await cargarPicksKO();
 
         actualizarTimestamp();
         mostrarInicio();
@@ -46,6 +49,9 @@ async function iniciarApp(){
         await cargarUsuarios();
         await cargarPicks();
         await cargarLugaresPro();
+        await cargarKnockout();
+        await cargarRankKO();
+        await cargarPicksKO();
 
         actualizarTimestamp();
         mostrarInicio();

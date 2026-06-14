@@ -1460,3 +1460,28 @@
         padding:14px;
     }
 }
+
+/* KNOCKOUT / PENALES */
+.penales-circulos{
+    color:#22c55e;
+    letter-spacing:1px;
+    font-size:.72em;
+    white-space:nowrap;
+}
+
+.marcador-penales{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    flex-wrap:wrap;
+    line-height:1.25;
+}
+
+.usuario-pronostico-ko{
+    border-left:4px solid #38bdf8;
+}
+
+.pts-ko{
+    color:#38bdf8;
+}

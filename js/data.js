@@ -151,3 +151,98 @@ async function cargarLugaresPro(){
         };
     });
 }
+
+async function cargarKnockout(){
+
+    const res = await fetch(urlKnockout);
+    const text = await res.text();
+
+    const data = parseCSV(text);
+    const headers = data[0];
+
+    knockout = data.slice(1).map(r => {
+
+        const obj = {};
+
+        headers.forEach((h, i) => {
+            obj[h.trim()] = (r[i] || "").trim();
+        });
+
+        return {
+            id: Number(obj["ID"]),
+            idStage: Number(obj["IDStage"]),
+            stage: obj["Stage"],
+            fecha: obj["Fecha"],
+            hora: obj["Hora"],
+            lugar: obj["Lugar"],
+            loc: obj["Loc"],
+            vis: obj["Vis"],
+            local: obj["Local"],
+            visita: obj["Visita"],
+            penLoc: obj["PenLoc"],
+            golesLoc: obj["GolesLoc"],
+            golesVis: obj["GolesVis"],
+            penVis: obj["PenVis"],
+            status: obj["Status"] || "Pendiente",
+            esKO: true
+        };
+    });
+}
+
+async function cargarRankKO(){
+
+    const res = await fetch(urlRankKO);
+    const text = await res.text();
+
+    const data = parseCSV(text);
+    const headers = data[0];
+
+    rankKO = data.slice(1).map(r => {
+
+        const obj = {};
+
+        headers.forEach((h, i) => {
+            obj[h.trim()] = (r[i] || "").trim();
+        });
+
+        return {
+            idStage: Number(obj["IDStage"]),
+            stage: obj["Stage"],
+            clave: obj["Clave"],
+            equipo: obj["Equipo"]
+        };
+    });
+}
+
+async function cargarPicksKO(){
+
+    const res = await fetch(urlPicksKO);
+    const text = await res.text();
+
+    const data = parseCSV(text);
+    const headers = data[0];
+
+    picksKO = data.slice(1).map(r => {
+
+        const obj = {};
+
+        headers.forEach((h, i) => {
+            obj[h.trim()] = (r[i] || "").trim();
+        });
+
+        return {
+            idPick: Number(obj["IDPick"]),
+            idUser: Number(obj["IDUsuario"] || obj["IDUser"]),
+            idStage: Number(obj["IDStage"]),
+            stage: obj["Stage"],
+            partidoId: Number(obj["IDPartido"]),
+            loc: obj["Loc"],
+            vis: obj["Vis"],
+            penLoc: obj["PenLoc"],
+            golLoc: Number(obj["GolLoc"]),
+            golVis: Number(obj["GolVis"]),
+            penVis: obj["PenVis"],
+            esKO: true
+        };
+    });
+}

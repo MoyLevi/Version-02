@@ -839,7 +839,7 @@ function crearHTMLTabsDetalleUsuario(idUser, vista){
 }
 
 function getOrdenCronologicoPick(pick){
-    const partido = partidos.find(p => p.id === pick.partidoId);
+    const partido = pick.esKO ? getPartidoKOBase(pick.partidoId) : partidos.find(p => p.id === pick.partidoId);
     return partido ? partido.id : pick.partidoId;
 }
 
@@ -870,9 +870,10 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
     const usuarioActual = usuarios.find(u => u.id === idUser);
     const nombre = usuarioActual ? usuarioActual.nombre : `Usuario ${idUser}`;
 
-    const lista = picks
-        .filter(p => p.idUser === idUser)
-        .sort((a,b) => getOrdenCronologicoPick(a) - getOrdenCronologicoPick(b));
+    const lista = [
+        ...picks.filter(p => p.idUser === idUser).map(p => ({...p, esKO:false})),
+        ...picksKO.filter(p => p.idUser === idUser).map(p => ({...p, esKO:true}))
+    ].sort((a,b) => getOrdenCronologicoPick(a) - getOrdenCronologicoPick(b));
 
     paginaDetalleUsuario = pagina;
 
@@ -937,15 +938,15 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
 
         listaPagina.forEach(r => {
 
-            const partido = partidos.find(p => p.id === r.partidoId);
+            const partido = r.esKO ? getPartidoUsuarioKO(idUser, r.partidoId) : partidos.find(p => p.id === r.partidoId);
             if(!partido) return;
 
-            const jugado = partidoFinalizado(partido);
+            const jugado = !r.esKO && partidoFinalizado(partido);
             const puntos = jugado ? getPuntos(partido, r) : 0;
 
-            let textoPuntos = "-";
-            let tipo = "Por jugar";
-            let clasePuntos = "pts-pendiente";
+            let textoPuntos = r.esKO ? "KO" : "-";
+            let tipo = r.esKO ? "Pick Knockout" : "Por jugar";
+            let clasePuntos = r.esKO ? "pts-ko" : "pts-pendiente";
 
             if(jugado){
                 textoPuntos = `${puntos} pts`;
@@ -968,12 +969,18 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
                 }
             }
 
+            const realTexto = r.esKO
+                ? formatearMarcadorConPenales(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis)
+                : (partido.golesLoc !== "" && partido.golesVis !== "" ? `${partido.golesLoc}-${partido.golesVis}` : "Pendiente");
+
+            const pickTexto = r.esKO ? formatearPickKO(r) : `${r.golLoc}-${r.golVis}`;
+
             html += `
-                <div class="usuario-pronostico">
+                <div class="usuario-pronostico ${r.esKO ? "usuario-pronostico-ko" : ""}">
                     <div>
                         <strong>${partido.local} vs ${partido.visita}</strong>
-                        <p>${partido.fecha} · ${partido.hora}</p>
-                        <p>Real: ${partido.golesLoc !== "" && partido.golesVis !== "" ? `${partido.golesLoc}-${partido.golesVis}` : "Pendiente"} · Pick: ${r.golLoc}-${r.golVis}</p>
+                        <p>${partido.stage ? partido.stage + " · " : ""}${partido.fecha} · ${partido.hora}</p>
+                        <p>Real: ${realTexto} · Pick: ${pickTexto}</p>
                     </div>
 
                     <div class="usuario-score ${clasePuntos}">

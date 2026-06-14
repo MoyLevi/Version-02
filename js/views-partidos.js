@@ -102,28 +102,29 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
         valor: valorFiltro
     };
 
-    let partidosFiltrados = [...partidos];
+    let partidosVista = getPartidosVista();
+    let partidosFiltrados = [...partidosVista];
 
     if(tipoFiltro === "fecha" || tipoFiltro === "hoy"){
-        partidosFiltrados = partidos.filter(p => fechaAppCoincide(p.fecha, valorFiltro));
+        partidosFiltrados = partidosVista.filter(p => fechaAppCoincide(p.fecha, valorFiltro));
     }
 
     if(tipoFiltro === "grupo"){
-        partidosFiltrados = partidos.filter(p =>
-            p.loc?.charAt(0) === valorFiltro ||
-            p.vis?.charAt(0) === valorFiltro
+        partidosFiltrados = partidosVista.filter(p =>
+            !p.esKO && (p.loc?.charAt(0) === valorFiltro ||
+            p.vis?.charAt(0) === valorFiltro)
         );
     }
 
     if(tipoFiltro === "ko"){
-        partidosFiltrados = partidos.filter(p =>
+        partidosFiltrados = partidosVista.filter(p =>
             p.stage === valorFiltro ||
             p.Stage === valorFiltro
         );
     }
 
     if(tipoFiltro === "todos"){
-        partidosFiltrados = partidos;
+        partidosFiltrados = partidosVista;
     }
 
     let tituloFiltro = "Partidos";
@@ -221,9 +222,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
     partidosFiltrados.forEach(p => {
 
-        const marcador = p.golesLoc !== "" && p.golesVis !== ""
-            ? `${p.golesLoc}-${p.golesVis}`
-            : "VS";
+        const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis);
 
         html += `
             <div class="partido ${getClaseStatus(p.status)}" onclick="verPartido(${p.id})">
@@ -280,16 +279,14 @@ function verPartido(id){
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const p = partidos.find(x => x.id === id);
+    const p = getPartidoVistaPorId(id);
 
     if(!p){
         contenido.innerHTML = `<p>No se encontró el partido.</p>${getFooterCopyright()}`;
         return;
     }
 
-    const marcador = p.golesLoc !== "" && p.golesVis !== ""
-        ? `${p.golesLoc} - ${p.golesVis}`
-        : "VS";
+    const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis);
 
     let html = `
         <button onclick="mostrarPartidos(ultimoFiltroPartidos.tipo, ultimoFiltroPartidos.valor)" class="btnVolver">⬅ Volver</button>
@@ -316,13 +313,13 @@ function verPartido(id){
         <p class="info-partido">${p.fecha} · ${p.hora} · ${p.lugar}</p>
 
         <div class="prediccion-colectiva">
-            ${getPrediccionColectiva(id)}
+            ${p.esKO ? getPrediccionColectivaKO(id) : getPrediccionColectiva(id)}
         </div>
 
         <h2>PRONÓSTICOS <span class="titulo-acento">DEL PARTIDO</span></h2>
    `;
 
-    const lista = picks
+    const lista = (p.esKO ? picksKO : picks)
     .filter(x => x.partidoId === id)
     .sort((a, b) => {
         const puntosA = getPuntos(p, a);
@@ -349,7 +346,7 @@ function verPartido(id){
         html += `
             <div class="pronostico">
                 <span><strong>${usuario ? usuario.nombre : "Usuario " + r.idUser}</strong></span>
-                <span>${r.golLoc}-${r.golVis}</span>
+                <span>${p.esKO ? formatearPickKO(r) : `${r.golLoc}-${r.golVis}`}</span>
                 <span>${puntos} pts</span>
             </div>
         `;
