@@ -182,7 +182,7 @@ function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
     const topSegundo = contarValores(picksSegundo, x => x.lugares);
 
     return `
-        <h1>PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
+        <h1>PICKS <span class="titulo-acento">ESPECIALES</span></h1>
 
         ${crearHTMLBotonesEspeciales("clasificados")}
 
@@ -259,7 +259,7 @@ function crearHTMLEspecial(categoria){
     const panelActual = vistaEspecialActual === "usuarios" ? "usuarios" : "conteo";
 
     return `
-        <h1>PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
+        <h1>PICKS <span class="titulo-acento">ESPECIALES</span></h1>
 
         ${crearHTMLBotonesEspeciales(categoria)}
 
