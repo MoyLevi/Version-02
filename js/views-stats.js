@@ -32,6 +32,8 @@ const categoriasEspeciales = {
 };
 
 let categoriaEspecialActual = "campeon";
+let vistaEspecialActual = "conteo";
+let grupoClasificadosActual = "A";
 
 function normalizarPickEspecial(valor){
     return valor && valor.trim() !== "" ? valor.trim() : "Sin pick";
@@ -93,6 +95,25 @@ function crearHTMLBotonesEspeciales(categoriaActiva){
     `;
 }
 
+function crearHTMLBotonesVistaEspecial(categoria, vistaActiva){
+    return `
+        <div class="tabs-mini-estadisticas">
+            <button
+                class="${vistaActiva === "conteo" ? "tab-activa" : ""}"
+                onclick="mostrarEstadisticas('${categoria}', 'conteo')"
+            >
+                📊 Conteo General
+            </button>
+
+            <button
+                class="${vistaActiva === "usuarios" ? "tab-activa" : ""}"
+                onclick="mostrarEstadisticas('${categoria}', 'usuarios')"
+            >
+                👥 Picks por Usuario
+            </button>
+        </div>
+    `;
+}
 
 function getLugaresProGrupos(){
     return lugaresPro.filter(x => /^[A-L][12]$/.test(x.lug));
@@ -110,7 +131,7 @@ function contarValores(lista, selector){
         .sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
 }
 
-function crearHTMLTopConteo(ordenados, total, limite = 3){
+function crearHTMLTopConteo(ordenados, total, limite = 5){
     if(ordenados.length === 0){
         return `<p class="subtexto">Sin picks capturados.</p>`;
     }
@@ -129,15 +150,39 @@ function crearHTMLTopConteo(ordenados, total, limite = 3){
     }).join("");
 }
 
-function crearHTMLClasificadosComunidad(){
+function crearHTMLBotonesGruposClasificados(grupoActivo){
+    const grupos = "ABCDEFGHIJKL".split("");
+
+    return `
+        <div class="grupos-clasificados-stats">
+            ${grupos.map(g => `
+                <button
+                    class="${grupoActivo === g ? "filtro-activo" : ""}"
+                    onclick="mostrarEstadisticas('clasificados', 'conteo', '${g}')"
+                >
+                    ${g}
+                </button>
+            `).join("")}
+        </div>
+    `;
+}
+
+function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
     const lugaresGrupo = getLugaresProGrupos();
     const totalUsuarios = new Set(lugaresGrupo.map(x => x.idUsuario)).size;
     const conteoGeneral = contarValores(lugaresGrupo, x => x.lugares);
     const favorito = conteoGeneral[0] || ["Sin pick", 0];
-    const grupos = "ABCDEFGHIJKL".split("");
+
+    const grupoSeguro = /^[A-L]$/.test(grupoActivo) ? grupoActivo : "A";
+    grupoClasificadosActual = grupoSeguro;
+
+    const picksPrimero = lugaresGrupo.filter(x => x.lug === `${grupoSeguro}1`);
+    const picksSegundo = lugaresGrupo.filter(x => x.lug === `${grupoSeguro}2`);
+    const topPrimero = contarValores(picksPrimero, x => x.lugares);
+    const topSegundo = contarValores(picksSegundo, x => x.lugares);
 
     return `
-        <h1 class="titulo-stats-principal">PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
+        <h1>PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
 
         ${crearHTMLBotonesEspeciales("clasificados")}
 
@@ -158,29 +203,22 @@ function crearHTMLClasificadosComunidad(){
             </div>
         </div>
 
-        <div class="clasificados-comunidad-grid">
-            ${grupos.map(g => {
-                const picksPrimero = lugaresGrupo.filter(x => x.lug === `${g}1`);
-                const picksSegundo = lugaresGrupo.filter(x => x.lug === `${g}2`);
-                const topPrimero = contarValores(picksPrimero, x => x.lugares);
-                const topSegundo = contarValores(picksSegundo, x => x.lugares);
+        ${crearHTMLBotonesGruposClasificados(grupoSeguro)}
 
-                return `
-                    <div class="clasificado-comunidad-card">
-                        <h3>Grupo ${g}</h3>
+        <div class="clasificados-comunidad-grid clasificados-comunidad-grid-unico">
+            <div class="clasificado-comunidad-card">
+                <h3>Grupo ${grupoSeguro}</h3>
 
-                        <div class="clasificado-comunidad-bloque">
-                            <h4>1° lugar más elegido</h4>
-                            ${crearHTMLTopConteo(topPrimero, picksPrimero.length)}
-                        </div>
+                <div class="clasificado-comunidad-bloque">
+                    <h4>1° lugar más elegido</h4>
+                    ${crearHTMLTopConteo(topPrimero, picksPrimero.length)}
+                </div>
 
-                        <div class="clasificado-comunidad-bloque">
-                            <h4>2° lugar más elegido</h4>
-                            ${crearHTMLTopConteo(topSegundo, picksSegundo.length)}
-                        </div>
-                    </div>
-                `;
-            }).join("")}
+                <div class="clasificado-comunidad-bloque">
+                    <h4>2° lugar más elegido</h4>
+                    ${crearHTMLTopConteo(topSegundo, picksSegundo.length)}
+                </div>
+            </div>
         </div>
     `;
 }
@@ -188,7 +226,7 @@ function crearHTMLClasificadosComunidad(){
 function crearHTMLEspecial(categoria){
 
     if(categoria === "clasificados"){
-        return crearHTMLClasificadosComunidad();
+        return crearHTMLClasificadosComunidad(grupoClasificadosActual);
     }
 
     const resumen = getResumenEspecial(categoria);
@@ -218,8 +256,10 @@ function crearHTMLEspecial(categoria){
         `;
     }).join("");
 
+    const panelActual = vistaEspecialActual === "usuarios" ? "usuarios" : "conteo";
+
     return `
-        <h1 class="titulo-stats-principal">PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
+        <h1>PRONÓSTICOS <span class="titulo-acento">ESPECIALES</span></h1>
 
         ${crearHTMLBotonesEspeciales(categoria)}
 
@@ -240,21 +280,25 @@ function crearHTMLEspecial(categoria){
             </div>
         </div>
 
-        <div class="especiales-layout">
-            <div class="especial-panel">
-                <h3>Conteo general</h3>
-                ${conteoHTML}
-            </div>
+        ${crearHTMLBotonesVistaEspecial(categoria, panelActual)}
 
-            <div class="especial-panel">
-                <h3>Picks por usuario</h3>
-                ${listaUsuarios}
-            </div>
+        <div class="especiales-layout especiales-layout-unico">
+            ${panelActual === "conteo" ? `
+                <div class="especial-panel">
+                    <h3>Conteo general</h3>
+                    ${conteoHTML}
+                </div>
+            ` : `
+                <div class="especial-panel">
+                    <h3>Picks por usuario</h3>
+                    ${listaUsuarios}
+                </div>
+            `}
         </div>
     `;
 }
 
-function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual){
+function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual, vistaEspecial = "conteo", grupoClasificados = grupoClasificadosActual){
 
     window.scrollTo({
         top: 0,
@@ -264,6 +308,12 @@ function mostrarEstadisticas(categoriaEspecial = categoriaEspecialActual){
     categoriaEspecialActual = categoriasEspeciales[categoriaEspecial]
         ? categoriaEspecial
         : "campeon";
+
+    vistaEspecialActual = vistaEspecial === "usuarios" ? "usuarios" : "conteo";
+
+    if(/^[A-L]$/.test(grupoClasificados)){
+        grupoClasificadosActual = grupoClasificados;
+    }
 
     contenido.innerHTML = `
         ${crearHTMLEspecial(categoriaEspecialActual)}

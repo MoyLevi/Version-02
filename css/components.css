@@ -1276,3 +1276,65 @@
 .titulo-stats-principal{
     font-size:32px !important;
 }
+/* MEJORAS STATS - PANELES COMPACTOS */
+.tabs-mini-estadisticas,
+.grupos-clasificados-stats{
+    max-width:900px;
+    margin:18px auto 22px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.tabs-mini-estadisticas button,
+.grupos-clasificados-stats button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:bold;
+    cursor:pointer;
+    min-width:46px;
+}
+
+.tabs-mini-estadisticas button:hover,
+.grupos-clasificados-stats button:hover{
+    background:#475569;
+}
+
+.tabs-mini-estadisticas .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.especiales-layout-unico{
+    max-width:720px;
+    grid-template-columns:1fr;
+}
+
+.clasificados-comunidad-grid-unico{
+    max-width:520px;
+    grid-template-columns:1fr;
+}
+
+.datos-destacados-records{
+    margin-bottom:28px;
+}
+
+/* Corrección definitiva: Stats usa el h1 global */
+.titulo-stats-principal{
+    all:unset;
+}
+
+@media(max-width:600px){
+    .tabs-mini-estadisticas button{
+        flex:1 1 150px;
+    }
+
+    .grupos-clasificados-stats button{
+        min-width:44px;
+        padding:9px 10px;
+    }
+}

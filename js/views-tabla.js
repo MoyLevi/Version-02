@@ -104,6 +104,57 @@ function crearHTMLRecordCard(icono, titulo, valor, detalle = ""){
     `;
 }
 
+
+function getDatosDestacados(){
+
+    const totalPicks = picks.length;
+
+    const exactos = picks.filter(p => {
+        const partido = partidos.find(x => x.id === p.partidoId);
+        return partido && getPuntos(partido, p) === 3;
+    }).length;
+
+    const diferencias = picks.filter(p => {
+        const partido = partidos.find(x => x.id === p.partidoId);
+        return partido && getPuntos(partido, p) === 2;
+    }).length;
+
+    const ganadores = picks.filter(p => {
+        const partido = partidos.find(x => x.id === p.partidoId);
+        return partido && getPuntos(partido, p) === 1;
+    }).length;
+
+    const fallos = picks.filter(p => {
+        const partido = partidos.find(x => x.id === p.partidoId);
+        return partidoFinalizado(partido) && getPuntos(partido, p) === 0;
+    }).length;
+
+    return {
+        totalPicks,
+        exactos,
+        diferencias,
+        ganadores,
+        fallos
+    };
+}
+
+function crearHTMLDatosDestacados(){
+
+    const datos = getDatosDestacados();
+
+    return `
+        <h2>DATOS <span class="titulo-acento">DESTACADOS</span></h2>
+
+        <div class="stats-grid datos-destacados-records">
+            <div class="stat-card"><h2>${datos.totalPicks}</h2><p>Picks</p></div>
+            <div class="stat-card"><h2>${datos.exactos}</h2><p>Exactos</p></div>
+            <div class="stat-card"><h2>${datos.diferencias}</h2><p>Diferencia + ganador</p></div>
+            <div class="stat-card"><h2>${datos.ganadores}</h2><p>Ganadores</p></div>
+            <div class="stat-card"><h2>${datos.fallos}</h2><p>Fallos</p></div>
+        </div>
+    `;
+}
+
 function crearHTMLRecordsTabla(){
 
     const ranking = getRanking();
@@ -123,6 +174,10 @@ function crearHTMLRecordsTabla(){
             <button onclick="mostrarTabla('recreativa')">🎮 Recreativa</button>
             <button class="tab-activa" onclick="mostrarTabla('records')">📈 Récords</button>
         </div>
+
+        ${crearHTMLDatosDestacados()}
+
+        <h2>RÉCORDS <span class="titulo-acento">ACTUALES</span></h2>
 
         <div class="records-grid">
             ${crearHTMLRecordCard(
