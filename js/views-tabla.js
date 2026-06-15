@@ -679,6 +679,12 @@ function crearHTMLRecordsTabla(){
     `;
 }
 
+
+function getClasePuntosSemaforo(puntos){
+    const n = Math.max(0, Math.min(8, Number(puntos) || 0));
+    return `pts-semaforo-${n}`;
+}
+
 function crearHTMLRankingKO(lista){
 
     if(lista.length === 0){
@@ -697,13 +703,13 @@ function crearHTMLRankingKO(lista){
 
                 <div class="ranking-user">
                     ${u.nombre}
-                    <span>${u.jugados}/${u.pronosticos} partidos KO jugados</span>
+                    <span>${u.jugados}/${u.pronosticos}</span>
                 </div>
 
                 <div class="ranking-ko-breakdown">
-                    <span>Avanza: ${u.avanza}</span>
-                    <span>Marcador: ${u.marcador}</span>
-                    <span>Penales: ${u.penales}</span>
+                    <span>A: ${u.avanza}</span>
+                    <span>E: ${u.marcador}</span>
+                    <span>P: ${u.penales}</span>
                 </div>
 
                 <div class="ranking-puntos">${u.puntos} pts</div>
@@ -738,7 +744,7 @@ function mostrarTabla(tipo = "principal", grupo = "A", hacerScroll = true){
 
         contenido.innerHTML = `
             <h1>STANDINGS <span class="titulo-acento">KO</span></h1>
-            <p class="subtexto">Tabla separada: 5 pts avanza, +2 marcador exacto, +1 penales.</p>
+            <p class="subtexto">Tabla KO: 5 pts avanza (A), +2 marcador exacto (E), +1 penales (P).</p>
 
             ${crearHTMLTabsTabla(tipo)}
 
@@ -879,11 +885,11 @@ function crearHTMLClasificadosUsuario(idUser, grupoActivo = "A"){
 
         <div class="clasificados-comparacion-grid">
             ${infoGrupo.filas.map(item => `
-                <div class="clasificado-card ${item.aciertoOrden ? "clasificado-ok" : "clasificado-error"}">
+                <div class="clasificado-card ${getClasePuntosSemaforo(infoGrupo.puntos)} ${item.aciertoOrden ? "clasificado-ok" : "clasificado-error"}">
                     <h3>${item.clave}</h3>
                     <p><strong>Pick:</strong> ${crearHTMLPaisConBandera(item.pronostico)}</p>
                     <p><strong>Real:</strong> ${crearHTMLPaisConBandera(item.real)}</p>
-                    <p class="clasificado-resultado">${item.aciertoOrden ? "✅ Orden exacto" : "🔎 Comparado por grupo"}</p>
+                    <p class="clasificado-resultado">${item.aciertoOrden ? "✅ Orden exacto" : ""}</p>
                 </div>
             `).join("")}
         </div>
@@ -1062,8 +1068,8 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
                 const pasaReal = getEquipoPasaPartido(partido);
                 const pasaPick = getEquipoPasaPick(partido, r);
                 textoPuntos = `${puntos} pts`;
-                tipo = `Pasa: ${pasaPick}`;
-                clasePuntos = puntos > 0 ? "pts-ko" : "pts-fallo";
+                tipo = puntos > 0 ? "KO" : "Fallo";
+                clasePuntos = getClasePuntosSemaforo(puntos);
             }
             else if(jugado){
                 textoPuntos = `${puntos} pts`;
@@ -1098,7 +1104,7 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
                         <strong>${partido.local} vs ${partido.visita}</strong>
                         <p>${partido.stage ? partido.stage + " · " : ""}${partido.fecha} · ${partido.hora}</p>
                         <p>Real: ${realTexto} · Pick: ${pickTexto}</p>
-                        ${r.esKO ? `<p>Pasa real: ${crearHTMLPaisConBandera(getEquipoPasaPartido(partido))} · Pasa pick: ${crearHTMLPaisConBandera(getEquipoPasaPick(partido, r))}</p>` : ""}
+                        ${r.esKO ? `<p><strong>Real:</strong> ${crearHTMLPaisConBandera(getEquipoPasaPartido(partido))} · <strong>Pick:</strong> ${crearHTMLPaisConBandera(getEquipoPasaPick(partido, r))}</p>` : ""}
                     </div>
 
                     <div class="usuario-score ${clasePuntos}">

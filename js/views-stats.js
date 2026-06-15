@@ -186,11 +186,11 @@ function crearHTMLClasificadosRealesGrupo(grupo){
 
     return `
         <div class="clasificado-comunidad-card clasificados-reales-card">
-            <h3>Clasificados reales provisionales · Grupo ${grupo}</h3>
-            <p class="subtexto">Mientras falten partidos, los empates de criterio se completan por orden alfabético.</p>
+            <h3>Clasificados Reales · Grupo ${grupo}</h3>
+            <p class="subtexto">Únicamente lugares 1° y 2°.</p>
             ${reales.map(r => `
                 <div class="clasificado-comunidad-row">
-                    <span><strong>${r.clave}</strong> ${crearHTMLPaisConBandera(r.equipo)}</span>
+                    <span><strong class="clave-clasificado-real">${r.clave}</strong> ${crearHTMLPaisConBandera(r.equipo)}</span>
                     <strong>${r.lugar}°</strong>
                 </div>
             `).join("")}
@@ -288,7 +288,6 @@ function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
 
         <div class="clasificados-comunidad-grid clasificados-comunidad-grid-unico">
             ${crearHTMLClasificadosRealesGrupo(grupoSeguro)}
-            ${crearHTMLResumenComparacionClasificados()}
 
             <div class="clasificado-comunidad-card">
                 <h3>Grupo ${grupoSeguro}</h3>
