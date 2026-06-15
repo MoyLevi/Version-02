@@ -130,7 +130,7 @@ function crearHTMLBotonesVistaEspecial(categoria, vistaActiva){
 }
 
 function getLugaresProGrupos(){
-    return lugaresPro.filter(x => /^[A-L][12]$/.test(x.lug));
+    return getLugaresProComparables();
 }
 
 function contarValores(lista, selector){
@@ -181,6 +181,73 @@ function crearHTMLBotonesGruposClasificados(grupoActivo){
     `;
 }
 
+function crearHTMLClasificadosRealesGrupo(grupo){
+    const reales = getClasificadosReales().filter(x => x.grupo === grupo);
+
+    return `
+        <div class="clasificado-comunidad-card clasificados-reales-card">
+            <h3>Clasificados reales provisionales · Grupo ${grupo}</h3>
+            <p class="subtexto">Mientras falten partidos, los empates de criterio se completan por orden alfabético.</p>
+            ${reales.map(r => `
+                <div class="clasificado-comunidad-row">
+                    <span><strong>${r.clave}</strong> ${crearHTMLPaisConBandera(r.equipo)}</span>
+                    <strong>${r.lugar}°</strong>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+function getResumenComparacionClasificados(){
+    const picksComparables = getLugaresProComparables();
+    const porUsuario = {};
+
+    picksComparables.forEach(pick => {
+        const real = getClasificadoRealPorClave(pick.claveNormal);
+        const acierto = real && normalizarNombreEquipo(real.equipo) === normalizarNombreEquipo(pick.lugares);
+
+        if(!porUsuario[pick.idUsuario]){
+            porUsuario[pick.idUsuario] = {
+                id: pick.idUsuario,
+                total: 0,
+                aciertos: 0
+            };
+        }
+
+        porUsuario[pick.idUsuario].total += 1;
+        porUsuario[pick.idUsuario].aciertos += acierto ? 1 : 0;
+    });
+
+    return Object.values(porUsuario).sort((a,b) =>
+        b.aciertos - a.aciertos ||
+        a.id - b.id
+    );
+}
+
+function crearHTMLResumenComparacionClasificados(){
+    const resumen = getResumenComparacionClasificados();
+
+    if(resumen.length === 0){
+        return `<p class="subtexto">Todavía no hay LugaresPro comparables.</p>`;
+    }
+
+    return `
+        <div class="clasificado-comunidad-card clasificados-reales-card">
+            <h3>Comparación vs LugaresPro</h3>
+            <p class="subtexto">Solo posiciones 1 y 2 de cada grupo. Terceros fuera por ahora.</p>
+            ${resumen.map(r => {
+                const usuario = usuarios.find(u => Number(u.id) === Number(r.id));
+                return `
+                    <div class="clasificado-comunidad-row">
+                        <span>${usuario?.nombre || "Usuario " + r.id}</span>
+                        <strong>${r.aciertos}/${r.total}</strong>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+    `;
+}
+
 function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
     const lugaresGrupo = getLugaresProGrupos();
     const totalUsuarios = new Set(lugaresGrupo.map(x => x.idUsuario)).size;
@@ -190,8 +257,8 @@ function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
     const grupoSeguro = /^[A-L]$/.test(grupoActivo) ? grupoActivo : "A";
     grupoClasificadosActual = grupoSeguro;
 
-    const picksPrimero = lugaresGrupo.filter(x => x.lug === `${grupoSeguro}1`);
-    const picksSegundo = lugaresGrupo.filter(x => x.lug === `${grupoSeguro}2`);
+    const picksPrimero = lugaresGrupo.filter(x => x.claveNormal === `1${grupoSeguro}`);
+    const picksSegundo = lugaresGrupo.filter(x => x.claveNormal === `2${grupoSeguro}`);
     const topPrimero = contarValores(picksPrimero, x => x.lugares);
     const topSegundo = contarValores(picksSegundo, x => x.lugares);
 
@@ -220,6 +287,9 @@ function crearHTMLClasificadosComunidad(grupoActivo = grupoClasificadosActual){
         ${crearHTMLBotonesGruposClasificados(grupoSeguro)}
 
         <div class="clasificados-comunidad-grid clasificados-comunidad-grid-unico">
+            ${crearHTMLClasificadosRealesGrupo(grupoSeguro)}
+            ${crearHTMLResumenComparacionClasificados()}
+
             <div class="clasificado-comunidad-card">
                 <h3>Grupo ${grupoSeguro}</h3>
 

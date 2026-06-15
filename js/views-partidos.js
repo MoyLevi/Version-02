@@ -168,7 +168,14 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
                     class="${panelActivo === "grupos" ? "filtro-activo" : ""}"
                     onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'grupos')"
                 >
-                    🏆 Grupos / KO
+                    🏆 Grupos
+                </button>
+
+                <button 
+                    class="${panelActivo === "ko" ? "filtro-activo" : ""}"
+                    onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'ko')"
+                >
+                    ⚔️ KO
                 </button>
             </div>
 
@@ -199,11 +206,15 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
                             ${g}
                         </button>
                     `).join("")}
+                </div>
+            ` : ""}
 
+            ${panelActivo === "ko" ? `
+                <div class="grupos-ko-grid ko-grid">
                     ${etapasKO.map(e => `
                         <button 
                             class="${tipoFiltro === "ko" && valorFiltro === e.value ? "filtro-activo" : ""}"
-                            onclick="mostrarPartidos('ko', '${e.value}', 'grupos')"
+                            onclick="mostrarPartidos('ko', '${e.value}', 'ko')"
                         >
                             ${e.label}
                         </button>
@@ -234,6 +245,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
                 <div class="marcador-box">
                     <div class="marcador">${marcador}</div>
+                    ${p.esKO ? `<div class="pasa-partido">Gana: ${crearHTMLPaisConBandera(p.pasa || getEquipoPasaPartido(p))}</div>` : ""}
                     <div class="estado-partido ${getClaseTextoStatus(p.status)}">
                         ${p.status || "Pendiente"}
                     </div>
@@ -311,6 +323,7 @@ function verPartido(id){
         </div>
 
         <p class="info-partido">${p.fecha} · ${p.hora} · ${p.lugar}</p>
+        ${p.esKO ? `<p class="info-partido pasa-detalle">Gana: ${crearHTMLPaisConBandera(p.pasa || getEquipoPasaPartido(p))}</p>` : ""}
 
         <div class="prediccion-colectiva">
             ${p.esKO ? getPrediccionColectivaKO(id) : getPrediccionColectiva(id)}
@@ -322,8 +335,8 @@ function verPartido(id){
     const lista = (p.esKO ? picksKO : picks)
     .filter(x => x.partidoId === id)
     .sort((a, b) => {
-        const puntosA = getPuntos(p, a);
-        const puntosB = getPuntos(p, b);
+        const puntosA = p.esKO ? getPuntosKO(p, a) : getPuntos(p, a);
+        const puntosB = p.esKO ? getPuntosKO(p, b) : getPuntos(p, b);
 
         if(puntosB !== puntosA) return puntosB - puntosA;
 
@@ -340,7 +353,7 @@ function verPartido(id){
 
     lista.forEach(r => {
 
-        const puntos = getPuntos(p, r);
+        const puntos = p.esKO ? getPuntosKO(p, r) : getPuntos(p, r);
         const usuario = usuarios.find(u => u.id === r.idUser);
 
         html += `

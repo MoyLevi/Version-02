@@ -109,7 +109,7 @@ function getClaseStatus(status){
 }
 
 function getFooterCopyright(){
-    return `<div class="dev-footer">© Moy · 2026 (v.2.7.0 DEV)</div>`;
+    return `<div class="dev-footer">© Moy · 2026 (v.2.8.1 KO)</div>`;
 }
 
 function getPrediccionColectiva(partidoId){
@@ -175,12 +175,15 @@ function getPartidoGlobalKO(partidoId){
     const base = getPartidoKOBase(partidoId);
     if(!base) return null;
 
-    return {
+    const partido = {
         ...base,
         local: esPorDefinir(base.local) ? resolverClaveGlobal(base.loc) : base.local,
         visita: esPorDefinir(base.visita) ? resolverClaveGlobal(base.vis) : base.visita,
         esKO: true
     };
+
+    partido.pasa = getEquipoPasaPartido(partido);
+    return partido;
 }
 
 function resolverClaveGlobal(clave){
@@ -246,12 +249,17 @@ function getPartidoUsuarioKO(idUser, partidoId){
     const base = getPartidoKOBase(partidoId);
     if(!base) return null;
 
-    return {
+    const partido = {
         ...base,
         local: esPorDefinir(base.local) ? resolverClaveUsuario(idUser, base.loc) : base.local,
         visita: esPorDefinir(base.visita) ? resolverClaveUsuario(idUser, base.vis) : base.visita,
         esKO: true
     };
+
+    const pick = getPickKOPorUsuarioPartido(idUser, partidoId);
+    partido.pasaPick = pick ? getEquipoPasaPick(partido, pick) : "(Por Definir)";
+    partido.pasa = getEquipoPasaPartido(partido);
+    return partido;
 }
 
 function getGanadorDesdePick(pick){
@@ -280,25 +288,25 @@ function getPerdedorDesdePick(pick){
     return null;
 }
 
-function crearCirculosPenales(valor){
+function crearNumeroPenal(valor){
     const n = Number(valor);
-    if(!Number.isFinite(n) || n <= 0) return "";
-    return `<span class="penales-circulos" aria-label="${n} penales anotados">${"●".repeat(n)}</span>`;
+    if(!Number.isFinite(n) || n < 0 || valor === "" || valor == null) return "";
+    return `<span class="penales-numero" aria-label="${n} penales anotados">${n}</span>`;
 }
 
 function formatearMarcadorConPenales(golLoc, golVis, penLoc = "", penVis = ""){
     const tieneGoles = golLoc !== "" && golVis !== "" && golLoc != null && golVis != null;
     if(!tieneGoles) return "VS";
 
-    const penalesLoc = crearCirculosPenales(penLoc);
-    const penalesVis = crearCirculosPenales(penVis);
-    const marcador = `${golLoc} - ${golVis}`;
+    const penalesLoc = crearNumeroPenal(penLoc);
+    const penalesVis = crearNumeroPenal(penVis);
+    const marcador = `<span class="marcador-goles">${golLoc} - ${golVis}</span>`;
 
     if(penalesLoc || penalesVis){
-        return `<span class="marcador-penales">${penalesLoc ? `(${penalesLoc})` : ""} ${marcador} ${penalesVis ? `(${penalesVis})` : ""}</span>`;
+        return `<span class="marcador-penales">${penalesLoc} ${marcador} ${penalesVis}</span>`;
     }
 
-    return marcador;
+    return `${golLoc} - ${golVis}`;
 }
 
 function formatearPickKO(pick){
@@ -324,4 +332,198 @@ function getPrediccionColectivaKO(partidoId){
         .sort((a,b) => b[1] - a[1])[0];
 
     return `Pick KO más común: ${ganador[0]} (${ganador[1]} votos)`;
+}
+
+
+function getEquipoPasaPartido(partido){
+    const lado = getGanadorDesdeMarcador(partido);
+    if(lado === "loc") return partido.local || "(Por Definir)";
+    if(lado === "vis") return partido.visita || "(Por Definir)";
+    return "(Por Definir)";
+}
+
+function getEquipoPasaPick(partido, pick){
+    const lado = getGanadorDesdePick(pick);
+    if(lado === "loc") return partido.local || "(Por Definir)";
+    if(lado === "vis") return partido.visita || "(Por Definir)";
+    return "(Por Definir)";
+}
+
+function pickTienePenalesKO(pick){
+    return pick && pick.penLoc !== "" && pick.penLoc != null && pick.penVis !== "" && pick.penVis != null;
+}
+
+function partidoTienePenalesKO(partido){
+    return partido && partido.penLoc !== "" && partido.penLoc != null && partido.penVis !== "" && partido.penVis != null;
+}
+
+function normalizarNombreEquipo(nombre){
+    return (nombre || "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+function normalizarClaveLugar(lug){
+    const texto = (lug || "").toString().trim().toUpperCase();
+    const m1 = texto.match(/^([A-L])([12])$/);
+    if(m1) return `${m1[2]}${m1[1]}`;
+    const m2 = texto.match(/^([12])([A-L])$/);
+    if(m2) return `${m2[1]}${m2[2]}`;
+    return texto;
+}
+
+function getEquiposPorGrupo(grupo){
+    const equipos = new Set();
+
+    partidos.forEach(partido => {
+        if(getGrupoDesdeCodigo(partido.loc) === grupo && partido.local){
+            equipos.add(partido.local);
+        }
+        if(getGrupoDesdeCodigo(partido.vis) === grupo && partido.visita){
+            equipos.add(partido.visita);
+        }
+    });
+
+    return [...equipos].sort((a,b) => a.localeCompare(b, "es"));
+}
+
+function getClasificadosReales(){
+    const grupos = "ABCDEFGHIJKL".split("");
+    const salida = [];
+
+    grupos.forEach(grupo => {
+        const tabla = getTablaGrupo(grupo);
+        const equiposBase = getEquiposPorGrupo(grupo);
+        const usados = new Set(tabla.map(e => e.nombre));
+        const tablaCompleta = [
+            ...tabla,
+            ...equiposBase
+                .filter(nombre => !usados.has(nombre))
+                .map(nombre => ({...crearEquipoGrupo(nombre), dg:0}))
+        ].sort((a,b) =>
+            b.pts - a.pts ||
+            b.dg - a.dg ||
+            b.gf - a.gf ||
+            a.nombre.localeCompare(b.nombre, "es")
+        );
+
+        [1,2].forEach(pos => {
+            salida.push({
+                grupo,
+                lugar: pos,
+                clave: `${pos}${grupo}`,
+                claveLegacy: `${grupo}${pos}`,
+                equipo: tablaCompleta[pos - 1]?.nombre || "(Por Definir)"
+            });
+        });
+    });
+
+    return salida;
+}
+
+function getClasificadoRealPorClave(clave){
+    const normal = normalizarClaveLugar(clave);
+    return getClasificadosReales().find(x => x.clave === normal);
+}
+
+function getLugaresProComparables(){
+    return lugaresPro
+        .map(x => ({...x, claveNormal: normalizarClaveLugar(x.lug)}))
+        .filter(x => /^[12][A-L]$/.test(x.claveNormal));
+}
+
+function getComparacionClasificadosUsuario(idUser){
+    return getLugaresProComparables()
+        .filter(x => Number(x.idUsuario) === Number(idUser))
+        .sort((a,b) => a.claveNormal.localeCompare(b.claveNormal, "es", {numeric:true}))
+        .map(pick => {
+            const real = getClasificadoRealPorClave(pick.claveNormal);
+            const acierto = real && normalizarNombreEquipo(real.equipo) === normalizarNombreEquipo(pick.lugares);
+            return {
+                clave: pick.claveNormal,
+                pronostico: pick.lugares || "-",
+                real: real?.equipo || "(Por Definir)",
+                acierto
+            };
+        });
+}
+
+function getComparacionClasificadosUsuarioGrupo(idUser, grupo){
+    const grupoSeguro = /^[A-L]$/.test((grupo || "").toString().toUpperCase())
+        ? grupo.toString().toUpperCase()
+        : "A";
+
+    const picksUsuario = getLugaresProComparables()
+        .filter(x => Number(x.idUsuario) === Number(idUser) && x.claveNormal.endsWith(grupoSeguro));
+
+    const realesGrupo = [1,2].map(pos => getClasificadoRealPorClave(`${pos}${grupoSeguro}`));
+    const pickPorClave = Object.fromEntries(picksUsuario.map(x => [x.claveNormal, x]));
+
+    const filas = [1,2].map(pos => {
+        const clave = `${pos}${grupoSeguro}`;
+        const pick = pickPorClave[clave];
+        const real = realesGrupo[pos - 1];
+        const pronostico = pick?.lugares || "-";
+        const realEquipo = real?.equipo || "(Por Definir)";
+        const aciertoOrden = normalizarNombreEquipo(pronostico) === normalizarNombreEquipo(realEquipo);
+        return {
+            clave,
+            pronostico,
+            real: realEquipo,
+            aciertoOrden
+        };
+    });
+
+    const realesNorm = new Set(filas.map(x => normalizarNombreEquipo(x.real)).filter(Boolean));
+    const pronosticosNorm = filas.map(x => normalizarNombreEquipo(x.pronostico)).filter(Boolean);
+    const aciertosEquipos = pronosticosNorm.filter(x => realesNorm.has(x)).length;
+    const aciertosOrden = filas.filter(x => x.aciertoOrden).length;
+
+    let puntos = 0;
+    let etiqueta = "Sin aciertos";
+
+    if(aciertosEquipos === 2){
+        puntos = 5;
+        etiqueta = "Acertó los 2 clasificados";
+
+        if(aciertosOrden === 2){
+            puntos += 3;
+            etiqueta = "Acertó los 2 y el orden";
+        }
+    }
+    else if(aciertosEquipos === 1){
+        puntos = 1;
+        etiqueta = "Acertó 1 clasificado";
+    }
+
+    return {
+        grupo: grupoSeguro,
+        filas,
+        aciertosEquipos,
+        aciertosOrden,
+        puntos,
+        etiqueta
+    };
+}
+
+function getResumenClasificadosUsuario(idUser){
+    const grupos = "ABCDEFGHIJKL".split("");
+    return grupos.reduce((acc, grupo) => {
+        const r = getComparacionClasificadosUsuarioGrupo(idUser, grupo);
+        acc.puntos += r.puntos;
+        acc.grupos += 1;
+        acc.gruposPerfectos += r.puntos === 8 ? 1 : 0;
+        acc.dosClasificados += r.aciertosEquipos === 2 ? 1 : 0;
+        acc.unClasificado += r.aciertosEquipos === 1 ? 1 : 0;
+        return acc;
+    }, {
+        puntos:0,
+        grupos:0,
+        gruposPerfectos:0,
+        dosClasificados:0,
+        unClasificado:0
+    });
 }

@@ -87,3 +87,90 @@ function getClasePuntos(puntos){
     if(puntos === 1) return "pts-ganador";
     return "pts-fallo";
 }
+
+function getPuntosKO(partido, pick){
+    if(!partidoFinalizado(partido) || !pick){
+        return 0;
+    }
+
+    const realPasa = getEquipoPasaPartido(partido);
+    const pickPasa = getEquipoPasaPick(partido, pick);
+
+    let puntos = 0;
+
+    if(
+        !esPorDefinir(realPasa) &&
+        !esPorDefinir(pickPasa) &&
+        normalizarNombreEquipo(realPasa) === normalizarNombreEquipo(pickPasa)
+    ){
+        puntos += 5;
+    }
+
+    if(Number(partido.golesLoc) === Number(pick.golLoc) && Number(partido.golesVis) === Number(pick.golVis)){
+        puntos += 2;
+    }
+
+    if(partidoTienePenalesKO(partido) && pickTienePenalesKO(pick)){
+        puntos += 1;
+    }
+
+    return puntos;
+}
+
+function getResumenUsuarioKO(idUser){
+    const lista = picksKO.filter(p => Number(p.idUser) === Number(idUser));
+
+    return lista.reduce((acc, pick) => {
+        const partido = getPartidoGlobalKO(pick.partidoId);
+        const jugado = partidoFinalizado(partido);
+        const puntos = jugado ? getPuntosKO(partido, pick) : 0;
+        const realPasa = partido ? getEquipoPasaPartido(partido) : "(Por Definir)";
+        const pickPasa = partido ? getEquipoPasaPick(partido, pick) : "(Por Definir)";
+
+        const acertoAvanza = jugado && !esPorDefinir(realPasa) && !esPorDefinir(pickPasa) &&
+            normalizarNombreEquipo(realPasa) === normalizarNombreEquipo(pickPasa);
+        const acertoMarcador = jugado && Number(partido.golesLoc) === Number(pick.golLoc) && Number(partido.golesVis) === Number(pick.golVis);
+        const acertoPenales = jugado && partidoTienePenalesKO(partido) && pickTienePenalesKO(pick);
+
+        acc.jugados += jugado ? 1 : 0;
+        acc.puntos += puntos;
+        acc.pronosticos += 1;
+        acc.aciertos += puntos > 0 ? 1 : 0;
+        acc.exactos += acertoMarcador ? 1 : 0;
+        acc.diferencias += acertoPenales ? 1 : 0;
+        acc.ganadores += acertoAvanza ? 1 : 0;
+        acc.fallos += jugado && puntos === 0 ? 1 : 0;
+        acc.avanza += acertoAvanza ? 1 : 0;
+        acc.marcador += acertoMarcador ? 1 : 0;
+        acc.penales += acertoPenales ? 1 : 0;
+
+        return acc;
+    }, {
+        puntos: 0,
+        pronosticos: 0,
+        jugados: 0,
+        aciertos: 0,
+        exactos: 0,
+        diferencias: 0,
+        ganadores: 0,
+        fallos: 0,
+        avanza: 0,
+        marcador: 0,
+        penales: 0
+    });
+}
+
+function getRankingKO(){
+    return usuarios.map(u => ({
+        id: u.id,
+        nombre: u.nombre,
+        paga: u.paga,
+        ...getResumenUsuarioKO(u.id)
+    })).sort((a,b) =>
+        b.puntos - a.puntos ||
+        b.avanza - a.avanza ||
+        b.marcador - a.marcador ||
+        b.penales - a.penales ||
+        a.nombre.localeCompare(b.nombre, "es")
+    );
+}
