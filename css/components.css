@@ -1641,3 +1641,55 @@
     display:inline-block;
     margin-right:8px;
 }
+
+
+/* v2.8.3 ajustes: penales laterales, standings clasificados y orden */
+.marcador-detalle > .status-partido{
+    display:block;
+    margin-top:8px;
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+.marcador-detalle .marcador-penales{
+    display:inline-flex !important;
+    align-items:center;
+    justify-content:center;
+    flex-direction:row !important;
+    flex-wrap:nowrap !important;
+    gap:8px;
+    white-space:nowrap;
+}
+
+.marcador-detalle .marcador-penales .penales-numero{
+    display:inline-flex !important;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    color:#22c55e !important;
+    font-size:.58em;
+    font-weight:900;
+    line-height:1;
+}
+
+.marcador-detalle .marcador-penales .marcador-goles{
+    display:inline-block !important;
+    white-space:nowrap;
+}
+
+.ranking-clasificados-card{
+    grid-template-columns:48px minmax(120px, 1fr) minmax(170px, auto) 86px;
+}
+
+@media(max-width:700px){
+    .ranking-clasificados-card{
+        grid-template-columns:40px 1fr 74px;
+    }
+
+    .ranking-clasificados-card .ranking-ko-breakdown{
+        grid-column:2 / -1;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:8px;
+    }
+}

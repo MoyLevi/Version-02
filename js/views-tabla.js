@@ -278,6 +278,7 @@ function crearHTMLTabsTabla(tipo, grupo = "A"){
             <button class="${tipo === "principal" ? "tab-activa" : ""}" onclick="mostrarTabla('principal')">🏆 Principal</button>
             <button class="${tipo === "recreativa" ? "tab-activa" : ""}" onclick="mostrarTabla('recreativa')">🎮 Recreativa</button>
             <button class="${tipo === "grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('grupos', '${grupo}')">🌐 Grupos</button>
+            <button class="${tipo === "clasificados" ? "tab-activa" : ""}" onclick="mostrarTabla('clasificados')">🏆 Clasificados</button>
             <button class="${tipo === "knockout" ? "tab-activa" : ""}" onclick="mostrarTabla('knockout')">⚔️ Knockout</button>
             <button class="${tipo === "records" ? "tab-activa" : ""}" onclick="mostrarTabla('records')">👑 Récords</button>
         </div>
@@ -529,7 +530,7 @@ function crearHTMLDetalleRecordEfectividad(pagina = 1){
     const paginaSegura = Math.min(Math.max(Number(pagina) || 1, 1), totalPaginas);
     const inicio = (paginaSegura - 1) * itemsPorPagina;
     const fin = Math.min(inicio + itemsPorPagina, lista.length);
-    const listaPagina = lista.slice(inicio, fin);
+    const listaPagina = ordenarPronosticosPorIDPartido(lista.slice(inicio, fin));
     const paginacionHTML = lista.length > 0
         ? crearHTMLPaginacionRecordEfectividad(paginaSegura, totalPaginas, lista.length, inicio, fin)
         : "";
@@ -718,6 +719,56 @@ function crearHTMLRankingKO(lista){
     }).join("");
 }
 
+function getRankingClasificados(){
+    return usuarios
+        .map(u => ({
+            id: u.id,
+            nombre: u.nombre,
+            paga: u.paga,
+            ...getResumenClasificadosUsuario(u.id)
+        }))
+        .sort((a,b) =>
+            b.puntos - a.puntos ||
+            b.gruposPerfectos - a.gruposPerfectos ||
+            b.dosClasificados - a.dosClasificados ||
+            b.unClasificado - a.unClasificado ||
+            a.nombre.localeCompare(b.nombre, "es", {numeric:true})
+        );
+}
+
+function crearHTMLRankingClasificados(lista){
+
+    if(lista.length === 0){
+        return `<p class="subtexto">No hay picks de clasificados todavía.</p>`;
+    }
+
+    return lista.map((u, index) => {
+        let medalla = "";
+        if(index === 0) medalla = "🥇";
+        if(index === 1) medalla = "🥈";
+        if(index === 2) medalla = "🥉";
+
+        return `
+            <div class="ranking-card ranking-card-detallado ranking-clasificados-card" onclick="verDetalleUsuario(${u.id}, 1, false, 'clasificados', 'grupos', 'A')">
+                <div class="ranking-pos">${medalla || index + 1}</div>
+
+                <div class="ranking-user">
+                    ${u.nombre}
+                    <span>${u.grupos}/12 grupos</span>
+                </div>
+
+                <div class="ranking-ko-breakdown">
+                    <span>Perfectos: ${u.gruposPerfectos}</span>
+                    <span>2 clasif.: ${u.dosClasificados}</span>
+                    <span>1 clasif.: ${u.unClasificado}</span>
+                </div>
+
+                <div class="ranking-puntos ${getClasePuntosSemaforo(Math.min(8, u.puntos))}">${u.puntos} pts</div>
+            </div>
+        `;
+    }).join("");
+}
+
 function mostrarTabla(tipo = "principal", grupo = "A", hacerScroll = true){
 
     if(hacerScroll){
@@ -736,6 +787,24 @@ function mostrarTabla(tipo = "principal", grupo = "A", hacerScroll = true){
 
     if(tipo === "grupos"){
         contenido.innerHTML = crearHTMLTablaGrupos(grupo);
+        return;
+    }
+
+    if(tipo === "clasificados"){
+        const rankingClasificados = getRankingClasificados();
+
+        contenido.innerHTML = `
+            <h1>STANDINGS <span class="titulo-acento">CLASIFICADOS</span></h1>
+            <p class="subtexto">Tabla de picks de clasificados: 5 pts por acertar los 2 clasificados, +3 orden exacto, +1 si solo acierta 1.</p>
+
+            ${crearHTMLTabsTabla(tipo)}
+
+            <div class="tabla-ranking">
+                ${crearHTMLRankingClasificados(rankingClasificados)}
+            </div>
+
+            ${getFooterCopyright()}
+        `;
         return;
     }
 
@@ -924,17 +993,20 @@ function crearHTMLTabsDetalleUsuario(idUser, vista, detalleTipo = "grupos", grup
     `;
 }
 
-function getOrdenCronologicoPick(pick){
-    const partido = pick.esKO ? getPartidoKOBase(pick.partidoId) : partidos.find(p => p.id === pick.partidoId);
-    return Number(partido?.id ?? pick.partidoId ?? 9999);
+function getNumeroIDPartidoPick(pick){
+    const directo = Number(pick?.partidoId);
+    if(Number.isFinite(directo)) return directo;
+
+    const alterno = Number(pick?.IDPartido || pick?.idPartido || pick?.partido || 9999);
+    return Number.isFinite(alterno) ? alterno : 9999;
 }
 
 function ordenarPronosticosPorIDPartido(lista){
-    return [...lista].sort((a,b) =>
-        getOrdenCronologicoPick(a) - getOrdenCronologicoPick(b) ||
-        Number(a.partidoId || 0) - Number(b.partidoId || 0) ||
-        Number(a.idPick || 0) - Number(b.idPick || 0)
-    );
+    return [...lista].sort((a,b) => {
+        const idA = getNumeroIDPartidoPick(a);
+        const idB = getNumeroIDPartidoPick(b);
+        return idA - idB || Number(a.idPick || 0) - Number(b.idPick || 0);
+    });
 }
 
 function crearHTMLSubtabsDesgloseUsuario(idUser, detalleTipo){
@@ -995,7 +1067,7 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
     const paginaSegura = Math.min(Math.max(Number(pagina) || 1, 1), totalPaginas);
     const inicio = (paginaSegura - 1) * picksPorPagina;
     const fin = inicio + picksPorPagina;
-    const listaPagina = lista.slice(inicio, fin);
+    const listaPagina = ordenarPronosticosPorIDPartido(lista.slice(inicio, fin));
 
     const resumen = getResumenUsuario(idUser);
 

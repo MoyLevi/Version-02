@@ -312,7 +312,7 @@ function verPartido(id){
 
             <div class="marcador-detalle">
                 <div>${marcador}</div>
-                <span>${p.status || "Pendiente"}</span>
+                <span class="status-partido">${p.status || "Pendiente"}</span>
             </div>
 
             <div class="equipo-detalle">
