@@ -1,26 +1,28 @@
-const APP_VERSION = "4.0.2";
-const CACHE_NAME = `quiniela-mundial-2026-v${APP_VERSION}`;
+const APP_VERSION = "4.1.0";
+const CACHE_PREFIX = "quiniela-mundial-2026";
+const CACHE_NAME = `${CACHE_PREFIX}-v${APP_VERSION}`;
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./offline.html",
   "./manifest.json",
+  "./version.json",
   "./favicon.png",
-  "./css/base.css?v=4.0.2",
-  "./css/layout.css?v=4.0.2",
-  "./css/components.css?v=4.0.2",
-  "./css/responsive.css?v=4.0.2",
-  "./js/config.js?v=4.0.2",
-  "./js/data.js?v=4.0.2",
-  "./js/utils.js?v=4.0.2",
-  "./js/scoring.js?v=4.0.2",
-  "./js/views-inicio.js?v=4.0.2",
-  "./js/views-partidos.js?v=4.0.2",
-  "./js/views-tabla.js?v=4.0.2",
-  "./js/views-stats.js?v=4.0.2",
-  "./js/app.js?v=4.0.2",
-  "./js/pwa.js?v=4.0.2",
+  "./css/base.css?v=4.1.0",
+  "./css/layout.css?v=4.1.0",
+  "./css/components.css?v=4.1.0",
+  "./css/responsive.css?v=4.1.0",
+  "./js/config.js?v=4.1.0",
+  "./js/data.js?v=4.1.0",
+  "./js/utils.js?v=4.1.0",
+  "./js/scoring.js?v=4.1.0",
+  "./js/views-inicio.js?v=4.1.0",
+  "./js/views-partidos.js?v=4.1.0",
+  "./js/views-tabla.js?v=4.1.0",
+  "./js/views-stats.js?v=4.1.0",
+  "./js/app.js?v=4.1.0",
+  "./js/pwa.js?v=4.1.0",
   "./img/copa-fifa.png",
   "./img/reglas-premios.png",
   "./img/trionda.png",
@@ -40,16 +42,17 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(names => Promise.all(names
-        .filter(name => name.startsWith("quiniela-mundial-2026-v") && name !== CACHE_NAME)
-        .map(name => caches.delete(name))
+      .then(names => Promise.all(
+        names
+          .filter(name => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
+          .map(name => caches.delete(name))
       ))
       .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener("message", event => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
+  if (event.data?.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
@@ -57,13 +60,16 @@ self.addEventListener("message", event => {
 function isDynamicGoogleData(url) {
   return url.hostname.includes("docs.google.com") ||
          url.hostname.includes("googleusercontent.com") ||
-         url.hostname.includes("google.com") && url.pathname.includes("forms");
+         (url.hostname.includes("google.com") && url.pathname.includes("forms"));
+}
+
+function isVersionFile(url) {
+  return url.pathname.endsWith("/version.json") || url.pathname.endsWith("version.json");
 }
 
 async function networkFirst(request) {
   try {
-    const fresh = await fetch(request, { cache: "no-store" });
-    return fresh;
+    return await fetch(request, { cache: "no-store" });
   } catch (error) {
     const cached = await caches.match(request);
     return cached || caches.match("./offline.html");
@@ -76,7 +82,7 @@ async function cacheFirst(request) {
 
   try {
     const response = await fetch(request);
-    if (response && response.ok && request.method === "GET") {
+    if (response?.ok && request.method === "GET") {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, response.clone());
     }
@@ -95,7 +101,7 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  if (isDynamicGoogleData(url)) {
+  if (isDynamicGoogleData(url) || isVersionFile(url)) {
     event.respondWith(networkFirst(request));
     return;
   }
@@ -106,4 +112,18 @@ self.addEventListener("fetch", event => {
   }
 
   event.respondWith(cacheFirst(request));
+});
+
+self.addEventListener("notificationclick", event => {
+  event.notification.close();
+
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if ("focus" in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow("./");
+      return null;
+    })
+  );
 });

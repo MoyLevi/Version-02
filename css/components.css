@@ -4731,3 +4731,168 @@
         justify-content: flex-end;
     }
 }
+
+/* PWA v4.1.0 - instalación, actualización y avisos */
+.pwa-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(2, 6, 23, 0.18), rgba(2, 6, 23, 0.62));
+    backdrop-filter: blur(6px);
+}
+
+.pwa-panel-card {
+    position: relative;
+    width: min(520px, 100%);
+    border-radius: 26px;
+    padding: 22px;
+    color: #fff;
+    background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, .32), transparent 38%),
+        radial-gradient(circle at bottom right, rgba(250, 204, 21, .22), transparent 34%),
+        rgba(15, 23, 42, .98);
+    border: 1px solid rgba(255, 255, 255, .18);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .48);
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+}
+
+.pwa-panel-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,.12), transparent 30%, transparent 70%, rgba(255,255,255,.06));
+}
+
+.pwa-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    padding: 6px 11px;
+    border-radius: 999px;
+    color: #082f49;
+    background: #7dd3fc;
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    box-shadow: 0 8px 24px rgba(56, 189, 248, .2);
+}
+
+.pwa-panel-card h2 {
+    position: relative;
+    margin: 14px 44px 8px 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.25rem;
+    line-height: 1;
+    letter-spacing: .04em;
+    color: #fff;
+}
+
+.pwa-panel-card p {
+    position: relative;
+    margin: 0;
+    color: #dbeafe;
+    line-height: 1.45;
+}
+
+.pwa-ios-help {
+    position: relative;
+    margin-top: 14px;
+    padding: 12px 13px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .14);
+    display: grid;
+    gap: 4px;
+    color: #e0f2fe;
+    font-size: .88rem;
+}
+
+.pwa-actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.pwa-actions button,
+.pwa-close {
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    transition: transform .15s ease, opacity .15s ease, background .15s ease;
+}
+
+.pwa-actions button:hover,
+.pwa-close:hover {
+    transform: translateY(-1px);
+}
+
+.pwa-primary {
+    color: #082f49;
+    background: linear-gradient(135deg, #67e8f9, #38bdf8);
+    padding: 11px 15px;
+    border-radius: 999px;
+    box-shadow: 0 12px 26px rgba(56, 189, 248, .22);
+}
+
+.pwa-secondary {
+    color: #e0f2fe;
+    background: rgba(255, 255, 255, .12);
+    padding: 11px 15px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .13) !important;
+}
+
+.pwa-small {
+    position: relative;
+    margin-top: 12px !important;
+    color: #bfdbfe !important;
+    font-size: .78rem;
+}
+
+.pwa-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.13);
+    color: #fff;
+    font-size: 1.45rem;
+    line-height: 1;
+}
+
+@media (max-width: 640px) {
+    .pwa-panel {
+        padding: 12px;
+    }
+
+    .pwa-panel-card {
+        border-radius: 24px;
+        padding: 20px;
+    }
+
+    .pwa-panel-card h2 {
+        font-size: 2rem;
+    }
+
+    .pwa-actions {
+        flex-direction: column;
+    }
+
+    .pwa-actions button {
+        width: 100%;
+    }
+}

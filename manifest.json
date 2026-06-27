@@ -1,8 +1,8 @@
 {
   "name": "Quiniela Mundial FIFA 2026",
   "short_name": "Quiniela 2026",
-  "description": "Aplicación de quiniela del Mundial FIFA 2026 con partidos, standing, estadísticas y fase final.",
-  "start_url": "./index.html",
+  "description": "Aplicación instalable de la Quiniela Mundial FIFA 2026 con partidos, standing, estadísticas, fase final y mejoras automáticas.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": [

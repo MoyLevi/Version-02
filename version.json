@@ -1,0 +1,12 @@
+{
+  "version": "4.1.0",
+  "build": "410",
+  "release": "2026-06-26",
+  "name": "Quiniela Mundial 2026 PWA",
+  "notes": [
+    "Pantalla de instalación mejorada",
+    "Detección automática de nuevas versiones",
+    "Actualización sin reinstalar la app",
+    "Base preparada para notificaciones"
+  ]
+}
