@@ -234,11 +234,6 @@ Bueno aqui sigo, me falta desarrollar los Standings de los Goleadores, e integra
 `
     },
     {
-        fecha: "19.Junio.2026 06:22pm",
-        titulo: "Picks de Ronda 32",
-        texto: `En este espacio les explicaré cómo registrar o modificar sus picks para la <b>Ronda de 32.</b> ¡Esténse atentos!`
-    },
-    {
         fecha: "26.Junio.2026 04:58pm",
         titulo: "Highlights",
         texto: `Se agregó un breve resumen en video de aproximadamente <b>5 minutos</b> para cada partido, ideal para quienes no pudieron verlo en vivo.`
@@ -246,13 +241,32 @@ Bueno aqui sigo, me falta desarrollar los Standings de los Goleadores, e integra
     {
         fecha: "26.Junio.2026 08:20pm",
         titulo: "¡Nueva función disponible!",
-        texto: ` Ahora puedes <b>instalar la APP de la Quiniela Mundial 2026</b> directamente en tu celular, tablet o computadora. Es completamente segura y te permitirá acceder de forma más rápida, como si fuera una aplicación nativa.<br><br>
+        texto: `Ahora puedes <b>instalar la APP de la Quiniela Mundial 2026</b> directamente en tu celular, tablet o computadora. Es completamente segura y te permitirá acceder de forma más rápida, como si fuera una aplicación nativa.<br><br>
 
         Muy pronto también podrás recibir <b>Notificaciones automáticas</b> hasta <b>15 minutos antes del inicio de cada partido</b>, además de futuras funciones y mejoras exclusivas para la versión instalada.<br><br>
 
-        ¡Instálala y disfruta de una mejor experiencia durante la fase de Knockout! ⚽🏆
+        ¡Instálala y disfruta de una mejor experiencia durante la fase de Knockout! ⚽🏆`
+    },
+    {
+        fecha: "27.Junio.2026 08:58pm",
+        titulo: "<b>⚽ Picks - Ronda de 32</b>",
+        texto: `<b>¡Ya puedes actualizar tus Picks para la Ronda de 32!</b><br><br>
+
+        <b>1.</b> Puedes modificar tus Picks hasta <b>5 minutos antes</b> del inicio de <b>cada partido</b>.<br><br>
+
+        <b>2.</b> Puedes enviar el formulario <b>las veces que quieras</b>. Siempre contará <b>el último formulario</b> que envíes antes del cierre del partido.<br><br>
+
+        <b>3.</b> Si envías el formulario <b>después del horario de cierre</b>, esa captura <b>ya no contará</b>, aunque el formulario todavía siga apareciendo disponible.<br><br>
+
+        <b>4.</b> Si decides <b>no cambiar tus Picks</b>, no pasa nada. La app conservará automáticamente los Picks que registraste <b>antes de iniciar el Mundial</b>.<br><br>
+
+        <b>5.</b> Por eso es normal que en la app sigas viendo equipos que ya fueron eliminados. Esos Picks originales seguirán siendo válidos para tu puntuación. <b>Así nadie está obligado a modificar sus Picks.</b><br><br>
+
+        <b>6.</b> Antes de enviar, revisa bien tus marcadores. Si pronosticas un <b>empate</b>, también debes capturar <b>el resultado de los penales</b>.<br><br>
+
+        🍀 <b>¡Mucha suerte y que gane el mejor pronosticador! 🏆.</b>
 `
-    }        
+    }
 ];
 
 function crearHTMLMensajeLeeme(){
