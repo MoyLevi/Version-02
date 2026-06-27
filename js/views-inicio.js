@@ -243,8 +243,18 @@ Bueno aqui sigo, me falta desarrollar los Standings de los Goleadores, e integra
         titulo: "Highlights",
         texto: `Se agregó un breve resumen en video de aproximadamente <b>5 minutos</b> para cada partido, ideal para quienes no pudieron verlo en vivo.<br><br>
         
-        También se agregó la opción de poder instalar la APP en tu dispositivo, es 100% seguro y mucho más práctico, podrás recibir Notificaciones 15 minutos antes de que comience un partido, entre otras cosas!.`
-    }    
+        T,ambién se agregó la opción de poder instalar la APP en tu dispositivo, es 100% seguro y mucho más práctico, podrás recibir Notificaciones 15 minutos antes de que comience un partido, entre otras cosas!.`
+    },
+    {
+        fecha: "26.Junio.2026 08:20pm",
+        titulo: "📱 ¡Nueva función disponible!",
+        texto: ` Ahora puedes <b>instalar la APP de la Quiniela Mundial 2026</b> directamente en tu celular, tablet o computadora. Es completamente segura y te permitirá acceder de forma más rápida, como si fuera una aplicación nativa.<br><br>
+
+        Muy pronto también podrás recibir <b>Notificaciones automáticas</b> hasta <b>15 minutos antes del inicio de cada partido</b>, además de futuras funciones y mejoras exclusivas para la versión instalada.<br><br>
+
+        ¡Instálala y disfruta de una mejor experiencia durante la fase de Knockout! ⚽🏆
+`
+    }        
 ];
 
 function crearHTMLMensajeLeeme(){
