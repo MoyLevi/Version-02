@@ -264,8 +264,7 @@ Bueno aqui sigo, me falta desarrollar los Standings de los Goleadores, e integra
 
         <b>6.</b> Antes de enviar, revisa bien tus marcadores. Si pronosticas un <b>empate</b>, también debes capturar <b>el resultado de los penales</b>.<br><br>
 
-        🍀 <b>¡Mucha suerte y que gane el mejor pronosticador! 🏆.</b>
-`
+        🍀 <b>¡Mucha suerte y que gane el mejor pronosticador! 🏆.</b>`
     }
 ];
 
