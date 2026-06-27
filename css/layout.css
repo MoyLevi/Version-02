@@ -1,0 +1,104 @@
+/* MENÚ */
+
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:15px;
+    background:#1e293b;
+    flex-wrap:wrap;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.menu button{
+    background:#334155;
+    border:none;
+    color:white;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.menu button:hover{
+    background:#475569;
+}
+
+/* INICIO / STATS */
+
+.inicio-grid,
+.stats-grid{
+    max-width:850px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:15px;
+}
+
+/* FILTROS */
+
+.filtros{
+    max-width:700px;
+    margin:20px auto;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.filtros select{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    background:#1e293b;
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+
+/* TABLA GENERAL */
+
+.tabla-ranking{
+    max-width:650px;
+    margin:30px auto;
+}
+
+/* DETALLE USUARIO */
+
+.resumen-usuario{
+    max-width:850px;
+    margin:25px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:12px;
+}
+
+/* ACCIONES */
+
+.acciones-app{
+    display:flex;
+    justify-content:center;
+    margin:15px 0;
+}
+
+.refresh-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+
+/* AJUSTES STANDINGS v2.8.5 */
+.tabs-tabla-secundaria{
+    margin-top:28px;
+    padding-top:8px;
+}
+
+.tabs-tabla-principal{
+    margin-bottom:8px;
+}

@@ -1,0 +1,4733 @@
+/* TARJETAS */
+
+.inicio-card,
+.stat-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.inicio-card h2,
+.stat-card h2{
+    font-size:36px;
+    margin:0;
+}
+
+.inicio-card p,
+.stat-card p{
+    color:#cbd5e1;
+}
+
+/* PARTIDOS */
+
+.partido{
+    background:#1e293b;
+    margin:12px auto;
+    padding:15px;
+    border-radius:15px;
+    max-width:650px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.partido:hover{
+    background:#334155;
+}
+
+.partido-pendiente{
+    border-left:4px solid #64748b;
+}
+
+.partido-en-vivo{
+    border-left:4px solid #facc15;
+}
+
+.partido-finalizado{
+    border-left:4px solid #22c55e;
+}
+
+.equipo{
+    width:120px;
+    text-align:center;
+}
+
+.equipo img{
+    width:52px;
+    height:34px;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+    margin:0 auto;
+    border-radius:6px;
+    box-shadow:0 3px 8px rgba(0,0,0,.25);
+}
+
+.equipo p{
+    margin:8px 0 0;
+    font-size:14px;
+}
+
+.marcador{
+    font-size:22px;
+    font-weight:bold;
+    min-width:60px;
+    text-align:center;
+}
+
+.marcador-box{
+    min-width:70px;
+    text-align:center;
+}
+
+.estado-partido{
+    font-size:12px;
+    margin-top:4px;
+    font-weight:bold;
+    text-align:center;
+    min-width:70px;
+}
+
+.status-mini{
+    font-size:12px;
+    margin-top:4px;
+    font-weight:bold;
+}
+
+.status-vivo,
+.texto-en-vivo{
+    color:#facc15;
+}
+
+.texto-pendiente{
+    color:#94a3b8;
+}
+
+.texto-finalizado{
+    color:#22c55e;
+}
+
+/* DETALLE PARTIDO */
+
+.detalle-partido{
+    background:#1e293b;
+    max-width:750px;
+    margin:25px auto;
+    padding:25px;
+    border-radius:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.equipo-detalle{
+    width:35%;
+    text-align:center;
+}
+
+.equipo-detalle img{
+    width:110px;
+    height:72px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:10px;
+    box-shadow:0 5px 12px rgba(0,0,0,.3);
+}
+
+.equipo-detalle h2{
+    margin-bottom:0;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:42px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.marcador-detalle{
+    text-align:center;
+    font-size:38px;
+    font-weight:bold;
+}
+
+.marcador-detalle span{
+    display:block;
+    margin-top:8px;
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+.info-partido{
+    text-align:center;
+    color:#cbd5e1;
+}
+
+/* BOTONES */
+
+.balon-app{
+    display:inline-block;
+    width:1.15em;
+    height:1.15em;
+    object-fit:contain;
+    vertical-align:-0.18em;
+    line-height:1;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));
+}
+
+.btnVolver{
+    background:#334155;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    margin-bottom:15px;
+}
+
+.btnVolver:hover{
+    background:#475569;
+}
+
+.acciones-app button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.acciones-app button:hover{
+    background:#1d4ed8;
+}
+
+.btn-refresh{
+    background:#1e293b;
+    color:white;
+    border:1px solid rgba(56,189,248,.35);
+    border-radius:12px;
+    padding:10px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+    box-shadow:0 8px 20px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.btn-refresh:hover{
+    background:#27364d;
+    transform:scale(1.03);
+}
+
+.btn-refresh:active{
+    background:#334155;
+    transform:scale(.99);
+}
+
+.btn-refresh:disabled{
+    opacity:.85;
+    cursor:not-allowed;
+}
+
+/* PRONOSTICOS */
+
+.pronostico{
+    background:#334155;
+    margin:10px auto;
+    padding:12px 16px;
+    border-radius:12px;
+    max-width:700px;
+    display:grid;
+    grid-template-columns: 1fr 80px 80px;
+    align-items:center;
+    gap:10px;
+}
+
+.pronostico span:nth-child(1){
+    text-align:left;
+}
+
+.pronostico span:nth-child(2){
+    text-align:center;
+    font-weight:bold;
+}
+
+.pronostico span:nth-child(3){
+    text-align:right;
+    font-weight:bold;
+}
+
+.prediccion-colectiva{
+    max-width:650px;
+    margin:15px auto;
+    background:#334155;
+    padding:12px 15px;
+    border-radius:14px;
+    text-align:center;
+    color:#e2e8f0;
+    font-weight:bold;
+}
+
+/* TABLA */
+
+.ranking-card{
+    background:#1e293b;
+    margin:12px 0;
+    padding:15px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    cursor:pointer;
+}
+
+.ranking-card:hover{
+    background:#334155;
+}
+
+.ranking-card-detallado{
+    border-left:4px solid #22c55e;
+}
+
+.ranking-card-detallado:nth-child(1){
+    border-left-color:#facc15;
+}
+
+.ranking-card-detallado:nth-child(2){
+    border-left-color:#cbd5e1;
+}
+
+.ranking-card-detallado:nth-child(3){
+    border-left-color:#fb923c;
+}
+
+.ranking-pos{
+    font-size:28px;
+    width:60px;
+    text-align:center;
+    flex-shrink:0;
+}
+
+.ranking-user{
+    font-size:20px;
+    font-weight:bold;
+    flex:1;
+}
+
+.ranking-user span{
+    display:block;
+    color:#cbd5e1;
+    font-size:13px;
+    margin-top:4px;
+    font-weight:normal;
+}
+
+.ranking-puntos{
+    background:#334155;
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:bold;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    text-align:right;
+    max-width:45%;
+}
+
+.ranking-mov{
+    width:34px;
+    text-align:center;
+    font-size:26px;
+    font-weight:900;
+    line-height:1;
+    transform:scaleX(1.25);
+    flex-shrink:0;
+}
+
+.mov-up{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.mov-down{
+    color:#ef4444;
+    font-weight:bold;
+}
+
+.mov-neutral{
+    color:#94a3b8;
+}
+
+/* DETALLE USUARIO */
+
+.resumen-usuario div{
+    background:#1e293b;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.resumen-usuario strong{
+    display:block;
+    font-size:28px;
+}
+
+.resumen-usuario span{
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.usuario-pronostico{
+    background:#1e293b;
+    max-width:700px;
+    margin:12px auto;
+    padding:16px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.usuario-pronostico p{
+    margin:5px 0 0;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.usuario-score{
+    width:130px;
+    min-width:130px;
+    font-size:22px;
+    font-weight:bold;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.usuario-score span{
+    display:block;
+    width:130px;
+    text-align:center;
+    margin-top:5px;
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+/* ESTADOS DE PUNTOS */
+
+.pts-exacto{
+    color:#22c55e;
+}
+
+.pts-diferencia{
+    color:#38bdf8;
+}
+
+.pts-ganador{
+    color:#facc15;
+}
+
+.pts-fallo{
+    color:#f87171;
+}
+
+.pts-pendiente{
+    color:#e2e8f0;
+}
+
+/* LOADING / ERROR */
+
+.loading,
+.error-card{
+    max-width:600px;
+    margin:80px auto;
+    background:#1e293b;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+/* LOGO */
+
+.hero-logo{
+    max-width:260px;
+    margin:25px auto 10px;
+    text-align:center;
+    animation:fadeUp .8s ease both;
+}
+
+.hero-logo img{
+    width:100%;
+    max-width:240px;
+    filter:drop-shadow(0 12px 25px rgba(0,0,0,.45));
+}
+
+/* FOOTER */
+
+.dev-footer{
+    text-align:center;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:18px;
+    color:#94a3b8;
+    margin:35px 0 15px;
+    letter-spacing:1.5px;
+    opacity:.85;
+}
+
+/* PAGINACIÓN */
+
+.paginacion{
+    max-width:700px;
+    margin:25px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.paginacion button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.paginacion button:hover{
+    background:#475569;
+}
+
+.paginacion button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.paginacion span{
+    color:#cbd5e1;
+    font-weight:bold;
+}
+
+/* ANIMACIONES */
+
+.balon-actualizando{
+    display:inline-block;
+    animation:girarBalon .8s linear infinite;
+}
+
+@keyframes girarBalon{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* TABS TABLA */
+.tabs-tabla{
+    max-width:650px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-tabla button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:14px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.tabs-tabla button:hover{
+    background:#475569;
+}
+
+.tabs-tabla .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+/* PRONÓSTICOS ESPECIALES */
+.tabs-especiales{
+    max-width:900px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-especiales button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:14px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tabs-especiales button:hover{
+    background:#475569;
+    transform:translateY(-1px);
+}
+
+.tabs-especiales .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.especiales-resumen-grid .stat-card h2{
+    font-size:28px;
+    overflow-wrap:anywhere;
+}
+
+.especiales-layout{
+    max-width:950px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:18px;
+}
+
+.especial-panel{
+    background:#1e293b;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.especial-panel h3{
+    margin-top:0;
+}
+
+.especial-row{
+    background:#334155;
+    margin:10px 0;
+    padding:12px 14px;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.especial-row span{
+    color:#e2e8f0;
+}
+
+.especial-row strong{
+    text-align:right;
+    overflow-wrap:anywhere;
+}
+
+.especial-row-conteo strong{
+    color:#38bdf8;
+}
+
+.picks-especiales-usuario{
+    max-width:900px;
+    margin:20px auto 25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:12px;
+}
+
+.picks-especiales-usuario div{
+    background:#1e293b;
+    border-radius:15px;
+    padding:14px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.picks-especiales-usuario strong{
+    display:block;
+    color:#38bdf8;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.picks-especiales-usuario span{
+    display:block;
+    color:#e2e8f0;
+    font-weight:bold;
+    overflow-wrap:anywhere;
+}
+
+.reglas-card{
+    max-width:650px;
+    margin:25px auto;
+    background:#1e293b;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #facc15;
+}
+
+.reglas-card h2{
+    margin-top:0;
+}
+
+.reglas-card p{
+    color:#cbd5e1;
+}
+
+.reglas-card button,
+.btn-descargar-reglas{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    border:none;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.reglas-card button:hover,
+.btn-descargar-reglas:hover{
+    background:#1d4ed8;
+}
+
+.visor-reglas{
+    max-width:1000px;
+    height:75vh;
+    margin:25px auto;
+    overflow:hidden;
+    border-radius:18px;
+    background:#020617;
+    padding:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    touch-action:none;
+}
+
+.img-reglas{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:12px;
+    cursor:grab;
+}
+
+
+.filtros-botones{
+    max-width:850px;
+    margin:20px auto 25px;
+    background:transparent;
+    border-radius:0;
+    padding:0;
+    box-shadow:none;
+}
+
+.filtros-botones h3{
+    margin:18px 0 10px;
+    text-align:left;
+    color:#e2e8f0;
+}
+
+.filtro-rapido{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.filtro-rapido button,
+.fechas-scroll button,
+.grupos-grid button,
+.ko-grid button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:bold;
+    cursor:pointer;
+    min-width:48px;
+}
+
+.filtro-rapido button:hover,
+.fechas-scroll button:hover,
+.grupos-grid button:hover,
+.ko-grid button:hover{
+    background:#475569;
+}
+
+.filtro-activo{
+    background:#2563eb !important;
+    box-shadow:0 8px 20px rgba(37,99,235,.28);
+}
+
+.fechas-scroll{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:8px 2px 12px;
+    scrollbar-width:thin;
+}
+
+.fechas-scroll button{
+    flex:0 0 auto;
+}
+
+.grupos-grid,
+.ko-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(55px, 1fr));
+    gap:8px;
+}
+
+.ko-grid{
+    grid-template-columns:repeat(auto-fit, minmax(80px, 1fr));
+}
+
+
+.filtro-tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:14px;
+}
+
+.filtro-tabs button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.filtro-tabs button:hover{
+    background:#475569;
+}
+
+.grupos-ko-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(48px, 1fr));
+    gap:8px;
+    margin-top:14px;
+}
+
+.grupos-ko-grid button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.grupos-ko-grid button:hover{
+    background:#475569;
+}
+
+.premios-card{
+    max-width:650px;
+    margin:15px auto;
+    padding:14px 18px;
+    background:#1e293b;
+    border-radius:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    font-weight:bold;
+    border-left:4px solid #facc15;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.premios-card:hover{
+    background:#334155;
+    transform:translateY(-1px);
+}
+
+.premios-card span:first-child{
+    font-size:18px;
+}
+
+.premios-card span:last-child{
+    color:#facc15;
+    font-size:20px;
+}
+
+.btn-premios{
+    background:#facc15 !important;
+    color:#0f172a !important;
+    border:none;
+    padding:13px 22px !important;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:800;
+    box-shadow:0 8px 20px rgba(250,204,21,.25);
+    font-size:15px;
+}
+
+.btn-premios:hover{
+    background:#fde047 !important;
+    transform:scale(1.03);
+}
+
+/* DETALLE USUARIO - PICKS ESPECIALES Y CLASIFICADOS */
+
+.picks-especiales-grid-compacto{
+    max-width:850px;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.pick-especial-usuario-card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:14px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #facc15;
+    overflow-wrap:anywhere;
+}
+
+.pick-especial-usuario-card strong{
+    display:block;
+    color:#38bdf8;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.pick-especial-usuario-card span{
+    display:block;
+    color:#e2e8f0;
+    font-weight:bold;
+    overflow-wrap:anywhere;
+    line-height:1.25;
+}
+
+.pick-especial-largo{
+    grid-column:span 1;
+}
+
+.tabs-detalle-usuario{
+    max-width:700px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tabs-detalle-usuario button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.tabs-detalle-usuario button:hover{
+    background:#475569;
+}
+
+.tabs-detalle-usuario .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.clasificados-grid{
+    max-width:900px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(185px, 1fr));
+    gap:12px;
+}
+
+.clasificado-card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.clasificado-card h3{
+    margin:0 0 8px;
+    color:#38bdf8;
+}
+
+.clasificado-card p{
+    margin:6px 0;
+    color:#e2e8f0;
+    overflow-wrap:anywhere;
+}
+
+@media(max-width:600px){
+    .picks-especiales-grid-compacto{
+        grid-template-columns:repeat(auto-fit, minmax(145px, 1fr));
+    }
+
+    .pick-especial-usuario-card{
+        padding:12px;
+    }
+
+    .pick-especial-usuario-card strong{
+        font-size:13px;
+    }
+
+    .pick-especial-usuario-card span{
+        font-size:14px;
+    }
+
+    .clasificados-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* MEJORAS: DETALLE USUARIO / STATS CLASIFICADOS / FECHA FILTRADA */
+
+.filtro-resultado-titulo{
+    max-width:850px;
+    margin:18px auto 14px;
+    text-align:center;
+    color:#e2e8f0;
+    font-weight:800;
+    font-size:18px;
+}
+
+.clasificados-comunidad-grid{
+    max-width:950px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:16px;
+}
+
+.clasificado-comunidad-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.clasificado-comunidad-card h3{
+    margin:0 0 12px;
+    color:#38bdf8;
+}
+
+.clasificado-comunidad-bloque{
+    background:#0f172a;
+    border-radius:14px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.clasificado-comunidad-bloque h4{
+    margin:0 0 8px;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.clasificado-comunidad-row{
+    background:#334155;
+    margin:8px 0;
+    padding:10px 12px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.clasificado-comunidad-row span,
+.clasificado-comunidad-row strong{
+    overflow-wrap:anywhere;
+}
+
+.clasificado-comunidad-row strong{
+    color:#38bdf8;
+    text-align:right;
+    white-space:nowrap;
+}
+
+@media(max-width:600px){
+    .filtro-resultado-titulo{
+        font-size:16px;
+        margin-top:16px;
+    }
+
+    .clasificados-comunidad-grid{
+        grid-template-columns:1fr;
+    }
+
+    .clasificado-comunidad-row{
+        align-items:flex-start;
+    }
+}
+
+/* BANDERAS MINI - ALINEACIÓN CORREGIDA */
+
+.pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:7px;
+    line-height:1;
+    vertical-align:middle;
+    min-width:0;
+}
+
+.pais-con-bandera span{
+    line-height:1.15;
+    display:inline-block;
+}
+
+.flag-mini{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center;
+    flex-shrink:0;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);
+    display:block;
+}
+
+/* Detalle usuario: 1° bandera país perfectamente centrado */
+.clasificado-card p{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    line-height:1.2;
+}
+
+.clasificado-card p strong{
+    min-width:30px;
+    text-align:right;
+    line-height:1;
+    flex-shrink:0;
+}
+
+.clasificado-card p .pais-con-bandera{
+    margin-left:0;
+}
+
+/* Stats comunitarias: bandera + país centrados verticalmente */
+.clasificado-comunidad-row > span:first-child{
+    display:flex;
+    align-items:center;
+    min-width:0;
+}
+
+.clasificado-comunidad-row .pais-con-bandera{
+    justify-content:flex-start;
+}
+
+.stat-pais-favorito{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow-wrap:anywhere;
+}
+
+.stat-pais-favorito .pais-con-bandera{
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+@media(max-width:600px){
+    .flag-mini{
+        width:20px;
+        height:20px;
+    }
+
+    .pais-con-bandera{
+        gap:6px;
+    }
+
+    .clasificado-card p strong{
+        min-width:28px;
+    }
+}
+
+
+/* STANDINGS - RÉCORDS */
+.records-grid{
+    max-width:900px;
+    margin:25px auto 35px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:14px;
+}
+
+.record-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    border-left:4px solid #38bdf8;
+}
+
+.record-card:nth-child(1){
+    border-left-color:#facc15;
+}
+
+.record-card:nth-child(2){
+    border-left-color:#22c55e;
+}
+
+.record-card:nth-child(3){
+    border-left-color:#60a5fa;
+}
+
+.record-card:nth-child(4){
+    border-left-color:#a78bfa;
+}
+
+.record-card:nth-child(5){
+    border-left-color:#fb923c;
+}
+
+.record-icono{
+    width:48px;
+    min-width:48px;
+    height:48px;
+    border-radius:15px;
+    background:#334155;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.record-info{
+    flex:1;
+    min-width:0;
+}
+
+.record-info span{
+    display:block;
+    color:#cbd5e1;
+    font-size:13px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.record-info strong{
+    display:block;
+    color:white;
+    font-size:18px;
+    overflow-wrap:anywhere;
+    line-height:1.25;
+}
+
+.record-info small{
+    display:block;
+    color:#94a3b8;
+    margin-top:5px;
+    font-size:12px;
+}
+
+@media(max-width:600px){
+    .records-grid{
+        grid-template-columns:1fr;
+    }
+
+    .record-card{
+        padding:14px;
+    }
+
+    .record-info strong{
+        font-size:16px;
+    }
+}
+
+
+/* AJUSTE TÍTULO STATS */
+.titulo-stats-principal{
+    text-align:center;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(46px, 8vw, 68px);
+    letter-spacing:2px;
+    line-height:1;
+    margin:35px auto 18px;
+    text-transform:uppercase;
+}
+
+.titulo-stats-principal{
+    font-size:32px !important;
+}
+/* MEJORAS STATS - PANELES COMPACTOS */
+.tabs-mini-estadisticas,
+.grupos-clasificados-stats{
+    max-width:900px;
+    margin:18px auto 22px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.tabs-mini-estadisticas button,
+.grupos-clasificados-stats button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:bold;
+    cursor:pointer;
+    min-width:46px;
+}
+
+.tabs-mini-estadisticas button:hover,
+.grupos-clasificados-stats button:hover{
+    background:#475569;
+}
+
+.tabs-mini-estadisticas .tab-activa{
+    background:#2563eb;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.especiales-layout-unico{
+    max-width:720px;
+    grid-template-columns:1fr;
+}
+
+.clasificados-comunidad-grid-unico{
+    max-width:520px;
+    grid-template-columns:1fr;
+}
+
+.datos-destacados-records{
+    margin-bottom:28px;
+}
+
+/* Corrección definitiva: Stats usa el h1 global */
+.titulo-stats-principal{
+    all:unset;
+}
+
+@media(max-width:600px){
+    .tabs-mini-estadisticas button{
+        flex:1 1 150px;
+    }
+
+    .grupos-clasificados-stats button{
+        min-width:44px;
+        padding:9px 10px;
+    }
+}
+
+/* MEJORAS STAGE 2 PRE-KO: DETALLE, RÉCORDS Y GRUPOS */
+.paginacion-detalle{
+    margin-top:16px;
+    margin-bottom:18px;
+}
+
+.record-card-clickable{
+    cursor:pointer;
+    transition:.2s;
+}
+
+.record-card-clickable:hover{
+    background:#334155;
+    transform:translateY(-2px);
+}
+
+.grupos-standings-tabs{
+    max-width:760px;
+    margin:18px auto 22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(46px, 1fr));
+    gap:8px;
+}
+
+.grupos-standings-tabs button{
+    background:#334155;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:10px 8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.grupos-standings-tabs button:hover{
+    background:#475569;
+}
+
+.grupo-standings-card{
+    max-width:900px;
+    margin:18px auto 35px;
+    background:transparent;
+    border-radius:0;
+    padding:0;
+    box-shadow:none;
+}
+
+.grupo-standings-card h2{
+    margin-top:0;
+    text-align:center;
+}
+
+.tabla-grupo-real{
+    width:100%;
+    overflow-x:auto;
+}
+
+.tabla-grupo-header,
+.tabla-grupo-row{
+    display:grid;
+    grid-template-columns:24px minmax(190px, 1fr) 46px 42px 42px;
+    gap:4px;
+    align-items:center;
+    padding:10px 10px;
+}
+
+.tabla-grupo-header{
+    color:#cbd5e1;
+    font-size:13px;
+    font-weight:bold;
+    border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.tabla-grupo-row{
+    background:#334155;
+    border-radius:12px;
+    margin:8px 0;
+    color:#e2e8f0;
+}
+
+.tabla-grupo-row strong{
+    color:#facc15;
+    font-size:18px;
+}
+
+.equipo-grupo-nombre{
+    min-width:0;
+    overflow-wrap:anywhere;
+}
+
+.tabla-posicion{
+    text-align:center;
+    font-weight:900;
+    color:#cbd5e1;
+}
+
+.equipo-grupo-linea{
+    display:inline-flex;
+    align-items:center;
+    min-width:0;
+}
+
+.equipo-forma{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    margin-top:4px;
+    margin-left:29px;
+    min-height:12px;
+}
+
+.forma-dot{
+    width:10px;
+    height:10px;
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    box-sizing:border-box;
+}
+
+.forma-dot::after{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:999px;
+    display:block;
+}
+
+.forma-win{ border:1.5px solid #22c55e; }
+.forma-win::after{ background:#22c55e; }
+.forma-draw{ border:1.5px solid #fb923c; }
+.forma-draw::after{ background:#fb923c; }
+.forma-loss{ border:1.5px solid #ef4444; }
+.forma-loss::after{ background:#ef4444; }
+
+.forma-pending{
+    color:#cbd5e1;
+    font-size:17px;
+    line-height:8px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:10px;
+    height:10px;
+}
+
+.especial-row .pais-con-bandera,
+.especial-row-conteo .pais-con-bandera,
+.stat-pais-favorito .pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    vertical-align:middle;
+}
+
+.especial-row > span:first-child{
+    display:flex;
+    align-items:center;
+    min-width:0;
+}
+
+.especial-row strong .pais-con-bandera{
+    justify-content:flex-end;
+}
+
+@media(max-width:600px){
+    .tabla-grupo-header,
+    .tabla-grupo-row{
+        grid-template-columns:22px minmax(138px, 1fr) 38px 36px 36px;
+        gap:3px;
+        font-size:12.5px;
+        padding:9px 6px;
+    }
+
+    .grupo-standings-card{
+        padding:0;
+    }
+
+    .equipo-forma{
+        margin-left:27px;
+    }
+}
+
+@media(max-width:380px){
+    .tabla-grupo-header,
+    .tabla-grupo-row{
+        grid-template-columns:20px minmax(130px, 1fr) 34px 34px 34px;
+        gap:2px;
+        padding-left:5px;
+        padding-right:5px;
+        font-size:12px;
+    }
+}
+
+/* KNOCKOUT / PENALES */
+.penales-circulos{
+    color:#22c55e;
+    letter-spacing:1px;
+    font-size:.72em;
+    white-space:nowrap;
+}
+
+.marcador-penales{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    flex-wrap:wrap;
+    line-height:1.25;
+}
+
+.usuario-pronostico-ko{
+    border-left:4px solid #38bdf8;
+}
+
+.pts-ko{
+    color:#38bdf8;
+}
+
+/* v2.8.0 KO Upgrade */
+.penales-numero{
+    color:#22c55e;
+    font-size:.72em;
+    font-weight:800;
+    line-height:1;
+    min-width:.8em;
+    display:inline-block;
+    text-align:center;
+}
+
+.marcador-goles{
+    display:inline-block;
+}
+
+.pasa-partido,
+.pasa-detalle{
+    font-size:.72rem;
+    color:#94a3b8;
+    margin-top:4px;
+}
+
+.pasa-partido .pais-con-bandera,
+.pasa-detalle .pais-con-bandera{
+    justify-content:center;
+}
+
+.ranking-ko-card{
+    grid-template-columns:48px minmax(120px, 1fr) minmax(150px, auto) 86px;
+}
+
+.ranking-ko-breakdown{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    font-size:.72rem;
+    color:#cbd5e1;
+    text-align:left;
+}
+
+.clasificados-resumen-usuario{
+    max-width:680px;
+    margin:12px auto 18px;
+    background:#0f172a;
+    border:1px solid rgba(148,163,184,.25);
+    border-radius:16px;
+    padding:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.clasificados-resumen-usuario strong{
+    color:#22c55e;
+    font-size:1.35rem;
+}
+
+.clasificados-comparacion-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:12px;
+    max-width:980px;
+    margin:0 auto;
+}
+
+.clasificado-ok{
+    border:1px solid rgba(34,197,94,.45);
+}
+
+.clasificado-error{
+    border:1px solid rgba(248,113,113,.35);
+}
+
+.clasificado-resultado{
+    margin-top:8px;
+    font-weight:800;
+}
+
+.clasificados-reales-card{
+    border:1px solid rgba(34,197,94,.25);
+}
+
+.ko-grid button{
+    min-width:72px;
+}
+
+@media(max-width:700px){
+    .ranking-ko-card{
+        grid-template-columns:40px 1fr 74px;
+    }
+
+    .ranking-ko-breakdown{
+        grid-column:2 / -1;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:8px;
+    }
+}
+
+/* v2.8.1 Ajustes KO y Clasificados */
+.subtabs-desglose{
+    margin-top:6px;
+    margin-bottom:14px;
+}
+
+.grupos-clasificados-usuario{
+    max-width:720px;
+    margin:12px auto 16px;
+}
+
+.clasificados-resumen-grupo{
+    background:#111827;
+    border-color:rgba(34,197,94,.35);
+}
+
+/* v2.8.2 ajustes KO */
+.marcador-penales{
+    flex-wrap:nowrap;
+    white-space:nowrap;
+}
+
+.marcador-detalle .marcador-penales{
+    gap:8px;
+}
+
+.marcador-detalle .penales-numero{
+    font-size:.58em;
+    vertical-align:middle;
+}
+
+.pts-semaforo-0{ color:#ef4444; }
+.pts-semaforo-1{ color:#f97316; }
+.pts-semaforo-2{ color:#fb923c; }
+.pts-semaforo-3{ color:#facc15; }
+.pts-semaforo-4{ color:#fde047; }
+.pts-semaforo-5{ color:#bef264; }
+.pts-semaforo-6{ color:#84cc16; }
+.pts-semaforo-7{ color:#22c55e; }
+.pts-semaforo-8{ color:#16a34a; }
+
+.clasificado-card.pts-semaforo-0{ border-color:rgba(239,68,68,.55); }
+.clasificado-card.pts-semaforo-1{ border-color:rgba(249,115,22,.50); }
+.clasificado-card.pts-semaforo-2{ border-color:rgba(251,146,60,.50); }
+.clasificado-card.pts-semaforo-3{ border-color:rgba(250,204,21,.50); }
+.clasificado-card.pts-semaforo-4{ border-color:rgba(253,224,71,.60); }
+.clasificado-card.pts-semaforo-5{ border-color:rgba(190,242,100,.50); }
+.clasificado-card.pts-semaforo-6{ border-color:rgba(132,204,22,.50); }
+.clasificado-card.pts-semaforo-7{ border-color:rgba(34,197,94,.55); }
+.clasificado-card.pts-semaforo-8{ border-color:rgba(22,163,74,.65); }
+
+.clave-clasificado-real{
+    display:inline-block;
+    margin-right:8px;
+}
+
+
+/* v2.8.3 ajustes: penales laterales, standings clasificados y orden */
+.marcador-detalle > .status-partido{
+    display:block;
+    margin-top:8px;
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+.marcador-detalle .marcador-penales{
+    display:inline-flex !important;
+    align-items:center;
+    justify-content:center;
+    flex-direction:row !important;
+    flex-wrap:nowrap !important;
+    gap:8px;
+    white-space:nowrap;
+}
+
+.marcador-detalle .marcador-penales .penales-numero{
+    display:inline-flex !important;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    color:#22c55e !important;
+    font-size:.58em;
+    font-weight:900;
+    line-height:1;
+}
+
+.marcador-detalle .marcador-penales .marcador-goles{
+    display:inline-block !important;
+    white-space:nowrap;
+}
+
+.ranking-clasificados-card{
+    grid-template-columns:48px minmax(120px, 1fr) minmax(170px, auto) 86px;
+}
+
+@media(max-width:700px){
+    .ranking-clasificados-card{
+        grid-template-columns:40px 1fr 74px;
+    }
+
+    .ranking-clasificados-card .ranking-ko-breakdown{
+        grid-column:2 / -1;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:8px;
+    }
+}
+
+/* v2.8.4 mejoras: standings compactos, terceros y resumen stage 2 */
+.tabs-tabla-principal{
+    margin-bottom:8px;
+}
+
+.tabs-tabla-secundaria{
+    margin-top:0;
+    transform:scale(.96);
+    transform-origin:center top;
+}
+
+.tabs-tabla-secundaria button{
+    font-size:13px;
+    padding:9px 12px;
+}
+
+.equipo-clasificado-row{
+    background:linear-gradient(90deg, rgba(34,197,94,.16), rgba(30,41,59,.55));
+}
+
+.equipo-clasificado-row .equipo-grupo-nombre{
+    font-weight:900;
+}
+
+.resumen-usuario-stage2{
+    max-width:980px;
+}
+
+.resumen-usuario-stage2 .resumen-card-principal{
+    border-top:3px solid #38bdf8;
+    background:linear-gradient(180deg, #1e293b, #0f172a);
+}
+
+.resumen-usuario-stage2 .resumen-card-secundario{
+    border-top:3px solid #f59e0b;
+    background:linear-gradient(180deg, #292524, #0f172a);
+}
+
+.resumen-usuario-stage2 .resumen-card-principal strong{
+    color:#e0f2fe;
+}
+
+.resumen-usuario-stage2 .resumen-card-secundario strong{
+    color:#fde68a;
+}
+
+/* v2.8.4 fix definitivo marcador KO con penales en detalle */
+.marcador-detalle > div{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.marcador-detalle > div > .marcador-penales{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-direction:row !important;
+    flex-wrap:nowrap !important;
+    gap:10px !important;
+    margin:0 !important;
+    white-space:nowrap !important;
+    line-height:1 !important;
+}
+
+.marcador-detalle > div > .marcador-penales .marcador-goles{
+    display:inline-block !important;
+    margin:0 !important;
+    font-size:38px !important;
+    color:#f8fafc !important;
+    font-weight:900 !important;
+    line-height:1 !important;
+}
+
+.marcador-detalle > div > .marcador-penales .penales-numero{
+    display:inline-block !important;
+    margin:0 !important;
+    font-size:22px !important;
+    color:#22c55e !important;
+    font-weight:900 !important;
+    line-height:1 !important;
+    vertical-align:middle !important;
+}
+
+
+/* v2.8.7 ajustes Léeme, Clasificados y KO compacto */
+.acciones-inicio-botones{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn-leeme{
+    background:#dc2626 !important;
+    color:white !important;
+    border:none;
+    padding:13px 22px !important;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:800;
+    box-shadow:0 8px 20px rgba(220,38,38,.25);
+    font-size:15px;
+}
+
+.btn-leeme:hover{
+    background:#ef4444 !important;
+    transform:scale(1.03);
+}
+
+.leeme-card{
+    max-width:900px;
+    margin:25px auto;
+    background:#0f172a;
+    border:1px solid rgba(239,68,68,.45);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:#e5e7eb;
+    line-height:1.55;
+    font-size:16px;
+}
+
+.ranking-clasificados-card .ranking-puntos,
+.ranking-puntos-clasificados{
+    color:white !important;
+}
+
+.texto-grupo-clasificados{
+    color:#facc15;
+}
+
+.texto-puntos-clasificados{
+    font-weight:900;
+}
+
+.linea-ko-compacta{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.bandera-solo{
+    display:inline-block;
+    width:22px;
+    height:16px;
+    object-fit:cover;
+    border-radius:3px;
+    vertical-align:middle;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+}
+
+.bandera-placeholder{
+    width:auto;
+    height:auto;
+    box-shadow:none;
+    color:#94a3b8;
+}
+
+.usuario-score span{
+    max-width:92px;
+    text-align:center;
+    line-height:1.05;
+}
+
+
+/* v2.8.8 botón Léeme arriba del logotipo */
+.acciones-leeme-top{
+    margin: 12px 0 26px;
+    padding-bottom: 8px;
+}
+
+.acciones-leeme-top .btn-leeme{
+    min-width: 145px;
+}
+
+
+.texto-grupo-clasificados-blanco{
+    color:#ffffff !important;
+}
+
+.ranking-puntos span{
+    display:block;
+    font-size:11px;
+    line-height:1.1;
+    opacity:.9;
+    font-weight:700;
+}
+
+.balon-menu{
+    width:1.05em;
+    height:1.05em;
+    margin-right:4px;
+}
+
+.stats-clasificados-titulo-blanco{
+    color:#facc15 !important;
+}
+
+.ranking-puntos-inline span{
+    display:inline;
+    font-size:inherit;
+    line-height:inherit;
+    opacity:1;
+}
+
+/* v2.9.2: Especiales en solo dos líneas: Campeón y Goleador */
+.ranking-user-especiales .especial-linea{
+    display:block;
+}
+
+.ranking-user-especiales .pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-left:4px;
+    vertical-align:middle;
+}
+
+.ranking-user-especiales .pais-con-bandera span{
+    display:inline;
+    margin-top:0;
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.ranking-user-especiales .pais-con-bandera .flag-mini{
+    display:inline-block;
+    margin-right:0;
+}
+
+/* =========================================================
+   BRACKET VISUAL DINÁMICO · v3.0.2
+   ========================================================= */
+.bracket-scroll-hint{
+    text-align:center;
+    color:#94a3b8;
+    font-size:13px;
+    margin:8px 0 12px;
+}
+
+.bracket-zoom-controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:0 0 12px;
+}
+
+.bracket-zoom-controls button{
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(15,23,42,.86);
+    color:#f8fafc;
+    border-radius:999px;
+    padding:7px 13px;
+    font-weight:900;
+    font-size:13px;
+    box-shadow:0 6px 14px rgba(0,0,0,.22);
+}
+
+.bracket-zoom-controls button:active{
+    transform:scale(.96);
+    background:rgba(30,64,175,.9);
+}
+
+.bracket-scroll{
+    width:100%;
+    overflow:auto;
+    padding:8px 0 20px;
+    -webkit-overflow-scrolling:touch;
+    touch-action:none;
+    cursor:grab;
+}
+
+.bracket-scroll:active{
+    cursor:grabbing;
+}
+
+.bracket-board{
+    transform-origin:center center;
+    min-width:1600px;
+    max-width:none;
+    width:max-content;
+    margin:0 auto;
+    padding:28px 36px;
+    border-radius:28px;
+    background:
+        radial-gradient(circle at center, rgba(56,189,248,.18) 0%, rgba(15,23,42,.18) 30%, rgba(15,23,42,.92) 72%),
+        linear-gradient(180deg, #0876b8 0%, #0f3a70 46%, #0b1733 100%);
+    display:grid;
+    grid-template-columns:560px 380px 560px;
+    gap:28px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
+    position:relative;
+}
+
+.bracket-side{
+    display:grid;
+    grid-template-rows:repeat(4, minmax(125px, auto));
+    gap:16px;
+}
+
+.bracket-cluster{
+    display:grid;
+    grid-template-columns:168px 26px 168px 26px 168px;
+    grid-template-areas:"r32 ca r16 cb qf";
+    align-items:center;
+    min-height:126px;
+}
+
+/* Lado derecho en espejo perfecto:
+   Cuartos hacia el centro, Octavos al medio, R32 hasta la orilla derecha. */
+.bracket-right .bracket-cluster{
+    grid-template-areas:"qf cb r16 ca r32";
+}
+
+.bracket-round{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.bracket-r32{ grid-area:r32; }
+.bracket-r16{ grid-area:r16; }
+.bracket-qf{ grid-area:qf; }
+.bracket-connector-a{ grid-area:ca; }
+.bracket-connector-b{ grid-area:cb; }
+
+.bracket-match{
+    background:rgba(15,23,42,.82);
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:16px;
+    padding:8px;
+    box-shadow:0 8px 18px rgba(0,0,0,.28);
+    color:#fff;
+    min-height:76px;
+}
+
+.bracket-finalizado{
+    border-color:rgba(34,197,94,.55);
+    box-shadow:0 8px 18px rgba(0,0,0,.28), 0 0 0 1px rgba(34,197,94,.18);
+}
+
+.bracket-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:4px;
+    align-items:center;
+    color:#cbd5e1;
+    font-size:10px;
+    line-height:1.1;
+    margin-bottom:5px;
+}
+
+.bracket-meta strong{
+    color:#f8fafc;
+    font-size:10px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.bracket-meta em{
+    font-style:normal;
+    color:#bae6fd;
+    max-width:70px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.bracket-teams{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:5px;
+}
+
+.bracket-team{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    min-width:0;
+}
+
+.bracket-team img,
+.bracket-flag-placeholder{
+    width:36px;
+    height:24px;
+    border-radius:6px;
+    object-fit:cover;
+    box-shadow:0 3px 8px rgba(0,0,0,.35);
+    background:#1e293b;
+}
+
+.bracket-flag-placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#94a3b8;
+    font-size:9px;
+    font-weight:800;
+    border:1px dashed rgba(148,163,184,.45);
+}
+
+.bracket-team span{
+    font-size:10px;
+    font-weight:800;
+    text-align:center;
+    line-height:1.05;
+    max-width:58px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bracket-team-winner span{
+    color:#facc15;
+}
+
+.bracket-team-winner img{
+    box-shadow:0 0 0 2px #facc15, 0 3px 8px rgba(0,0,0,.35);
+}
+
+.bracket-score{
+    color:#fff;
+    font-size:12px;
+    font-weight:900;
+    text-align:center;
+    min-width:42px;
+}
+
+.bracket-score .penales-numero{
+    color:#22c55e;
+    font-size:10px;
+}
+
+.bracket-winner{
+    margin-top:5px;
+    text-align:center;
+    font-size:10px;
+    color:#94a3b8;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bracket-connector{
+    height:2px;
+    background:rgba(255,255,255,.42);
+    border-radius:999px;
+    position:relative;
+}
+
+/* conectores ubicados con grid-area para que ambos lados queden alineados */
+
+.bracket-center{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    min-height:680px;
+}
+
+.bracket-title-card{
+    text-align:center;
+}
+
+.bracket-title-card h1{
+    margin:0;
+    font-size:45px;
+    line-height:.95;
+    text-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+.bracket-title-card p{
+    margin:8px 0 0;
+    color:#dbeafe;
+    font-size:13px;
+}
+
+.bracket-trophy{
+    font-size:110px;
+    line-height:1;
+    filter:drop-shadow(0 12px 22px rgba(0,0,0,.48));
+}
+
+.bracket-semis{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.bracket-final-card,
+.bracket-third-card{
+    width:100%;
+    background:rgba(15,23,42,.62);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    padding:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.bracket-final-label{
+    color:#facc15;
+    text-align:center;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:30px;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.bracket-final-match{
+    min-height:94px;
+    background:rgba(30,41,59,.95);
+}
+
+.bracket-champion{
+    margin-top:10px;
+    text-align:center;
+}
+
+.bracket-champion span,
+.bracket-third-card > span{
+    display:block;
+    color:#93c5fd;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:11px;
+    margin-bottom:4px;
+}
+
+.bracket-champion strong{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:#facc15;
+    font-size:20px;
+}
+
+.bracket-champion .pais-con-bandera{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.bracket-third-card .bracket-match{
+    background:rgba(30,41,59,.88);
+}
+
+@media(max-width:600px){
+    .bracket-scroll-hint{
+        display:block;
+    }
+
+    .bracket-board{
+        min-width:1540px;
+        padding:22px 30px;
+        gap:22px;
+    }
+
+    .bracket-title-card h1{
+        font-size:38px;
+    }
+}
+
+.bracket-groups-strip{
+    grid-column:1 / -1;
+    margin-top:12px;
+    padding-top:16px;
+    border-top:3px solid rgba(255,255,255,.82);
+    text-align:center;
+}
+
+.bracket-groups-strip h2{
+    margin:0 0 10px;
+    color:#f8fafc;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:34px;
+    letter-spacing:1px;
+}
+
+.bracket-groups-grid{
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    gap:9px;
+}
+
+.bracket-group-col{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+}
+
+.bracket-group-col strong{
+    color:#f8fafc;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:30px;
+    line-height:1;
+}
+
+.bracket-group-col img{
+    width:38px;
+    height:25px;
+    object-fit:cover;
+    border-radius:6px;
+    box-shadow:0 3px 8px rgba(0,0,0,.35);
+}
+
+/* Ajustes v3.0.7: Podio agrupado y Bracket sin zoom */
+.podio-wrapper{
+    margin: 16px 0 18px;
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+}
+.podio-wrapper h2{
+    margin: 0 0 6px;
+    color: #fff;
+}
+.tabs-stats-principales,
+.tabs-podio{
+    gap: 8px;
+}
+.bracket-scroll{
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+}
+.bracket-board{
+    transform: none !important;
+}
+
+/* v3.0.7 final: Bracket sin zoom pesado y orden Stats final */
+.bracket-zoom-controls{ display:none !important; }
+.bracket-scroll{
+    overflow:auto !important;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-x pan-y !important;
+    cursor:default !important;
+}
+.bracket-scroll:active{ cursor:default !important; }
+.bracket-board{ transform:none !important; }
+
+
+/* v3.0.8 ajustes inicio, bracket y stats */
+.acciones-inicio-compactas{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:8px;
+    max-width:520px;
+    margin:10px auto 8px;
+    padding:0 4px;
+}
+.acciones-inicio-compactas button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:11px;
+    padding:9px 7px;
+    font-weight:800;
+    font-size:13px;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(37,99,235,.22);
+    white-space:nowrap;
+}
+.acciones-inicio-compactas .btn-leeme{ background:#dc2626; box-shadow:0 6px 16px rgba(220,38,38,.22); }
+.acciones-inicio-compactas .btn-premios{ background:#334155; }
+.acciones-inicio-compactas .btn-refresh-compacto{ background:#1e293b; border:1px solid rgba(56,189,248,.35); }
+.refresh-container-simple{ margin-bottom:12px; }
+.inicio-grid-compacta{
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:8px;
+    max-width:760px;
+}
+.inicio-card-compacta{
+    padding:12px 7px;
+    border-radius:14px;
+}
+.inicio-card-compacta h2{
+    font-size:25px;
+}
+.inicio-card-compacta p{
+    font-size:11px;
+    line-height:1.15;
+    margin:6px 0 0;
+}
+.icono-trionda-mini{
+    width:22px;
+    height:22px;
+    object-fit:contain;
+    vertical-align:-4px;
+    display:inline-block;
+}
+.bracket-group-team{
+    display:grid;
+    grid-template-columns:38px auto;
+    align-items:center;
+    gap:5px;
+    min-width:64px;
+}
+.bracket-life{
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.3px;
+    line-height:1;
+}
+.bracket-life-in{ color:#22c55e; }
+.bracket-life-out{ color:#ef4444; }
+@media(max-width:520px){
+    .acciones-inicio-compactas{ gap:6px; }
+    .acciones-inicio-compactas button{ font-size:12px; padding:8px 5px; }
+    .inicio-grid-compacta{ grid-template-columns:repeat(4, minmax(0, 1fr)); gap:6px; }
+    .inicio-card-compacta{ padding:10px 5px; }
+    .inicio-card-compacta h2{ font-size:22px; }
+    .inicio-card-compacta p{ font-size:10px; }
+}
+
+
+/* v3.1.1 ajustes responsivos y visuales */
+/* 1. Botones KO más compactos en celular */
+.grupos-ko-grid.ko-grid{
+    grid-template-columns:repeat(6, minmax(0, 1fr));
+    gap:7px;
+}
+.grupos-ko-grid.ko-grid button,
+.ko-grid button{
+    min-width:0 !important;
+    padding-left:4px;
+    padding-right:4px;
+    font-size:13px;
+    white-space:nowrap;
+}
+@media(max-width:420px){
+    .grupos-ko-grid.ko-grid{ gap:6px; }
+    .grupos-ko-grid.ko-grid button,
+    .ko-grid button{
+        font-size:12px;
+        padding-left:3px;
+        padding-right:3px;
+        border-radius:10px;
+    }
+}
+@media(max-width:350px){
+    .grupos-ko-grid.ko-grid button,
+    .ko-grid button{ font-size:11px; }
+}
+
+/* 2. Movimiento sin guion largo: punto medio más limpio */
+.ranking-mov.mov-neutral{
+    transform:none;
+    font-size:28px;
+    letter-spacing:0;
+}
+
+/* 3. Alineación IN / OUT en el listado de grupos del Bracket */
+.bracket-group-team{
+    grid-template-columns:38px 30px;
+    justify-content:center;
+    column-gap:8px;
+}
+.bracket-life{
+    display:inline-block;
+    width:30px;
+    text-align:left;
+    margin-left:1px;
+}
+
+/* 4. Icono Trionda más visible en el cuadro de Goleador */
+.stat-card h2 .icono-trionda-mini{
+    width:44px;
+    height:44px;
+    vertical-align:middle;
+}
+@media(max-width:520px){
+    .stat-card h2 .icono-trionda-mini{
+        width:38px;
+        height:38px;
+    }
+}
+
+/* v3.1.2 ajustes: Leéme historial, Bracket export y Goleadores ESPN */
+.leeme-historial-barra{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin:12px auto 14px;
+    max-width:560px;
+    padding:9px;
+    border-radius:16px;
+    background:rgba(15,23,42,.72);
+    border:1px solid rgba(255,255,255,.10);
+}
+.leeme-historial-barra button{
+    background:#334155;
+    color:#fff;
+    border:none;
+    border-radius:11px;
+    padding:8px 12px;
+    font-weight:800;
+    cursor:pointer;
+}
+.leeme-historial-barra button:disabled{
+    opacity:.38;
+    cursor:not-allowed;
+}
+.leeme-historial-barra span{
+    color:#f8fafc;
+    font-weight:900;
+    min-width:52px;
+    text-align:center;
+}
+.bracket-export-actions{
+    display:flex;
+    justify-content:center;
+    margin:10px 0 12px;
+}
+.bracket-export-actions button{
+    border:none;
+    border-radius:14px;
+    padding:10px 16px;
+    background:#16a34a;
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(22,163,74,.22);
+}
+.goleadores-panel .goleador-row span{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    flex-wrap:wrap;
+}
+.goleadores-panel .goleador-row .flag-mini{
+    width:25px;
+    height:17px;
+    border-radius:4px;
+}
+@media(max-width:520px){
+    .leeme-historial-barra{
+        gap:7px;
+        padding:8px 6px;
+    }
+    .leeme-historial-barra button{
+        padding:7px 8px;
+        font-size:12px;
+    }
+    .bracket-export-actions button{
+        width:100%;
+        max-width:260px;
+    }
+}
+
+/* v3.1.5 ajustes: pronósticos suaves, bracket cache visual, datos compactos y detalle usuario */
+.pronostico{
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);
+}
+.pronostico-puntos-3{
+    background:linear-gradient(to left, rgba(34,197,94,.18) 0%, rgba(34,197,94,.08) 38%, #334155 82%);
+}
+.pronostico-puntos-2{
+    background:linear-gradient(to left, rgba(59,130,246,.18) 0%, rgba(59,130,246,.08) 38%, #334155 82%);
+}
+.pronostico-puntos-1{
+    background:linear-gradient(to left, rgba(250,204,21,.18) 0%, rgba(250,204,21,.08) 38%, #334155 82%);
+}
+.pronostico-puntos-0{
+    background:linear-gradient(to left, rgba(239,68,68,.18) 0%, rgba(239,68,68,.08) 38%, #334155 82%);
+}
+.pronostico-pendiente{
+    background:#334155;
+}
+
+.datos-destacados-records.datos-destacados-compactos{
+    max-width:820px;
+    margin-left:auto;
+    margin-right:auto;
+    justify-content:center;
+    align-items:stretch;
+    grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));
+}
+.datos-destacados-compactos .stat-card{
+    padding:16px 10px;
+    min-height:108px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.datos-destacados-compactos .stat-card h2{
+    font-size:34px;
+    line-height:1;
+    margin-bottom:8px;
+}
+.datos-destacados-compactos .stat-card p{
+    font-size:13px;
+    line-height:1.15;
+}
+
+/* Más cercanía entre banderas y leyendas IN/OUT */
+.bracket-group-team{
+    grid-template-columns:38px 28px !important;
+    column-gap:3px !important;
+    min-width:58px;
+}
+.bracket-life{
+    width:28px !important;
+    margin-left:0 !important;
+    text-align:left !important;
+}
+
+/* Detalle usuario: sin bordes superiores, solo degradado */
+.resumen-usuario-stage2 .resumen-card-principal,
+.resumen-usuario-stage2 .resumen-card-secundario{
+    border-top:none !important;
+}
+.resumen-usuario-stage2 .resumen-card-principal{
+    background:linear-gradient(180deg, rgba(56,189,248,.18), rgba(15,23,42,.96));
+}
+.resumen-usuario-stage2 .resumen-card-secundario{
+    background:linear-gradient(180deg, rgba(245,158,11,.18), rgba(15,23,42,.96));
+}
+
+.records-grid .record-card:nth-child(6){
+    border-left-color:#14b8a6;
+}
+
+@media(max-width:520px){
+    .datos-destacados-records.datos-destacados-compactos{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:9px;
+    }
+    .datos-destacados-compactos .stat-card{
+        min-height:92px;
+        padding:12px 8px;
+    }
+    .datos-destacados-compactos .stat-card h2{
+        font-size:28px;
+    }
+    .datos-destacados-compactos .stat-card p{
+        font-size:12px;
+    }
+}
+
+/* v3.1.6 ajustes finos: Bracket IN/OUT, Inicio 2x2 móvil */
+.bracket-group-team{
+    grid-template-columns:38px 44px !important;
+    column-gap:12px !important;
+    justify-content:center !important;
+    align-items:center !important;
+    min-width:92px !important;
+}
+.bracket-group-team img{
+    justify-self:end !important;
+}
+.bracket-life{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-width:34px !important;
+    margin-left:2px !important;
+    text-align:left !important;
+}
+
+@media(max-width:640px){
+    .inicio-grid-compacta{
+        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+        gap:10px !important;
+        max-width:430px !important;
+        margin-left:auto !important;
+        margin-right:auto !important;
+    }
+    .inicio-card-compacta{
+        padding:16px 10px !important;
+        border-radius:16px !important;
+        min-height:88px !important;
+        display:flex !important;
+        flex-direction:column !important;
+        justify-content:center !important;
+    }
+    .inicio-card-compacta h2{
+        font-size:31px !important;
+        line-height:1 !important;
+    }
+    .inicio-card-compacta p{
+        font-size:12px !important;
+        line-height:1.18 !important;
+        margin-top:8px !important;
+    }
+}
+
+@media(max-width:360px){
+    .inicio-grid-compacta{ gap:8px !important; }
+    .inicio-card-compacta{
+        padding:14px 8px !important;
+        min-height:82px !important;
+    }
+    .inicio-card-compacta h2{ font-size:28px !important; }
+    .inicio-card-compacta p{ font-size:11px !important; }
+}
+
+
+/* v3.1.7 Bracket: copa FIFA central como el fondo visual */
+.bracket-center{
+    position:relative;
+    isolation:isolate;
+}
+.bracket-trophy{
+    position:absolute;
+    inset:88px 50% auto auto;
+    transform:translateX(50%);
+    width:260px;  /* 260px */
+    height:430px;  /* 430px */
+    z-index:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    opacity:.28;  /* .28 */
+    filter:drop-shadow(0 18px 34px rgba(0,0,0,.55));
+}
+.bracket-trophy-img{
+    width:130%;  /* 100%*/
+    height:130%;  /* 100%*/
+    object-fit:contain;
+}
+.bracket-title-card,
+.bracket-semis,
+.bracket-final-card,
+.bracket-third-card{
+    position:relative;
+    z-index:1;
+}
+.bracket-final-card{
+    background:rgba(15,23,42,.72);
+    backdrop-filter:blur(1px);
+}
+@media(max-width:600px){
+    .bracket-trophy{
+        width:230px;  /* 230px */
+        height:380px;  /* 380px */
+        top:98px;
+        opacity:.24;  /* .24 */
+    }
+}
+
+/* v3.1.8 Exportación horizontal del Bracket */
+.bracket-export-sandbox{
+    position:fixed;
+    left:-100000px;
+    top:0;
+    width:2200px;
+    min-height:1200px;
+    padding:28px;
+    background:#0f172a;
+    overflow:visible;
+    pointer-events:none;
+    z-index:-1;
+}
+.bracket-board-export-canvas{
+    width:2100px !important;
+    min-width:2100px !important;
+    max-width:none !important;
+    margin:0 !important;
+    grid-template-columns:670px 560px 670px !important;
+    gap:34px !important;
+    padding:34px 44px !important;
+    box-sizing:border-box !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    width:340px !important;
+    height:560px !important;
+    top:80px !important;
+}
+.bracket-board-export-canvas .bracket-trophy-img{
+    width:120% !important;
+    height:120% !important;
+}
+
+/* v3.1.9 ajustes: bracket compacto, copa centrada, IN/OUT alineado y exportación ligera */
+.bracket-board{
+    min-width:1480px !important;
+    grid-template-columns:520px 330px 520px !important;
+    gap:22px !important;
+    padding:24px 30px !important;
+}
+.bracket-side{
+    grid-template-rows:repeat(4, minmax(112px, auto)) !important;
+    gap:12px !important;
+}
+.bracket-cluster{
+    grid-template-columns:158px 20px 158px 20px 158px !important;
+    min-height:112px !important;
+}
+.bracket-round{
+    gap:8px !important;
+}
+.bracket-match{
+    min-height:70px !important;
+    padding:7px !important;
+    border-radius:14px !important;
+}
+.bracket-center{
+    min-height:610px !important;
+    gap:10px !important;
+    justify-content:space-between !important;
+}
+.bracket-title-card h1{
+    font-size:40px !important;
+}
+.bracket-title-card p{
+    font-size:12px !important;
+    margin-top:6px !important;
+}
+.bracket-semis{
+    gap:10px !important;
+}
+.bracket-final-card,
+.bracket-third-card{
+    padding:10px !important;
+    border-radius:18px !important;
+}
+.bracket-final-label{
+    font-size:26px !important;
+    margin-bottom:6px !important;
+}
+.bracket-trophy{
+    top:50% !important;
+    right:50% !important;
+    transform:translate(50%, -50%) !important;
+    width:245px !important;
+    height:390px !important;
+    opacity:.24 !important;
+}
+.bracket-trophy-img{
+    width:118% !important;
+    height:118% !important;
+}
+.bracket-groups-strip{
+    margin-top:8px !important;
+    padding-top:12px !important;
+}
+.bracket-groups-grid{
+    gap:7px !important;
+}
+.bracket-group-team{
+    grid-template-columns:38px 44px !important;
+    column-gap:8px !important;
+    min-width:84px !important;
+}
+.bracket-group-team img{
+    justify-self:end !important;
+}
+.bracket-life{
+    justify-self:start !important;
+    min-width:38px !important;
+    padding:3px 5px !important;
+    border-radius:999px !important;
+    font-size:9px !important;
+    letter-spacing:.4px !important;
+    line-height:1 !important;
+    background:rgba(15,23,42,.56) !important;
+    border:1px solid rgba(255,255,255,.16) !important;
+}
+.bracket-life-in{
+    color:#86efac !important;
+    border-color:rgba(34,197,94,.45) !important;
+}
+.bracket-life-out{
+    color:#fca5a5 !important;
+    border-color:rgba(239,68,68,.45) !important;
+}
+.bracket-export-actions{
+    gap:8px !important;
+    flex-wrap:wrap !important;
+}
+.bracket-export-actions button{
+    min-width:132px !important;
+}
+.resumen-card-goles strong{
+    color:#bbf7d0 !important;
+}
+.resumen-card-goles{
+    background:linear-gradient(180deg, rgba(34,197,94,.18), rgba(15,23,42,.96)) !important;
+}
+@media(max-width:600px){
+    .bracket-board{
+        min-width:1480px !important;
+        padding:22px 28px !important;
+        gap:20px !important;
+    }
+    .bracket-trophy{
+        width:230px !important;
+        height:370px !important;
+        top:50% !important;
+    }
+}
+.bracket-board-export-canvas{
+    width:1600px !important;
+    min-width:1600px !important;
+    grid-template-columns:560px 360px 560px !important;
+    gap:24px !important;
+    padding:24px 30px !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    top:50% !important;
+    width:260px !important;
+    height:420px !important;
+    transform:translate(50%, -50%) !important;
+}
+.bracket-board-export-canvas .bracket-trophy-img{
+    width:116% !important;
+    height:116% !important;
+}
+.bracket-export-sandbox{
+    width:1700px !important;
+    min-height:1050px !important;
+    padding:22px !important;
+}
+
+
+/* v3.1.10 correcciones: exportación, líneas bracket, copa y detalle usuario */
+.bracket-export-actions button{
+    background:#f59e0b !important;
+    color:#0f172a !important;
+    border:1px solid rgba(250,204,21,.72) !important;
+    box-shadow:0 8px 18px rgba(245,158,11,.22) !important;
+}
+
+/* Líneas de avance sin alterar el layout base */
+.bracket-connector{
+    overflow:visible !important;
+    background:rgba(226,232,240,.50) !important;
+}
+.bracket-connector::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    width:2px;
+    transform:translateY(-50%);
+    background:rgba(226,232,240,.50);
+    border-radius:999px;
+}
+.bracket-connector-a::before{
+    height:74px;
+    left:0;
+}
+.bracket-right .bracket-connector-a::before{
+    left:auto;
+    right:0;
+}
+.bracket-connector-b::before{
+    height:136px;
+    right:0;
+}
+.bracket-right .bracket-connector-b::before{
+    right:auto;
+    left:0;
+}
+.bracket-connector-b::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    width:2px;
+    height:68px;
+    right:0;
+    background:rgba(226,232,240,.50);
+    border-radius:999px;
+}
+.bracket-right .bracket-connector-b::after{
+    right:auto;
+    left:0;
+}
+
+/* Exportación: conservar la copa centrada como en la vista normal */
+.bracket-board-export-canvas .bracket-center{
+    min-height:610px !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    top:54% !important;
+    right:50% !important;
+    transform:translate(50%, -50%) !important;
+    width:245px !important;
+    height:390px !important;
+    opacity:.24 !important;
+}
+.bracket-board-export-canvas .bracket-trophy-img{
+    width:118% !important;
+    height:118% !important;
+}
+
+.resumen-card-goles strong{
+    color:#facc15 !important;
+}
+.resumen-card-goles{
+    background:linear-gradient(180deg, rgba(245,158,11,.18), rgba(15,23,42,.96)) !important;
+}
+
+
+/* v3.2.1: goleadores top 25, paginación, export verde y conectores bracket */
+.goleadores-paginacion{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-top:14px;
+    color:#e2e8f0;
+    font-weight:900;
+}
+.goleadores-paginacion button{
+    border:1px solid rgba(148,163,184,.35);
+    background:rgba(15,23,42,.86);
+    color:#f8fafc;
+    border-radius:10px;
+    padding:6px 11px;
+    cursor:pointer;
+    font-weight:900;
+}
+.goleadores-paginacion button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+.goleador-pick-inline{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    flex-wrap:wrap;
+}
+.goleador-pick-inline .flag-mini{
+    width:23px;
+    height:16px;
+    border-radius:4px;
+    object-fit:cover;
+}
+.resumen-card-goles,
+.resumen-usuario-stage2 .resumen-card-goles{
+    background:linear-gradient(180deg, rgba(245,158,11,.18), rgba(15,23,42,.96)) !important;
+}
+.resumen-card-goles strong,
+.resumen-usuario-stage2 .resumen-card-goles strong{
+    color:#fde68a !important;
+}
+.bracket-export-actions button{
+    background:#16a34a !important;
+    color:#ffffff !important;
+    border:1px solid rgba(74,222,128,.72) !important;
+    border-radius:12px !important;
+    padding:8px 13px !important;
+    min-width:0 !important;
+    width:auto !important;
+    box-shadow:0 8px 18px rgba(22,163,74,.24) !important;
+}
+.bracket-connector{
+    height:2px !important;
+    align-self:center !important;
+    background:rgba(226,232,240,.55) !important;
+    overflow:visible !important;
+    border-radius:999px !important;
+}
+.bracket-connector-a::before,
+.bracket-connector-b::before,
+.bracket-connector-b::after{
+    content:"";
+    position:absolute;
+    width:2px;
+    background:rgba(226,232,240,.55);
+    border-radius:999px;
+    pointer-events:none;
+}
+.bracket-connector-a::before{
+    height:82px !important;
+    top:50% !important;
+    left:0 !important;
+    transform:translateY(-50%) !important;
+}
+.bracket-right .bracket-connector-a::before{
+    left:auto !important;
+    right:0 !important;
+}
+.bracket-connector-b::before{
+    height:58px !important;
+    top:50% !important;
+    right:0 !important;
+    transform:translateY(-50%) !important;
+}
+.bracket-right .bracket-connector-b::before{
+    right:auto !important;
+    left:0 !important;
+}
+.bracket-connector-b::after{
+    height:2px !important;
+    width:100% !important;
+    top:50% !important;
+    right:0 !important;
+    transform:translateY(-50%) !important;
+}
+.bracket-right .bracket-connector-b::after{
+    right:auto !important;
+    left:0 !important;
+}
+.bracket-cluster:nth-child(odd) .bracket-connector-b::before{
+    height:144px !important;
+}
+.bracket-board-export-canvas .bracket-connector-a::before{
+    height:78px !important;
+}
+.bracket-board-export-canvas .bracket-cluster:nth-child(odd) .bracket-connector-b::before{
+    height:132px !important;
+}
+
+/* v3.2.2 ajustes solicitados */
+.tabs-mini-estadisticas .tab-standing-goleador{
+    flex:0 0 auto !important;
+    min-width:0 !important;
+    width:auto !important;
+    padding:10px 14px !important;
+    align-self:center !important;
+}
+
+.ranking-user-especiales .especial-linea{
+    display:flex !important;
+    align-items:center !important;
+    gap:5px !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+    min-width:0 !important;
+}
+.ranking-user-especiales .goleador-pick-inline{
+    display:inline-flex !important;
+    align-items:center !important;
+    gap:5px !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+    min-width:0 !important;
+}
+.ranking-user-especiales .goleador-pick-inline .flag-mini{
+    width:22px !important;
+    height:22px !important;
+    border-radius:50% !important;
+    object-fit:cover !important;
+    box-shadow:0 2px 6px rgba(0,0,0,.32) !important;
+}
+
+.bracket-group-letter{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-width:34px !important;
+    height:28px !important;
+    padding:2px 10px !important;
+    border-radius:999px !important;
+    color:#e0f2fe !important;
+    background:linear-gradient(180deg, rgba(14,165,233,.30), rgba(15,23,42,.68)) !important;
+    border:1px solid rgba(56,189,248,.62) !important;
+    box-shadow:0 6px 14px rgba(14,165,233,.16) !important;
+}
+
+.bracket-trophy{
+    width:285px !important;
+    height:455px !important;
+    opacity:.27 !important;
+}
+.bracket-trophy-img{
+    width:122% !important;
+    height:122% !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    width:300px !important;
+    height:480px !important;
+    opacity:.27 !important;
+}
+.bracket-board-export-canvas .bracket-trophy-img{
+    width:122% !important;
+    height:122% !important;
+}
+
+.bracket-export-actions button{
+    padding:8px 11px !important;
+    min-width:112px !important;
+}
+
+@media(max-width:700px){
+    .ranking-user-especiales .especial-linea,
+    .ranking-user-especiales .goleador-pick-inline{
+        gap:4px !important;
+        font-size:12px !important;
+    }
+    .ranking-user-especiales .goleador-pick-inline .flag-mini{
+        width:19px !important;
+        height:19px !important;
+    }
+    .bracket-trophy{
+        width:260px !important;
+        height:420px !important;
+    }
+}
+
+/* v3.2.2 conectores bracket más alineados */
+.bracket-cluster{ position:relative !important; }
+.bracket-connector{
+    position:relative !important;
+    height:2px !important;
+    background:rgba(226,232,240,.62) !important;
+    align-self:center !important;
+    border-radius:999px !important;
+}
+.bracket-connector-a::before,
+.bracket-connector-b::before{
+    content:"" !important;
+    position:absolute !important;
+    width:2px !important;
+    left:50% !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    background:rgba(226,232,240,.62) !important;
+    border-radius:999px !important;
+}
+.bracket-connector-a::before{ height:96px !important; }
+.bracket-connector-b::before{ height:128px !important; }
+.bracket-cluster:nth-child(even) .bracket-connector-a::before{ height:96px !important; }
+.bracket-right .bracket-connector-a::before,
+.bracket-right .bracket-connector-b::before{
+    left:50% !important;
+    right:auto !important;
+}
+.bracket-connector-b::after{ display:none !important; }
+.bracket-board-export-canvas .bracket-connector-a::before{ height:90px !important; }
+.bracket-board-export-canvas .bracket-connector-b::before{ height:120px !important; }
+
+
+/* v3.2.3 standings compactos: sin bordes laterales, +/- y forma W/D/L */
+
+
+/* v3.2.5 ajustes: iconos especiales y copa estable en exportación */
+.ranking-user-especiales .especial-linea{
+    display:flex !important;
+    align-items:center !important;
+    gap:6px !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+}
+.especial-icono-trofeo,
+.especial-icono-goleador{
+    width:22px !important;
+    height:22px !important;
+    min-width:22px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    line-height:1 !important;
+    flex-shrink:0 !important;
+}
+.especial-icono-trofeo{
+    font-size:19px !important;
+}
+.especial-icono-goleador{
+    object-fit:contain !important;
+    filter:drop-shadow(0 2px 5px rgba(0,0,0,.28));
+}
+.ranking-user-especiales .goleador-pick-inline .flag-mini,
+.ranking-user-especiales .pais-con-bandera .flag-mini{
+    width:22px !important;
+    height:22px !important;
+    border-radius:50% !important;
+    object-fit:cover !important;
+}
+.bracket-center{
+    position:relative !important;
+    isolation:isolate !important;
+}
+.bracket-trophy{
+    left:50% !important;
+    right:auto !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:visible !important;
+}
+.bracket-trophy-img{
+    object-fit:contain !important;
+    object-position:center center !important;
+    display:block !important;
+}
+.bracket-board-export-canvas .bracket-center{
+    min-height:610px !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    left:50% !important;
+    right:auto !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    width:300px !important;
+    height:480px !important;
+    opacity:.27 !important;
+}
+.bracket-board-export-canvas .bracket-trophy-img{
+    width:122% !important;
+    height:122% !important;
+    object-fit:contain !important;
+}
+@media(max-width:700px){
+    .especial-icono-trofeo,
+    .especial-icono-goleador{
+        width:19px !important;
+        height:19px !important;
+        min-width:19px !important;
+    }
+    .especial-icono-trofeo{ font-size:17px !important; }
+}
+
+/* v3.2.6 ajustes: export bracket funcional, leyenda especiales y botones */
+.bracket-export-actions button{
+    min-width:150px !important;
+    padding-left:18px !important;
+    padding-right:18px !important;
+}
+
+.bracket-group-letter{
+    min-width:42px !important;
+    height:32px !important;
+    padding:3px 12px !important;
+    border-radius:10px !important;
+    border-width:2px !important;
+}
+
+.tabs-mini-estadisticas .tab-standing-goleador{
+    min-width:132px !important;
+    padding-left:18px !important;
+    padding-right:18px !important;
+}
+
+.standing-especiales-leyenda{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    margin:0 0 12px;
+    padding:8px 12px;
+    border:1px solid rgba(148,163,184,.22);
+    border-radius:14px;
+    background:rgba(15,23,42,.55);
+    color:#e5e7eb;
+    font-weight:900;
+    font-size:13px;
+    letter-spacing:.2px;
+    box-sizing:border-box;
+}
+.standing-especiales-leyenda .especial-leyenda-item{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+}
+.standing-especiales-leyenda .especial-leyenda-separador{
+    color:#facc15;
+    font-size:18px;
+    line-height:1;
+}
+.standing-especiales-leyenda .especial-icono-trofeo,
+.standing-especiales-leyenda .especial-icono-goleador{
+    width:22px !important;
+    height:22px !important;
+    min-width:22px !important;
+}
+
+.bracket-export-sandbox{
+    position:absolute !important;
+    left:0 !important;
+    top:0 !important;
+    width:1700px !important;
+    min-height:1050px !important;
+    padding:22px !important;
+    background:#0f172a !important;
+    overflow:visible !important;
+    pointer-events:none !important;
+    opacity:0.01 !important;
+    z-index:0 !important;
+}
+.bracket-board-export-canvas{
+    position:relative !important;
+    transform:none !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    left:50% !important;
+    right:auto !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    margin:0 !important;
+}
+
+@media(max-width:700px){
+    .standing-especiales-leyenda{
+        font-size:12px;
+        gap:6px;
+        padding:7px 8px;
+    }
+    .standing-especiales-leyenda .especial-icono-trofeo,
+    .standing-especiales-leyenda .especial-icono-goleador{
+        width:19px !important;
+        height:19px !important;
+        min-width:19px !important;
+    }
+    .bracket-group-letter{
+        min-width:38px !important;
+        height:30px !important;
+        border-radius:9px !important;
+    }
+}
+
+/* v3.3.0 Bracket estable: copa exportada, conectores reales y leyendas por fase */
+.bracket-side{
+    position:relative !important;
+    padding-top:34px !important;
+}
+.bracket-phase-label{
+    font-family:'Bebas Neue', sans-serif !important;
+    color:#f8fafc !important;
+    font-size:21px !important;
+    letter-spacing:1px !important;
+    text-transform:uppercase !important;
+    text-align:center !important;
+    text-shadow:0 3px 10px rgba(0,0,0,.35) !important;
+    pointer-events:none !important;
+    z-index:3 !important;
+}
+.bracket-side > .bracket-phase-label{
+    position:absolute !important;
+    top:5px !important;
+    width:158px !important;
+}
+.bracket-left .bracket-label-r32{ left:0 !important; }
+.bracket-left .bracket-label-r16{ left:178px !important; }
+.bracket-left .bracket-label-qf{ left:356px !important; }
+.bracket-right .bracket-label-qf{ left:0 !important; }
+.bracket-right .bracket-label-r16{ left:178px !important; }
+.bracket-right .bracket-label-r32{ left:356px !important; }
+.bracket-label-semis{
+    width:100% !important;
+    margin:-2px 0 -4px !important;
+    color:#dbeafe !important;
+}
+
+.bracket-cluster{
+    position:relative !important;
+    overflow:visible !important;
+}
+.bracket-connector{
+    position:relative !important;
+    align-self:stretch !important;
+    height:auto !important;
+    min-height:100% !important;
+    background:transparent !important;
+    overflow:visible !important;
+    border-radius:0 !important;
+}
+.bracket-connector::before,
+.bracket-connector::after{
+    display:none !important;
+}
+.bracket-connector .connector-line{
+    position:absolute !important;
+    display:block !important;
+    background:rgba(226,232,240,.68) !important;
+    border-radius:999px !important;
+    box-shadow:0 0 7px rgba(148,163,184,.16) !important;
+    pointer-events:none !important;
+}
+/* Conector 32avos -> Octavos: ┐├┘ */
+.bracket-connector-a .connector-vertical{
+    width:2px !important;
+    left:50% !important;
+    top:25% !important;
+    height:50% !important;
+    transform:translateX(-50%) !important;
+}
+.bracket-connector-a .connector-top,
+.bracket-connector-a .connector-bottom{
+    height:2px !important;
+    left:0 !important;
+    width:50% !important;
+}
+.bracket-connector-a .connector-top{ top:25% !important; }
+.bracket-connector-a .connector-bottom{ top:75% !important; }
+.bracket-connector-a .connector-middle{
+    height:2px !important;
+    left:50% !important;
+    width:50% !important;
+    top:50% !important;
+}
+.bracket-right .bracket-connector-a .connector-top,
+.bracket-right .bracket-connector-a .connector-bottom{
+    left:50% !important;
+    width:50% !important;
+}
+.bracket-right .bracket-connector-a .connector-middle{
+    left:0 !important;
+    width:50% !important;
+}
+
+/* Conector Octavos -> Cuartos: une dos octavos de un par hacia el cuarto */
+.bracket-connector-b{
+    overflow:visible !important;
+}
+.bracket-connector-b .connector-vertical{
+    width:2px !important;
+    left:50% !important;
+    top:50% !important;
+    height:124px !important;
+    transform:translateX(-50%) !important;
+}
+.bracket-connector-b .connector-top{
+    height:2px !important;
+    left:0 !important;
+    width:50% !important;
+    top:50% !important;
+}
+.bracket-connector-b .connector-bottom{
+    height:2px !important;
+    left:0 !important;
+    width:50% !important;
+    top:calc(50% + 124px) !important;
+}
+.bracket-connector-b .connector-middle{
+    height:2px !important;
+    left:50% !important;
+    width:50% !important;
+    top:calc(50% + 62px) !important;
+}
+.bracket-right .bracket-connector-b .connector-top,
+.bracket-right .bracket-connector-b .connector-bottom{
+    left:50% !important;
+    width:50% !important;
+}
+.bracket-right .bracket-connector-b .connector-middle{
+    left:0 !important;
+    width:50% !important;
+}
+.bracket-cluster-pair-start .bracket-qf{
+    transform:translateY(62px) !important;
+    position:relative !important;
+    z-index:2 !important;
+}
+.bracket-cluster-pair-end .bracket-qf,
+.bracket-cluster-pair-end .bracket-connector-b{
+    visibility:hidden !important;
+}
+
+/* Copa: usar coordenadas limpias también en el clon de exportación */
+.bracket-center{
+    position:relative !important;
+    isolation:isolate !important;
+}
+.bracket-trophy{
+    position:absolute !important;
+    left:50% !important;
+    right:auto !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    transform-origin:center center !important;
+    margin:0 !important;
+    z-index:0 !important;
+    width:285px !important;
+    height:455px !important;
+    opacity:.27 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:visible !important;
+    pointer-events:none !important;
+}
+.bracket-trophy-img{
+    width:122% !important;
+    height:122% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    display:block !important;
+}
+.bracket-board-export-canvas{
+    transform:none !important;
+    margin:0 !important;
+    box-sizing:border-box !important;
+}
+.bracket-board-export-canvas .bracket-side{
+    padding-top:34px !important;
+}
+.bracket-board-export-canvas .bracket-trophy{
+    left:50% !important;
+    right:auto !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    width:285px !important;
+    height:455px !important;
+    opacity:.27 !important;
+}
+.bracket-export-sandbox{
+    position:fixed !important;
+    left:-99999px !important;
+    top:0 !important;
+    opacity:1 !important;
+    z-index:-1 !important;
+    pointer-events:none !important;
+    background:#0f172a !important;
+    overflow:visible !important;
+}
+
+@media(max-width:700px){
+    .bracket-trophy,
+    .bracket-board-export-canvas .bracket-trophy{
+        width:260px !important;
+        height:420px !important;
+    }
+    .bracket-phase-label{ font-size:19px !important; }
+}
+
+/* v3.3.1 ajuste final Bracket: Fase 32, copa fija de fondo y rutas avanzadas SVG */
+.bracket-board{
+    position:relative !important;
+}
+.bracket-trophy-bg{
+    position:absolute !important;
+    left:50% !important;
+    top:39% !important;
+    width:385px !important;
+    height:auto !important;
+    max-height:575px !important;
+    transform:translate(-50%, -50%) !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    opacity:.27 !important;
+    z-index:0 !important;
+    pointer-events:none !important;
+    filter:drop-shadow(0 14px 25px rgba(0,0,0,.45)) !important;
+}
+.bracket-center .bracket-trophy{
+    display:none !important;
+}
+.bracket-board > .bracket-side,
+.bracket-board > .bracket-center,
+.bracket-board > .bracket-groups-strip{
+    position:relative !important;
+    z-index:2 !important;
+}
+.bracket-dynamic-lines{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    z-index:1 !important;
+    pointer-events:none !important;
+    overflow:visible !important;
+}
+.bracket-dynamic-path{
+    fill:none !important;
+    stroke:rgba(226,232,240,.72) !important;
+    stroke-width:2 !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+    filter:drop-shadow(0 0 5px rgba(148,163,184,.12)) !important;
+}
+/* Se respetan los conectores 32 -> Octavos; los demás se dibujan con SVG para que no se descuadren */
+.bracket-connector-b .connector-line{
+    display:none !important;
+}
+.bracket-cluster-pair-start .bracket-qf{
+    transform:translateY(62px) !important;
+}
+.bracket-board-export-canvas .bracket-trophy-bg{
+    left:50% !important;
+    top:39% !important;
+    width:385px !important;
+    max-height:575px !important;
+    transform:translate(-50%, -50%) !important;
+    opacity:.27 !important;
+}
+.bracket-board-export-canvas .bracket-dynamic-lines{
+    z-index:1 !important;
+}
+
+@media(max-width:700px){
+    .bracket-trophy-bg,
+    .bracket-board-export-canvas .bracket-trophy-bg{
+        width:350px !important;
+        top:39% !important;
+    }
+}
+
+
+/* v3.3.2 Bracket: copa centrada real y líneas de cuartos a semifinales */
+.bracket-board > .bracket-trophy-bg{
+    display:none !important;
+}
+.bracket-center{
+    position:relative !important;
+    overflow:visible !important;
+}
+.bracket-center .bracket-trophy{
+    display:flex !important;
+    position:absolute !important;
+    left:50% !important;
+    top:38% !important;
+    width:468px !important;
+    height:672px !important;
+    transform:translate(-50%, -50%) !important;
+    opacity:.25 !important;
+    z-index:0 !important;
+    pointer-events:none !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:visible !important;
+    filter:drop-shadow(0 14px 25px rgba(0,0,0,.45)) !important;
+}
+.bracket-center .bracket-trophy-img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    display:block !important;
+}
+.bracket-center > :not(.bracket-trophy){
+    position:relative !important;
+    z-index:2 !important;
+}
+.bracket-board-export-canvas > .bracket-trophy-bg{
+    display:none !important;
+}
+.bracket-board-export-canvas .bracket-center .bracket-trophy{
+    display:flex !important;
+    left:50% !important;
+    top:38% !important;
+    width:468px !important;
+    height:672px !important;
+    transform:translate(-50%, -50%) !important;
+    opacity:.25 !important;
+}
+
+@media(max-width:700px){
+    .bracket-center .bracket-trophy,
+    .bracket-board-export-canvas .bracket-center .bracket-trophy{
+        width:420px !important;
+        height:612px !important;
+        top:38% !important;
+    }
+}
+
+/* v3.3.3 corrección real Bracket: copa como fondo estable y rutas QF -> SF alineadas */
+.bracket-board{
+    position:relative !important;
+    isolation:isolate !important;
+}
+.bracket-board::before{
+    content:"" !important;
+    position:absolute !important;
+    inset:0 !important;
+    z-index:0 !important;
+    pointer-events:none !important;
+    background-image:url('../img/copa-fifa.png') !important;
+    background-repeat:no-repeat !important;
+    background-position:50% 38% !important;
+    background-size:auto 560px !important;
+    opacity:.25 !important;
+    filter:drop-shadow(0 14px 25px rgba(0,0,0,.45)) !important;
+}
+.bracket-board > .bracket-trophy-bg,
+.bracket-center .bracket-trophy,
+.bracket-board-export-canvas > .bracket-trophy-bg,
+.bracket-board-export-canvas .bracket-center .bracket-trophy{
+    display:none !important;
+}
+.bracket-board > .bracket-side,
+.bracket-board > .bracket-center,
+.bracket-board > .bracket-groups-strip{
+    position:relative !important;
+    z-index:2 !important;
+}
+.bracket-dynamic-lines{
+    z-index:1 !important;
+}
+.bracket-board-export-canvas::before{
+    background-position:50% 38% !important;
+    background-size:auto 560px !important;
+    opacity:.25 !important;
+}
+
+@media(max-width:700px){
+    .bracket-board::before,
+    .bracket-board-export-canvas::before{
+        background-size:auto 510px !important;
+        background-position:50% 38% !important;
+    }
+}
+
+/* v3.3.4 ajuste fino Bracket: leyendas por etapa y final más compacto */
+.bracket-side > .bracket-label-r16{
+    top:28px !important;
+}
+.bracket-side > .bracket-label-qf{
+    top:94px !important;
+}
+.bracket-label-semis{
+    transform:translateY(24px) !important;
+    margin:0 0 -8px !important;
+}
+.bracket-final-card{
+    width:86% !important;
+    max-width:330px !important;
+    align-self:center !important;
+    padding:11px !important;
+}
+.bracket-final-match{
+    min-height:86px !important;
+}
+.bracket-final-label{
+    font-size:27px !important;
+    margin-bottom:6px !important;
+}
+.bracket-champion{
+    margin-top:8px !important;
+}
+
+@media(max-width:700px){
+    .bracket-side > .bracket-label-r16{
+        top:28px !important;
+    }
+    .bracket-side > .bracket-label-qf{
+        top:92px !important;
+    }
+    .bracket-label-semis{
+        transform:translateY(22px) !important;
+    }
+    .bracket-final-card{
+        width:80% !important;
+        max-width:305px !important;
+    }
+}
+
+
+/* v3.3.5 ajuste fino solicitado: QF -> Semis limpio, copa centrada en vista y tercer lugar más compacto */
+.bracket-board:not(.bracket-board-export-canvas)::before{
+    background-position:50% 42% !important;
+}
+.bracket-board-export-canvas::before{
+    background-position:50% 38% !important;
+}
+.bracket-third-card{
+    width:76% !important;
+    max-width:292px !important;
+    align-self:center !important;
+}
+.bracket-third-card .bracket-match{
+    min-height:82px !important;
+}
+
+@media(max-width:700px){
+    .bracket-board:not(.bracket-board-export-canvas)::before{
+        background-position:50% 42% !important;
+    }
+    .bracket-board-export-canvas::before{
+        background-position:50% 38% !important;
+    }
+    .bracket-third-card{
+        width:72% !important;
+        max-width:275px !important;
+        padding:10px !important;
+    }
+}
+
+
+/* v3.3.5.1 ajuste bracket: export QF->SF y sin línea sobre grupos */
+.bracket-groups-strip{
+    border-top:none !important;
+}
+
+/* v3.3.5.3 ajuste export: cuartos alineados y rutas QF -> SF usando posiciones reales */
+.bracket-board-export-canvas .bracket-cluster-pair-start .bracket-qf{
+    transform:translateY(62px) !important;
+}
+
+/* v3.3.5.5 ajuste fino exportado: QF -> Semifinales */
+.bracket-board-export-canvas .bracket-dynamic-path{
+    stroke-width:2.15px !important;
+}
+
+/* v3.3.5.10: ajuste fino SOLO exportación.
+   Se suben los cuadros de Cuartos, pero se mantiene la salida de líneas bajada desde JS. */
+.bracket-board-export-canvas .bracket-cluster-pair-start .bracket-qf{
+    transform:translateY(42px) !important;
+}
+
+
+/* v3.3.5.11: ajuste SOLO vista normal (PC/celular).
+   No afecta .bracket-board-export-canvas ni la imagen exportada. */
+.bracket-board:not(.bracket-board-export-canvas)::before{
+    background-position:47% 42% !important;
+}
+@media(max-width:700px){
+    .bracket-board:not(.bracket-board-export-canvas)::before{
+        background-position:47% 42% !important;
+    }
+}
+
+
+/* v3.3.6.7: Standings Clasificados leyenda 8P/5P/4P/1P en 2 líneas */
+.ranking-clasificados-card .ranking-ko-breakdown{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(48px, auto));
+    gap:3px 10px;
+    align-items:center;
+}
+
+/* v3.3.8.1 · Goleadores reales ESPN */
+.goleador-goles-real{
+    color:#facc15 !important;
+    font-weight:900;
+}
+.goleadores-fuente{
+    margin-top:-4px;
+    margin-bottom:10px;
+    color:#e2e8f0;
+    font-weight:800;
+}
+
+
+/* v3.3.10 · Formulario Picks Ronda de 32 */
+.form-picks-home{
+    max-width:620px;
+    margin:10px auto 12px;
+    border-radius:18px;
+    padding:13px 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+    animation:fadeUp .65s ease both;
+}
+.form-picks-home strong,
+.form-picks-home span{
+    display:block;
+}
+.form-picks-home strong{
+    color:#f8fafc;
+    font-size:15px;
+    letter-spacing:.2px;
+}
+.form-picks-home span{
+    color:#d1fae5;
+    font-size:12px;
+    margin-top:3px;
+}
+.form-picks-home-abierto{
+    background:linear-gradient(135deg, rgba(22,163,74,.96), rgba(5,150,105,.88));
+    border:1px solid rgba(134,239,172,.55);
+}
+.form-picks-home-cerrado{
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(135deg, rgba(30,41,59,.96), rgba(15,23,42,.94));
+    border:1px solid rgba(148,163,184,.30);
+}
+.form-picks-home-cerrado span{
+    color:#fde68a;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.9px;
+}
+.form-picks-home button{
+    background:#ffffff;
+    color:#047857;
+    border:none;
+    border-radius:12px;
+    padding:9px 12px;
+    font-weight:900;
+    cursor:pointer;
+    white-space:nowrap;
+    box-shadow:0 8px 18px rgba(0,0,0,.20);
+}
+.form-picks-frame-wrap{
+    max-width:920px;
+    margin:18px auto 20px;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(34,197,94,.45);
+    box-shadow:0 12px 28px rgba(0,0,0,.28);
+    background:#0f172a;
+}
+.form-picks-frame{
+    width:100%;
+    min-height:760px;
+    border:0;
+    display:block;
+    background:#ffffff;
+}
+.form-picks-card{
+    max-width:620px;
+    margin:25px auto;
+    padding:24px;
+    border-radius:18px;
+    text-align:center;
+    background:#1e293b;
+    border:1px solid rgba(250,204,21,.35);
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+}
+.form-picks-card h2{
+    margin:0 0 8px;
+    color:#fde68a;
+}
+
+/* v3.3.10 · Goleador Especial en una sola línea dentro del detalle por usuario */
+.pick-especial-goleador-una-linea{
+    grid-column:1 / -1;
+}
+.pick-especial-goleador-una-linea > span,
+.pick-especial-goleador-una-linea .goleador-pick-inline{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-wrap:nowrap !important;
+    gap:5px !important;
+    white-space:nowrap !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    max-width:100%;
+}
+.pick-especial-goleador-una-linea .flag-mini{
+    flex:0 0 auto;
+    width:23px !important;
+    height:16px !important;
+    object-fit:cover;
+    border-radius:4px;
+}
+
+@media(max-width:600px){
+    .form-picks-home{
+        margin:8px auto 10px;
+        padding:11px 12px;
+        flex-direction:column;
+        text-align:center;
+    }
+    .form-picks-home button{
+        width:100%;
+    }
+    .form-picks-frame{
+        min-height:680px;
+    }
+    .pick-especial-goleador-una-linea > span,
+    .pick-especial-goleador-una-linea .goleador-pick-inline{
+        font-size:13px;
+    }
+}
+
+
+/* v3.3.11 · Ajustes Picks Especiales e Inicio */
+.picks-especiales-usuario.picks-especiales-grid-compacto{
+    max-width:980px;
+    margin:20px auto 25px;
+    display:grid;
+    grid-template-columns:repeat(5, minmax(150px, 1fr));
+    justify-content:center;
+    align-items:stretch;
+    gap:12px;
+}
+.picks-especiales-grid-compacto .pick-especial-usuario-card,
+.picks-especiales-grid-compacto .pick-especial-largo,
+.picks-especiales-grid-compacto .pick-especial-goleador-una-linea{
+    grid-column:auto !important;
+    min-height:74px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.picks-especiales-grid-compacto .pick-especial-usuario-card span{
+    max-width:100%;
+}
+.pick-especial-goleador-una-linea > span,
+.pick-especial-goleador-una-linea .goleador-pick-inline{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-wrap:nowrap !important;
+    gap:4px !important;
+    white-space:nowrap !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    max-width:100%;
+    font-size:14px;
+}
+.pick-especial-goleador-una-linea .goleador-goles-real{
+    white-space:nowrap !important;
+}
+
+.acciones-inicio-compactas .btn-leeme,
+.acciones-inicio-compactas .btn-premios,
+.acciones-inicio-compactas .btn-comparte{
+    background:#1e293b !important;
+    color:#fff !important;
+    box-shadow:none !important;
+}
+.acciones-inicio-compactas .btn-leeme{
+    border:1px solid #ef4444 !important;
+}
+.acciones-inicio-compactas .btn-premios{
+    border:1px solid #facc15 !important;
+}
+.acciones-inicio-compactas .btn-comparte{
+    border:1px solid #fb923c !important;
+}
+.acciones-inicio-compactas .btn-leeme:hover,
+.acciones-inicio-compactas .btn-premios:hover,
+.acciones-inicio-compactas .btn-comparte:hover{
+    background:#263449 !important;
+    transform:translateY(-1px);
+}
+
+@media(max-width:900px){
+    .picks-especiales-usuario.picks-especiales-grid-compacto{
+        max-width:520px;
+        grid-template-columns:repeat(2, minmax(160px, 1fr));
+    }
+}
+@media(max-width:560px){
+    .picks-especiales-usuario.picks-especiales-grid-compacto{
+        max-width:330px;
+        grid-template-columns:1fr;
+    }
+    .pick-especial-goleador-una-linea > span,
+    .pick-especial-goleador-una-linea .goleador-pick-inline{
+        font-size:13px;
+    }
+}
+
+
+/* v3.3.12 · Ajuste fino: Picks Especiales responsivos, goleador en 2 líneas si trae goles */
+.picks-especiales-usuario.picks-especiales-grid-compacto{
+    max-width:1080px;
+    grid-template-columns:repeat(5, minmax(178px, 188px));
+    justify-content:center;
+    place-content:center;
+}
+.picks-especiales-grid-compacto .pick-especial-usuario-card,
+.picks-especiales-grid-compacto .pick-especial-largo,
+.picks-especiales-grid-compacto .pick-especial-goleador-una-linea{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px 12px;
+    overflow:hidden;
+}
+.pick-especial-goleador-una-linea > span{
+    width:100%;
+}
+.pick-especial-goleador-una-linea .goleador-pick-inline.goleador-pick-dos-lineas{
+    display:flex !important;
+    width:100%;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:2px !important;
+    white-space:normal !important;
+    line-height:1.18;
+}
+.pick-especial-goleador-una-linea .goleador-pick-nombre,
+.pick-especial-goleador-una-linea .goleador-pick-goles{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    max-width:100%;
+    white-space:nowrap;
+    text-align:center;
+}
+.pick-especial-goleador-una-linea .goleador-pick-nombre{
+    font-size:14px;
+}
+.pick-especial-goleador-una-linea .goleador-pick-goles{
+    font-size:13px;
+}
+
+@media(max-width:980px){
+    .picks-especiales-usuario.picks-especiales-grid-compacto{
+        max-width:620px;
+        grid-template-columns:repeat(2, minmax(178px, 188px));
+    }
+}
+@media(max-width:480px){
+    .picks-especiales-usuario.picks-especiales-grid-compacto{
+        max-width:310px;
+        grid-template-columns:minmax(220px, 280px);
+    }
+    .pick-especial-goleador-una-linea .goleador-pick-nombre{
+        font-size:13px;
+    }
+}
+
+
+/* v3.4.1 · Inicio: acceso a Form Picks compacto debajo del título */
+.form-picks-home{
+    max-width:320px !important;
+    margin:8px auto 12px !important;
+    padding:10px 14px !important;
+    min-height:42px !important;
+    border-radius:14px !important;
+    justify-content:center !important;
+    text-align:center !important;
+    gap:4px !important;
+}
+.form-picks-home strong{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:7px !important;
+    font-size:15px !important;
+    line-height:1.15 !important;
+}
+.form-picks-home span{
+    font-size:11px !important;
+    margin-top:2px !important;
+}
+.form-picks-home-abierto{
+    cursor:pointer;
+    background:linear-gradient(135deg, rgba(22,163,74,.94), rgba(5,150,105,.86)) !important;
+    border:1px solid rgba(134,239,172,.56) !important;
+    box-shadow:0 8px 18px rgba(0,0,0,.20) !important;
+}
+.form-picks-home-clickable:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.06);
+}
+.form-picks-home-cerrado{
+    flex-direction:column !important;
+}
+.form-picks-icono-trionda{
+    width:20px !important;
+    height:20px !important;
+    object-fit:contain !important;
+    display:inline-block !important;
+    flex:0 0 auto !important;
+}
+.acciones-inicio-compactas .btn-refresh.btn-refresh-compacto{
+    background:#2563eb !important;
+    border:1px solid rgba(125,211,252,.55) !important;
+    color:#ffffff !important;
+    box-shadow:none !important;
+}
+.acciones-inicio-compactas .btn-refresh.btn-refresh-compacto:hover{
+    background:#3b82f6 !important;
+    transform:translateY(-1px);
+}
+
+@media(max-width:600px){
+    .form-picks-home{
+        max-width:280px !important;
+        padding:9px 12px !important;
+        margin:7px auto 10px !important;
+    }
+    .form-picks-home strong{
+        font-size:14px !important;
+    }
+    .form-picks-icono-trionda{
+        width:19px !important;
+        height:19px !important;
+    }
+}
+
+/* v3.4.2 · Ajuste fino Inicio: Form Picks más compacto y Actualiza igual fondo que Comparte */
+.form-picks-home.form-picks-home-abierto{
+    max-width:245px !important;
+    min-height:46px !important;
+    padding:9px 16px !important;
+    border-radius:13px !important;
+}
+.form-picks-home.form-picks-home-abierto strong{
+    font-size:14px !important;
+    white-space:nowrap !important;
+}
+.acciones-inicio-compactas .btn-refresh.btn-refresh-compacto{
+    background:#1e293b !important;
+    border:1px solid #3b82f6 !important;
+    color:#ffffff !important;
+    box-shadow:none !important;
+}
+.acciones-inicio-compactas .btn-refresh.btn-refresh-compacto:hover{
+    background:#263449 !important;
+    transform:translateY(-1px);
+}
+
+@media(max-width:600px){
+    .form-picks-home.form-picks-home-abierto{
+        max-width:220px !important;
+        min-height:44px !important;
+        padding:9px 13px !important;
+    }
+    .form-picks-home.form-picks-home-abierto strong{
+        font-size:13px !important;
+    }
+}
+
+
+/* v3.4.3 Form Picks compact */
+.form-picks-home-abierto{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  min-height:44px !important;
+  height:44px !important;
+  padding:8px 16px !important;
+  width:auto !important;
+  max-width:240px !important;
+  margin:10px auto 12px auto !important;
+  border-radius:12px !important;
+}
+.form-picks-home-abierto strong{
+  font-size:.95rem !important;
+}
+
+
+/* v3.4.4 · Corrección centrado y diseño acceso Form Picks */
+.form-picks-home.form-picks-home-abierto{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    max-width:300px !important;
+    min-height:58px !important;
+    height:auto !important;
+    margin:8px auto 14px !important;
+    padding:9px 16px !important;
+    box-sizing:border-box !important;
+    border-radius:12px !important;
+    background:#16c55f !important;
+    background-image:none !important;
+    border:1px solid #86efac !important;
+    box-shadow:0 8px 18px rgba(0,0,0,.20) !important;
+    text-align:left !important;
+}
+.form-picks-home.form-picks-home-abierto .form-picks-abierto-contenido{
+    width:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:9px !important;
+}
+.form-picks-home.form-picks-home-abierto .form-picks-abierto-icono{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex:0 0 auto !important;
+    width:28px !important;
+    height:28px !important;
+    border-radius:50% !important;
+    background:#0f172a !important;
+    color:#ffffff !important;
+    font-size:16px !important;
+    line-height:1 !important;
+}
+.form-picks-home.form-picks-home-abierto .form-picks-abierto-textos{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    line-height:1.12 !important;
+}
+.form-picks-home.form-picks-home-abierto strong{
+    display:block !important;
+    font-size:14px !important;
+    line-height:1.12 !important;
+    white-space:nowrap !important;
+    margin:0 !important;
+}
+.form-picks-home.form-picks-home-abierto span:not(.form-picks-abierto-icono){
+    display:block !important;
+    margin:4px 0 0 !important;
+    color:#ecfdf5 !important;
+    font-size:12px !important;
+    font-weight:400 !important;
+    letter-spacing:.1px !important;
+    text-transform:none !important;
+    white-space:nowrap !important;
+}
+.form-picks-home.form-picks-home-clickable:hover{
+    transform:translateY(-1px) !important;
+    filter:brightness(1.05) !important;
+}
+@media(max-width:600px){
+    .form-picks-home.form-picks-home-abierto{
+        max-width:285px !important;
+        min-height:56px !important;
+        margin:7px auto 12px !important;
+        padding:9px 14px !important;
+    }
+    .form-picks-home.form-picks-home-abierto .form-picks-abierto-icono{
+        width:26px !important;
+        height:26px !important;
+        font-size:15px !important;
+    }
+    .form-picks-home.form-picks-home-abierto strong{
+        font-size:13px !important;
+    }
+    .form-picks-home.form-picks-home-abierto span:not(.form-picks-abierto-icono){
+        font-size:11px !important;
+    }
+}
+
+
+/* =========================================================
+   Videos en detalle del partido · v3.5.7
+   No modifica controles de Partidos Filtrados.
+   ========================================================= */
+.videos-partido{
+    width:min(640px, 92%);
+    margin:20px auto 24px;
+    text-align:left;
+}
+
+.videos-partido h2{
+    text-align:center;
+    margin:0 0 12px;
+}
+
+.videos-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+}
+
+.video-card{
+    position:relative;
+    display:block;
+    width:100%;
+    aspect-ratio:16 / 9;
+    min-height:230px;
+    border-radius:22px;
+    overflow:hidden;
+    background:rgba(15,23,42,.92);
+    border:1px solid rgba(255,255,255,.13);
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 12px 28px rgba(0,0,0,.22);
+    transition:transform .18s ease, filter .18s ease, border-color .18s ease;
+    cursor:pointer;
+}
+
+.video-card:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.07);
+    border-color:rgba(255,255,255,.25);
+}
+
+.video-card *{
+    pointer-events:none;
+}
+
+.video-thumb{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border-radius:inherit;
+    overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,0,0,.72), rgba(15,23,42,.96));
+}
+
+.video-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.video-thumb::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.78) 100%);
+    pointer-events:none;
+}
+
+.video-play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    z-index:2;
+    width:52px;
+    height:52px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#ff0033;
+    color:#fff;
+    font-size:22px;
+    font-weight:900;
+    box-shadow:0 10px 24px rgba(0,0,0,.36);
+}
+
+.video-info{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:3;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    min-width:0;
+    padding:14px 16px 15px;
+}
+
+.video-info strong{
+    font-size:1.05rem;
+    line-height:1.1;
+    font-weight:900;
+}
+
+.video-info span,
+.video-info small{
+    color:#dbe7f6;
+    font-size:.82rem;
+    line-height:1.15;
+}
+
+.video-info small{
+    color:#38bdf8;
+    font-weight:900;
+}
+
+@media (max-width:520px){
+    .videos-partido{
+        width:94%;
+        margin:16px auto 22px;
+    }
+
+    .video-card{
+        min-height:0;
+        border-radius:18px;
+    }
+
+    .video-play{
+        width:44px;
+        height:44px;
+        font-size:19px;
+    }
+
+    .video-info{
+        padding:11px 13px 12px;
+    }
+
+    .video-info strong{
+        font-size:.95rem;
+    }
+
+    .video-info span,
+    .video-info small{
+        font-size:.76rem;
+    }
+}
+
+
+/* PWA v4.0.0 */
+.pwa-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.96);
+    color: #ffffff;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(10px);
+}
+
+.pwa-bar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+}
+
+.pwa-bar-text strong {
+    font-size: 0.9rem;
+}
+
+.pwa-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.pwa-bar button {
+    border: none;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    background: #38bdf8;
+    color: #082f49;
+}
+
+.pwa-bar #pwaCloseBtn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    font-size: 1.35rem;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+.pwa-hidden {
+    display: none !important;
+}
+
+@media (max-width: 640px) {
+    .pwa-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .pwa-bar-actions {
+        justify-content: flex-end;
+    }
+}

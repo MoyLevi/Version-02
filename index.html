@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiniela Mundial 2026</title>
+
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Quiniela 2026">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- VERSION -->
+<link rel="stylesheet" href="css/base.css?v=4.0.1">
+<link rel="stylesheet" href="css/layout.css?v=4.0.1">
+<link rel="stylesheet" href="css/components.css?v=4.0.1">
+<link rel="stylesheet" href="css/responsive.css?v=4.0.1">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MH45VP3ESR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MH45VP3ESR');
+</script>
+
+</head>
+
+<body>
+
+<div class="menu">
+    <button id="btnInicio">🌍 Inicio</button>
+    <button id="btnPartidos"><img class="balon-app balon-menu" src="img/trionda.png" alt="Balón"> Partidos</button>
+    <button id="btnTabla">🏆 Standing</button>
+    <button id="btnEstadisticas">🎯 Stats</button>
+</div>
+
+<div id="contenido"></div>
+
+<script src="https://unpkg.com/@panzoom/panzoom@4.6.0/dist/panzoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- VERSION -->
+<script src="js/config.js?v=4.0.1"></script>
+<script src="js/data.js?v=4.0.1"></script>
+<script src="js/utils.js?v=4.0.1"></script>
+<script src="js/scoring.js?v=4.0.1"></script>
+<script src="js/views-inicio.js?v=4.0.1"></script>
+<script src="js/views-partidos.js?v=4.0.1"></script>
+<script src="js/views-tabla.js?v=4.0.1"></script>
+<script src="js/views-stats.js?v=4.0.1"></script>
+<script src="js/app.js?v=4.0.1"></script>
+<script src="js/pwa.js?v=4.0.1"></script>
+
+</body>
+</html>
