@@ -1628,7 +1628,7 @@ function verDetalleUsuario(idUser, pagina = 1, scrollPronosticos = false, vista 
             }
 
             const realTexto = r.esKO
-                ? formatearMarcadorConPenales(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis)
+                ? formatearMarcadorConPenales(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis, !partido.esKO || partidoTienePenalesKO(partido))
                 : (partido.golesLoc !== "" && partido.golesVis !== "" ? `${partido.golesLoc}-${partido.golesVis}` : "Pendiente");
 
             const pickTexto = r.esKO ? formatearPickKO(r) : `${r.golLoc}-${r.golVis}`;

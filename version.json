@@ -1,11 +1,11 @@
 {
-  "version": "4.1.3",
-  "build": "413",
+  "version": "4.1.5",
+  "build": "415",
   "release": "2026-06-29",
   "name": "Quiniela Mundial 2026 PWA",
   "notes": [
-    "Corrección del aviso de actualización PWA para evitar bucle en Android",
-    "Sincronización de versiones entre pwa.js, service-worker.js y version.json",
-    "Actualización controlada para recargar una sola vez"
+    "Corrección de visualización de penales en Pronósticos del Partido",
+    "Los ceros de penales ya no se muestran cuando el pick no tuvo penales",
+    "El punto de penales KO sólo cuenta si los penales coinciden exactamente"
   ]
 }

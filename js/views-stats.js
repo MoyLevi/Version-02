@@ -782,7 +782,7 @@ function crearScoreBracketHTML(partido){
 
     return `
         <div class="bracket-score">
-            ${formatearMarcadorConPenales(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis)}
+            ${formatearMarcadorConPenales(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis, !partido.esKO || partidoTienePenalesKO(partido))}
         </div>
     `;
 }

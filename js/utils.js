@@ -189,7 +189,7 @@ function getClaseStatus(status){
 }
 
 function getFooterCopyright(){
-    return `<div class="dev-footer">© Moy · 2026 (v.4.1.3)</div>`;
+    return `<div class="dev-footer">© Moy · 2026 (v.4.1.5)</div>`;
 }
 
 function getPrediccionColectiva(partidoId){
@@ -506,7 +506,7 @@ function getGanadorDesdePick(pick){
     if(gl > gv) return "loc";
     if(gv > gl) return "vis";
 
-    if(pick.penLoc !== "" && pick.penVis !== ""){
+    if(pickTienePenalesKO(pick)){
         const pl = Number(pick.penLoc);
         const pv = Number(pick.penVis);
         if(pl > pv) return "loc";
@@ -529,16 +529,19 @@ function crearNumeroPenal(valor){
     return `<span class="penales-numero" aria-label="${n} penales anotados">${n}</span>`;
 }
 
-function formatearMarcadorConPenales(golLoc, golVis, penLoc = "", penVis = ""){
+function formatearMarcadorConPenales(golLoc, golVis, penLoc = "", penVis = "", mostrarPenales = true){
     const tieneGoles = golLoc !== "" && golVis !== "" && golLoc != null && golVis != null;
     if(!tieneGoles) return "VS";
 
-    const penalesLoc = crearNumeroPenal(penLoc);
-    const penalesVis = crearNumeroPenal(penVis);
     const marcador = `<span class="marcador-goles">${golLoc} - ${golVis}</span>`;
 
-    if(penalesLoc || penalesVis){
-        return `<span class="marcador-penales">${penalesLoc} ${marcador} ${penalesVis}</span>`;
+    if(mostrarPenales){
+        const penalesLoc = crearNumeroPenal(penLoc);
+        const penalesVis = crearNumeroPenal(penVis);
+
+        if(penalesLoc || penalesVis){
+            return `<span class="marcador-penales">${penalesLoc} ${marcador} ${penalesVis}</span>`;
+        }
     }
 
     return `${golLoc} - ${golVis}`;
@@ -546,7 +549,13 @@ function formatearMarcadorConPenales(golLoc, golVis, penLoc = "", penVis = ""){
 
 function formatearPickKO(pick){
     if(!pick) return "-";
-    return formatearMarcadorConPenales(pick.golLoc, pick.golVis, pick.penLoc, pick.penVis);
+    return formatearMarcadorConPenales(
+        pick.golLoc,
+        pick.golVis,
+        pick.penLoc,
+        pick.penVis,
+        pickTienePenalesKO(pick)
+    );
 }
 
 function getPrediccionColectivaKO(partidoId){
@@ -584,12 +593,32 @@ function getEquipoPasaPick(partido, pick){
     return "(Por Definir)";
 }
 
+function esEnteroNoNegativo_(valor){
+    if(valor === "" || valor == null) return false;
+    const n = Number(valor);
+    return Number.isInteger(n) && n >= 0;
+}
+
+function tienePenalesValidosKO_(golesLoc, golesVis, penLoc, penVis){
+    if(golesLoc === "" || golesVis === "" || golesLoc == null || golesVis == null) return false;
+    if(Number(golesLoc) !== Number(golesVis)) return false;
+    if(!esEnteroNoNegativo_(penLoc) || !esEnteroNoNegativo_(penVis)) return false;
+    return Number(penLoc) !== Number(penVis);
+}
+
 function pickTienePenalesKO(pick){
-    return pick && pick.penLoc !== "" && pick.penLoc != null && pick.penVis !== "" && pick.penVis != null;
+    return !!pick && tienePenalesValidosKO_(pick.golLoc, pick.golVis, pick.penLoc, pick.penVis);
 }
 
 function partidoTienePenalesKO(partido){
-    return partido && partido.penLoc !== "" && partido.penLoc != null && partido.penVis !== "" && partido.penVis != null;
+    return !!partido && tienePenalesValidosKO_(partido.golesLoc, partido.golesVis, partido.penLoc, partido.penVis);
+}
+
+function penalesCoincidenKO(partido, pick){
+    return partidoTienePenalesKO(partido) &&
+        pickTienePenalesKO(pick) &&
+        Number(partido.penLoc) === Number(pick.penLoc) &&
+        Number(partido.penVis) === Number(pick.penVis);
 }
 
 function normalizarNombreEquipo(nombre){

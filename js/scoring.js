@@ -110,7 +110,7 @@ function getPuntosKO(partido, pick){
         puntos += 2;
     }
 
-    if(partidoTienePenalesKO(partido) && pickTienePenalesKO(pick)){
+    if(penalesCoincidenKO(partido, pick)){
         puntos += 1;
     }
 
@@ -130,7 +130,7 @@ function getResumenUsuarioKO(idUser){
         const acertoAvanza = jugado && !esPorDefinir(realPasa) && !esPorDefinir(pickPasa) &&
             normalizarNombreEquipo(realPasa) === normalizarNombreEquipo(pickPasa);
         const acertoMarcador = jugado && Number(partido.golesLoc) === Number(pick.golLoc) && Number(partido.golesVis) === Number(pick.golVis);
-        const acertoPenales = jugado && partidoTienePenalesKO(partido) && pickTienePenalesKO(pick);
+        const acertoPenales = jugado && penalesCoincidenKO(partido, pick);
 
         acc.jugados += jugado ? 1 : 0;
         acc.puntos += puntos;

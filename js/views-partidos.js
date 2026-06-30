@@ -307,7 +307,7 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
 
     partidosFiltrados.forEach(p => {
 
-        const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis);
+        const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis, !p.esKO || partidoTienePenalesKO(p));
 
         html += `
             <div class="partido ${getClaseStatus(p.status)}" onclick="verPartido(${p.id})">
@@ -372,7 +372,7 @@ function verPartido(id){
         return;
     }
 
-    const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis);
+    const marcador = formatearMarcadorConPenales(p.golesLoc, p.golesVis, p.penLoc, p.penVis, !p.esKO || partidoTienePenalesKO(p));
 
     let html = `
         <button onclick="mostrarPartidos(ultimoFiltroPartidos.tipo, ultimoFiltroPartidos.valor)" class="btnVolver">⬅ Volver</button>
