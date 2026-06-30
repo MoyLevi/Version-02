@@ -1,4 +1,34 @@
 
+
+function crearURLFormularioPicksLimpia(){
+    const separador = urlFormularioPicks.includes("?") ? "&" : "?";
+    return `${urlFormularioPicks}${separador}ts=${Date.now()}`;
+}
+
+function getTimestampPartidoInicio(p){
+    const clave = typeof obtenerClaveFechaPartido === "function" ? obtenerClaveFechaPartido(p) : "";
+    if(!clave) return Number.MAX_SAFE_INTEGER;
+
+    const [dia, mes, anio] = clave.split("/").map(Number);
+    const horaTexto = (p.hora || "00:00").toString().trim();
+    const matchHora = horaTexto.match(/(\d{1,2}):(\d{2})/);
+    const hora = matchHora ? Number(matchHora[1]) : 0;
+    const minuto = matchHora ? Number(matchHora[2]) : 0;
+
+    return new Date(anio, mes - 1, dia, hora, minuto).getTime();
+}
+
+function getProximosPartidosKOInicio(){
+    const listaKO = typeof getKnockoutResueltoGlobal === "function"
+        ? getKnockoutResueltoGlobal()
+        : (Array.isArray(knockout) ? knockout : []);
+
+    return listaKO
+        .filter(p => p && (p.status === "Pendiente" || p.status === "En vivo"))
+        .sort((a,b) => getTimestampPartidoInicio(a) - getTimestampPartidoInicio(b) || Number(a.id || 0) - Number(b.id || 0))
+        .slice(0, 3);
+}
+
 function crearHTMLAccesoFormularioPicks(){
     const abierto = formPicksAbierto === true;
 
@@ -46,7 +76,7 @@ function mostrarFormularioPicks(){
         <div class="form-picks-frame-wrap">
             <iframe
                 class="form-picks-frame"
-                src="${urlFormularioPicks}"
+                src="${crearURLFormularioPicksLimpia()}"
                 title="Formulario Picks Ronda de 32"
                 loading="lazy"
             ></iframe>
@@ -69,9 +99,7 @@ function mostrarInicio(){
         return total + (Number.isFinite(gl) ? gl : 0) + (Number.isFinite(gv) ? gv : 0);
     }, 0);
 
-    const proximos = partidos
-        .filter(p => p.status === "Pendiente" || p.status === "En vivo")
-        .slice(0, 3);
+    const proximos = getProximosPartidosKOInicio();
 
     contenido.innerHTML = `
         <div class="hero-logo">

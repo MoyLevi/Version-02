@@ -1,12 +1,12 @@
 {
-  "version": "4.1.0",
-  "build": "410",
-  "release": "2026-06-26",
+  "version": "4.1.2",
+  "build": "412",
+  "release": "2026-06-29",
   "name": "Quiniela Mundial 2026 PWA",
   "notes": [
-    "Pantalla de instalación mejorada",
-    "Detección automática de nuevas versiones",
-    "Actualización sin reinstalar la app",
-    "Base preparada para notificaciones"
+    "Formulario de Picks Ronda 32 abierto con enlace público limpio",
+    "Próximos partidos ahora muestra los siguientes 3 partidos KO",
+    "Intercambio visual de botones solicitados sin cambiar acciones",
+    "LocalStorage para tablas fijas: Partidos, Picks, Usuarios y LugaresPro"
   ]
 }

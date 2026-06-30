@@ -13,7 +13,7 @@ const urlKnockout = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nAS
 const urlRankKO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nASBNVX0vpYD3P0Uz41gHRsf4D52qu94vfmUX-vZtjN0NV0ONBI6WPWFJx81a1msQB8Xfy1/pub?gid=1416723802&single=true&output=csv";
 const urlPicksKO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nASBNVX0vpYD3P0Uz41gHRsf4D52qu94vfmUX-vZtjN0NV0ONBI6WPWFJx81a1msQB8Xfy1/pub?gid=512136379&single=true&output=csv";
 const urlForm = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nASBNVX0vpYD3P0Uz41gHRsf4D52qu94vfmUX-vZtjN0NV0ONBI6WPWFJx81a1msQB8Xfy1/pub?gid=90296847&single=true&output=csv";
-const urlFormularioPicks = "https://docs.google.com/forms/d/e/1FAIpQLSd1FxjcJxgV67tmyrJpP7anEfPmVlbXugxWHoaOaGwmw_W-Jg/viewform?edit2=2_ABaOnuf4P_jiR6UlmxTg0tp7pa5Yd9R1emxl4qVIEAO7uOdwT_aWHzDol6pxkKDGAtN5BnU";
+const urlFormularioPicks = "https://docs.google.com/forms/d/e/1FAIpQLSd1FxjcJxgV67tmyrJpP7anEfPmVlbXugxWHoaOaGwmw_W-Jg/viewform";
 // Goleadores reales desde HC publicada en Google Sheets.
 const urlGoleadores = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nASBNVX0vpYD3P0Uz41gHRsf4D52qu94vfmUX-vZtjN0NV0ONBI6WPWFJx81a1msQB8Xfy1/pub?gid=407044037&single=true&output=csv";
 // Videos / resúmenes oficiales por partido.

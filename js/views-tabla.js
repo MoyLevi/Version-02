@@ -307,7 +307,7 @@ function crearHTMLDatosDestacados(){
         <h2>DATOS <span class="titulo-acento">DESTACADOS</span></h2>
 
         <div class="stats-grid datos-destacados-records datos-destacados-compactos">
-            <div class="stat-card"><h2>${datos.totalPicks}</h2><p>Picks</p></div>
+            <div class="stat-card"><h2>${datos.totalPicks}</h2><p>Picks Fase Grupos</p></div>
             <div class="stat-card"><h2>${datos.exactos}</h2><p>Exactos</p></div>
             <div class="stat-card"><h2>${datos.diferencias}</h2><p>Diferencia + ganador</p></div>
             <div class="stat-card"><h2>${datos.ganadores}</h2><p>Ganadores</p></div>
@@ -326,7 +326,7 @@ function crearHTMLTabsTabla(tipo, grupo = "A"){
         <div class="tabs-tabla tabs-tabla-principal">
             <button class="${tipo === "principal" ? "tab-activa" : ""}" onclick="mostrarTabla('principal')">🏆 General</button>
             <button class="${tipo === "recreativa" ? "tab-activa" : ""}" onclick="mostrarTabla('recreativa')">🎮 Recreativa</button>
-            <button class="${tipo === "grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('grupos', '${grupo}')">🌐 Grupos</button>
+            <button class="${tipo === "knockout" ? "tab-activa" : ""}" onclick="mostrarTabla('knockout')">⚔️ Knockout</button>
             <button class="${esDetalle ? "tab-activa" : ""}" onclick="mostrarTabla('fase_grupos')">📊 Detalle</button>
         </div>
 
@@ -334,7 +334,7 @@ function crearHTMLTabsTabla(tipo, grupo = "A"){
             <div class="tabs-tabla tabs-tabla-secundaria">
                 <button class="${tipo === "fase_grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('fase_grupos')">⚽ Fase de Grupos</button>
                 <button class="${tipo === "clasificados" ? "tab-activa" : ""}" onclick="mostrarTabla('clasificados')">🏆 Clasificados</button>
-                <button class="${tipo === "knockout" ? "tab-activa" : ""}" onclick="mostrarTabla('knockout')">⚔️ Knockout</button>
+                <button class="${tipo === "grupos" ? "tab-activa" : ""}" onclick="mostrarTabla('grupos', '${grupo}')">🌐 Grupos</button>
                 <button class="${tipo === "especiales" ? "tab-activa" : ""}" onclick="mostrarTabla('especiales')">⭐ Especiales</button>
                 <button class="${tipo === "exactos" ? "tab-activa" : ""}" onclick="mostrarTabla('exactos')">🎯 Exactos</button>
             </div>
@@ -675,6 +675,11 @@ function volverARecordsMarcas(){
 }
 
 function mostrarDetalleRecord(tipo, pagina = 1, scrollTitulo = false){
+    if(tipo === "faseGrupos"){
+        mostrarTabla("fase_grupos");
+        return;
+    }
+
     if(!scrollTitulo){
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -721,7 +726,8 @@ function crearHTMLRecordsTabla(){
 
     const ranking = getRanking();
 
-    const liderGeneral = [...ranking].sort((a,b) => b.puntos - a.puntos)[0];
+    const liderFaseGrupos = [...ranking].sort((a,b) => b.puntos - a.puntos)[0];
+    const liderGeneral = (typeof getRankingGeneralCompleto === "function" ? getRankingGeneralCompleto() : ranking)[0];
     const mejorExactos = [...ranking].sort((a,b) => b.exactos - a.exactos)[0];
     const mejorGanadores = [...ranking].sort((a,b) => b.ganadores - a.ganadores)[0];
     const mejorDiferencias = [...ranking].sort((a,b) => b.diferencias - a.diferencias)[0];
@@ -740,6 +746,14 @@ function crearHTMLRecordsTabla(){
         <p class="subtexto">Toca una tarjeta para ver el detalle completo.</p>
 
         <div class="records-grid">
+            ${crearHTMLRecordCard(
+                "🔑",
+                "Key de Fase de Grupos",
+                liderFaseGrupos ? `${liderFaseGrupos.nombre} · ${liderFaseGrupos.puntos} pts` : "-",
+                "Toca para ir al standing de Fase de Grupos",
+                "faseGrupos"
+            )}
+
             ${crearHTMLRecordCard(
                 "👑",
                 "Líder general",

@@ -484,7 +484,8 @@ function crearHTMLRecordsStats(){
 
     const ranking = getRanking();
 
-    const liderGeneral = [...ranking].sort((a,b) => b.puntos - a.puntos || a.nombre.localeCompare(b.nombre, "es"))[0];
+    const liderFaseGrupos = [...ranking].sort((a,b) => b.puntos - a.puntos || a.nombre.localeCompare(b.nombre, "es"))[0];
+    const liderGeneral = (typeof getRankingGeneralCompleto === "function" ? getRankingGeneralCompleto() : ranking)[0];
     const mejorExactos = [...ranking].sort((a,b) => b.exactos - a.exactos || b.puntos - a.puntos || a.nombre.localeCompare(b.nombre, "es"))[0];
     const mejorGanadores = [...ranking].sort((a,b) => b.ganadores - a.ganadores || b.puntos - a.puntos || a.nombre.localeCompare(b.nombre, "es"))[0];
     const mejorDiferencias = [...ranking].sort((a,b) => b.diferencias - a.diferencias || b.puntos - a.puntos || a.nombre.localeCompare(b.nombre, "es"))[0];
@@ -503,6 +504,14 @@ function crearHTMLRecordsStats(){
         <p class="subtexto">Toca una tarjeta para ver el detalle completo.</p>
 
         <div class="records-grid">
+            ${crearHTMLRecordCardStats(
+                "🔑",
+                "Rey de Fase de Grupos",
+                liderFaseGrupos ? `${liderFaseGrupos.nombre} · ${liderFaseGrupos.puntos} pts` : "-",
+                "Toca para ir al standing de Fase de Grupos",
+                "faseGrupos"
+            )}
+
             ${crearHTMLRecordCardStats(
                 "👑",
                 "Líder general",
@@ -664,6 +673,11 @@ function crearHTMLDetalleRecordEfectividadStats(pagina = 1){
 }
 
 function mostrarDetalleRecordStats(tipo, pagina = 1, scrollTitulo = false){
+    if(tipo === "faseGrupos"){
+        mostrarTabla("fase_grupos");
+        return;
+    }
+
     if(!scrollTitulo){
         window.scrollTo({ top: 0, behavior: "smooth" });
     }

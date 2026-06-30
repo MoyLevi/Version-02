@@ -223,10 +223,10 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
                 </button>
 
                 <button 
-                    class="${tipoFiltro === "todos" ? "filtro-activo" : ""}"
-                    onclick="mostrarPartidos('todos')"
+                    class="${panelActivo === "ko" ? "filtro-activo" : ""}"
+                    onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'ko')"
                 >
-                    Todos
+                    ⚔️ KO
                 </button>
             </div>
 
@@ -246,10 +246,10 @@ function mostrarPartidos(tipoFiltro = "hoy", valorFiltro = null, panelActivo = n
                 </button>
 
                 <button 
-                    class="${panelActivo === "ko" ? "filtro-activo" : ""}"
-                    onclick="mostrarPartidos('${tipoFiltro}', ${valorFiltro ? `'${valorFiltro}'` : "null"}, 'ko')"
+                    class="${tipoFiltro === "todos" ? "filtro-activo" : ""}"
+                    onclick="mostrarPartidos('todos')"
                 >
-                    ⚔️ KO
+                    Todos
                 </button>
             </div>
 

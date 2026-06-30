@@ -1,3 +1,33 @@
+
+const CACHE_TABLAS_FIJAS_VERSION = "v4.1.2";
+
+function getCacheTablaFijaKey(nombre){
+    return `quiniela_${CACHE_TABLAS_FIJAS_VERSION}_${nombre}`;
+}
+
+function leerTablaFijaLocalStorage(nombre){
+    try{
+        const raw = localStorage.getItem(getCacheTablaFijaKey(nombre));
+        if(!raw) return null;
+
+        const data = JSON.parse(raw);
+        return Array.isArray(data) ? data : null;
+    }
+    catch(error){
+        console.warn(`No se pudo leer cache local de ${nombre}:`, error);
+        return null;
+    }
+}
+
+function guardarTablaFijaLocalStorage(nombre, data){
+    try{
+        localStorage.setItem(getCacheTablaFijaKey(nombre), JSON.stringify(data));
+    }
+    catch(error){
+        console.warn(`No se pudo guardar cache local de ${nombre}:`, error);
+    }
+}
+
 function parseCSV(str){
     const rows = [];
     let row = [];
@@ -42,6 +72,12 @@ function parseCSV(str){
 
 async function cargarPartidos(){
 
+    const cache = leerTablaFijaLocalStorage("Partidos");
+    if(cache){
+        partidos = cache;
+        return;
+    }
+
     const res = await fetch(urlPartidos);
     const text = await res.text();
 
@@ -70,9 +106,17 @@ async function cargarPartidos(){
             status: obj["Status"] || "Pendiente"
         };
     });
+
+    guardarTablaFijaLocalStorage("Partidos", partidos);
 }
 
 async function cargarUsuarios(){
+
+    const cache = leerTablaFijaLocalStorage("Usuarios");
+    if(cache){
+        usuarios = cache;
+        return;
+    }
 
     const res = await fetch(urlUsuarios);
     const text = await res.text();
@@ -99,9 +143,17 @@ async function cargarUsuarios(){
             sorpresa: obj["Sorpresa"] || ""
         };
     });
+
+    guardarTablaFijaLocalStorage("Usuarios", usuarios);
 }
 
 async function cargarPicks(){
+
+    const cache = leerTablaFijaLocalStorage("Picks");
+    if(cache){
+        picks = cache;
+        return;
+    }
 
     const res = await fetch(urlPicks);
     const text = await res.text();
@@ -125,9 +177,17 @@ async function cargarPicks(){
             golVis: Number(obj["GolVis"])
         };
     });
+
+    guardarTablaFijaLocalStorage("Picks", picks);
 }
 
 async function cargarLugaresPro(){
+
+    const cache = leerTablaFijaLocalStorage("LugaresPro");
+    if(cache){
+        lugaresPro = cache;
+        return;
+    }
 
     const res = await fetch(urlLugaresPro);
     const text = await res.text();
@@ -150,6 +210,8 @@ async function cargarLugaresPro(){
             lugares: obj["Lugares"]
         };
     });
+
+    guardarTablaFijaLocalStorage("LugaresPro", lugaresPro);
 }
 
 async function cargarKnockout(){
