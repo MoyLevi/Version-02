@@ -1,14 +1,18 @@
 (() => {
-  const APP_VERSION = "4.1.2";
+  const APP_VERSION = "4.1.3";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.1.3";
+  const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
 
   let deferredInstallPrompt = null;
   let swRegistration = null;
   let refreshing = false;
   let reminderTimer = null;
+  let activePanelMode = "";
+  let activeUpdateVersion = "";
 
   function isStandalone() {
     return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
@@ -64,9 +68,16 @@
     `;
     document.body.appendChild(panel);
 
-    document.getElementById("pwaCloseBtn")?.addEventListener("click", hidePanel);
+    document.getElementById("pwaCloseBtn")?.addEventListener("click", () => {
+      dismissVisibleUpdate();
+      hidePanel();
+    });
     document.getElementById("pwaLaterBtn")?.addEventListener("click", () => {
-      localStorage.setItem(INSTALL_HELP_KEY, "1");
+      if (activePanelMode === "update") {
+        dismissVisibleUpdate();
+      } else {
+        localStorage.setItem(INSTALL_HELP_KEY, "1");
+      }
       hidePanel();
     });
     document.getElementById("pwaInstallBtn")?.addEventListener("click", installApp);
@@ -74,8 +85,11 @@
     document.getElementById("pwaNotifyBtn")?.addEventListener("click", enableNotifications);
   }
 
-  function showPanel({ title, message, mode = "install", iosHelp = false, smallNote = "" }) {
+  function showPanel({ title, message, mode = "install", iosHelp = false, smallNote = "", updateVersion = "" }) {
     createPwaPanel();
+
+    activePanelMode = mode;
+    activeUpdateVersion = updateVersion || "";
 
     document.getElementById("pwaTitle").textContent = title;
     document.getElementById("pwaMessage").textContent = message;
@@ -85,6 +99,16 @@
     document.getElementById("pwaUpdateBtn")?.classList.toggle("pwa-hidden", mode !== "update");
     document.getElementById("pwaIosHelp")?.classList.toggle("pwa-hidden", !iosHelp);
     document.getElementById("pwaPanel")?.classList.remove("pwa-hidden");
+  }
+
+  function dismissVisibleUpdate() {
+    if (activePanelMode === "update" && activeUpdateVersion) {
+      sessionStorage.setItem(UPDATE_DISMISSED_VERSION_KEY, activeUpdateVersion);
+    }
+  }
+
+  function wasUpdateDismissed(version) {
+    return sessionStorage.getItem(UPDATE_DISMISSED_VERSION_KEY) === String(version || "");
   }
 
   function hidePanel() {
@@ -110,13 +134,29 @@
   }
 
   async function applyUpdate() {
-    if (swRegistration?.waiting) {
-      swRegistration.waiting.postMessage({ type: "SKIP_WAITING" });
-      return;
+    if (refreshing) return;
+
+    refreshing = true;
+    sessionStorage.setItem(UPDATE_RELOAD_KEY, "1");
+    hidePanel();
+
+    const btn = document.getElementById("pwaUpdateBtn");
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Actualizando...";
     }
 
-    if (swRegistration) {
-      await swRegistration.update();
+    try {
+      if (swRegistration?.waiting) {
+        swRegistration.waiting.postMessage({ type: "SKIP_WAITING" });
+        return;
+      }
+
+      if (swRegistration) {
+        await swRegistration.update();
+      }
+    } catch (error) {
+      console.warn("No se pudo aplicar la actualización PWA:", error);
     }
 
     window.location.reload();
@@ -156,11 +196,12 @@
       if (!response.ok) return;
       const info = await response.json();
 
-      if (info?.version && compareVersions(info.version, APP_VERSION) > 0) {
+      if (info?.version && compareVersions(info.version, APP_VERSION) > 0 && !wasUpdateDismissed(info.version)) {
         showPanel({
           title: `Nueva versión ${info.version}`,
           message: "Ya hay una actualización lista. Puedes aplicarla sin reinstalar la app.",
           mode: "update",
+          updateVersion: info.version,
           smallNote: Array.isArray(info.notes) ? info.notes.slice(0, 2).join(" • ") : "Mejoras y correcciones disponibles."
         });
       }
@@ -303,8 +344,8 @@
   });
 
   navigator.serviceWorker?.addEventListener("controllerchange", () => {
-    if (refreshing) return;
-    refreshing = true;
+    if (sessionStorage.getItem(UPDATE_RELOAD_KEY) !== "1") return;
+    sessionStorage.removeItem(UPDATE_RELOAD_KEY);
     window.location.reload();
   });
 
@@ -323,6 +364,7 @@
                 title: "Nueva versión lista",
                 message: "Hay mejoras disponibles. Actualiza sin reinstalar la app.",
                 mode: "update",
+                updateVersion: APP_VERSION,
                 smallNote: "La app se recargará una sola vez."
               });
             }
@@ -334,6 +376,7 @@
             title: "Nueva versión lista",
             message: "Hay mejoras disponibles. Actualiza sin reinstalar la app.",
             mode: "update",
+            updateVersion: APP_VERSION,
             smallNote: "La app se recargará una sola vez."
           });
         }

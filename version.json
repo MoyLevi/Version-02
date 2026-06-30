@@ -1,12 +1,11 @@
 {
-  "version": "4.1.2",
-  "build": "412",
+  "version": "4.1.3",
+  "build": "413",
   "release": "2026-06-29",
   "name": "Quiniela Mundial 2026 PWA",
   "notes": [
-    "Formulario de Picks Ronda 32 abierto con enlace público limpio",
-    "Próximos partidos ahora muestra los siguientes 3 partidos KO",
-    "Intercambio visual de botones solicitados sin cambiar acciones",
-    "LocalStorage para tablas fijas: Partidos, Picks, Usuarios y LugaresPro"
+    "Corrección del aviso de actualización PWA para evitar bucle en Android",
+    "Sincronización de versiones entre pwa.js, service-worker.js y version.json",
+    "Actualización controlada para recargar una sola vez"
   ]
 }
