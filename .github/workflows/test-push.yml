@@ -1,0 +1,39 @@
+name: Prueba Push Firebase
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Título de la notificación"
+        required: false
+        default: "🔔 Prueba Quiniela Mundial 2026"
+      body:
+        description: "Mensaje de la notificación"
+        required: false
+        default: "Si ves esto, Firebase Push ya funciona correctamente."
+
+jobs:
+  enviar-prueba-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Enviar Push de prueba
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          APP_URL: "https://moylevi.github.io/Version-02/"
+          TEST_PUSH_TITLE: ${{ github.event.inputs.title }}
+          TEST_PUSH_BODY: ${{ github.event.inputs.body }}
+        run: npm run send-test-notification
