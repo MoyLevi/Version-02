@@ -1,10 +1,12 @@
 (() => {
-  const APP_VERSION = "4.2.3";
+  const APP_VERSION = "4.2.4";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
-  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.3";
+  const NOTIFICATION_PROMPT_DISMISSED_KEY = "quiniela-pwa-notification-prompt-dismissed";
+  const POST_UPDATE_NOTIFY_PROMPT_KEY = "quiniela-pwa-show-notifications-after-update";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.4";
   const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
   const UPDATE_APPLIED_VERSION_KEY = "quiniela-pwa-update-applied-version";
 
@@ -70,15 +72,11 @@
     document.body.appendChild(panel);
 
     document.getElementById("pwaCloseBtn")?.addEventListener("click", () => {
-      dismissVisibleUpdate();
+      dismissVisiblePanel();
       hidePanel();
     });
     document.getElementById("pwaLaterBtn")?.addEventListener("click", () => {
-      if (activePanelMode === "update") {
-        dismissVisibleUpdate();
-      } else {
-        localStorage.setItem(INSTALL_HELP_KEY, "1");
-      }
+      dismissVisiblePanel();
       hidePanel();
     });
     document.getElementById("pwaInstallBtn")?.addEventListener("click", installApp);
@@ -98,8 +96,23 @@
 
     document.getElementById("pwaInstallBtn")?.classList.toggle("pwa-hidden", mode !== "install" || !deferredInstallPrompt);
     document.getElementById("pwaUpdateBtn")?.classList.toggle("pwa-hidden", mode !== "update");
+    document.getElementById("pwaNotifyBtn")?.classList.toggle("pwa-hidden", mode !== "notify");
     document.getElementById("pwaIosHelp")?.classList.toggle("pwa-hidden", !iosHelp);
     document.getElementById("pwaPanel")?.classList.remove("pwa-hidden");
+  }
+
+  function dismissVisiblePanel() {
+    if (activePanelMode === "update" && activeUpdateVersion) {
+      sessionStorage.setItem(UPDATE_DISMISSED_VERSION_KEY, activeUpdateVersion);
+      return;
+    }
+
+    if (activePanelMode === "notify") {
+      localStorage.setItem(NOTIFICATION_PROMPT_DISMISSED_KEY, "1");
+      return;
+    }
+
+    localStorage.setItem(INSTALL_HELP_KEY, "1");
   }
 
   function dismissVisibleUpdate() {
@@ -158,6 +171,7 @@
     const versionBeingApplied = activeUpdateVersion || APP_VERSION;
     markUpdateApplied(versionBeingApplied);
     sessionStorage.setItem(UPDATE_RELOAD_KEY, "1");
+    sessionStorage.setItem(POST_UPDATE_NOTIFY_PROMPT_KEY, "1");
     hidePanel();
 
     const btn = document.getElementById("pwaUpdateBtn");
@@ -209,6 +223,37 @@
       });
     }
   }
+  function shouldShowNotificationPrompt({ force = false } = {}) {
+    if (!("Notification" in window)) return false;
+    if (Notification.permission !== "default") return false;
+    if (localStorage.getItem(NOTIFICATION_KEY) === "1") return false;
+    if (!force && localStorage.getItem(NOTIFICATION_PROMPT_DISMISSED_KEY) === "1") return false;
+    return true;
+  }
+
+  function showNotificationPromptIfNeeded({ force = false } = {}) {
+    if (activePanelMode === "update") return false;
+    if (!shouldShowNotificationPrompt({ force })) return false;
+
+    if (force) {
+      localStorage.removeItem(NOTIFICATION_PROMPT_DISMISSED_KEY);
+    }
+
+    showPanel({
+      title: "Activa avisos de partidos",
+      message: "Te avisaremos 15 minutos antes de cada partido activo de la quiniela.",
+      mode: "notify",
+      smallNote: "Puedes aceptar ahora o dejarlo para después. No se enviará spam, palabra de PWA decente."
+    });
+    return true;
+  }
+
+  function consumePostUpdateNotificationPrompt() {
+    const shouldShow = sessionStorage.getItem(POST_UPDATE_NOTIFY_PROMPT_KEY) === "1";
+    sessionStorage.removeItem(POST_UPDATE_NOTIFY_PROMPT_KEY);
+    return shouldShow;
+  }
+
 
   async function checkForNewVersion() {
     try {
@@ -387,6 +432,7 @@
 
     if (permission === "granted") {
       localStorage.setItem(NOTIFICATION_KEY, "1");
+      localStorage.removeItem(NOTIFICATION_PROMPT_DISMISSED_KEY);
 
       try {
         await registerFcmToken();
@@ -474,8 +520,19 @@
           registerFcmToken().catch(error => console.warn("No se pudo refrescar token FCM:", error));
         }
 
+        const forceNotifyPromptAfterUpdate = consumePostUpdateNotificationPrompt();
         await checkForNewVersion();
-        setTimeout(showInstallHelpIfNeeded, 1400);
+
+        setTimeout(() => {
+          if (forceNotifyPromptAfterUpdate) {
+            showNotificationPromptIfNeeded({ force: true });
+            return;
+          }
+
+          showNotificationPromptIfNeeded();
+        }, 1200);
+
+        setTimeout(showInstallHelpIfNeeded, 1800);
         setInterval(checkForNewVersion, 10 * 60 * 1000);
         setInterval(() => swRegistration?.update(), 15 * 60 * 1000);
         setTimeout(scheduleNextReminder, 3500);
@@ -495,6 +552,7 @@
     checkForNewVersion,
     enableNotifications,
     registerFcmToken,
-    scheduleNextReminder
+    scheduleNextReminder,
+    showNotificationPromptIfNeeded
   };
 })();

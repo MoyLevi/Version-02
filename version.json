@@ -1,9 +1,9 @@
 {
-  "version": "4.2.3",
+  "version": "4.2.4",
   "date": "2026-06-30",
   "notes": [
-    "Corrección para que el aviso de actualización no se repita después de aplicar la misma versión.",
-    "La app marca la versión aplicada antes de recargar y evita volver a mostrar el mismo prompt.",
-    "Se mantiene Firebase Push y el flujo automático preparado."
+    "Corrección del flujo posterior a actualización.",
+    "Después de aplicar una nueva versión, la app vuelve a mostrar el aviso para activar notificaciones si todavía no se han concedido.",
+    "El aviso de actualización no se repite para la misma versión."
   ]
 }
