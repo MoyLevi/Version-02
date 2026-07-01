@@ -1,43 +1,4 @@
-importScripts("https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/10.12.5/firebase-messaging-compat.js");
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC66nMOwuwAZ-m2EIq6ckI8ktOmwIDF1p0",
-  authDomain: "quiniela-mundial-2026-pwa.firebaseapp.com",
-  projectId: "quiniela-mundial-2026-pwa",
-  storageBucket: "quiniela-mundial-2026-pwa.firebasestorage.app",
-  messagingSenderId: "467730515210",
-  appId: "1:467730515210:web:ae987030b92167bf5f26f3",
-  measurementId: "G-KL3SL8TDXD"
-};
-
-try {
-  firebase.initializeApp(firebaseConfig);
-  const messaging = firebase.messaging();
-
-  messaging.onBackgroundMessage(payload => {
-    const notification = payload.notification || {};
-    const data = payload.data || {};
-    const title = notification.title || data.title || "Quiniela Mundial 2026";
-    const options = {
-      body: notification.body || data.body || "Tienes una nueva notificación.",
-      icon: data.icon || "./icons/icon-192.png",
-      badge: data.badge || "./icons/icon-192.png",
-      tag: data.tag || "quiniela-mundial-2026",
-      data: {
-        url: data.url || "./",
-        ...data
-      },
-      renotify: true
-    };
-
-    self.registration.showNotification(title, options);
-  });
-} catch (error) {
-  console.warn("Firebase Messaging no pudo iniciar en el service worker:", error);
-}
-
-const APP_VERSION = "4.2.1";
+const APP_VERSION = "4.2.2";
 const CACHE_PREFIX = "quiniela-mundial-2026";
 const CACHE_NAME = `${CACHE_PREFIX}-v${APP_VERSION}`;
 
@@ -48,22 +9,22 @@ const APP_SHELL = [
   "./manifest.json",
   "./version.json",
   "./favicon.png",
-  "./css/base.css?v=4.2.1",
-  "./css/layout.css?v=4.2.1",
-  "./css/components.css?v=4.2.1",
-  "./css/responsive.css?v=4.2.1",
-  "./js/config.js?v=4.2.1",
-  "./js/data.js?v=4.2.1",
-  "./js/utils.js?v=4.2.1",
-  "./js/scoring.js?v=4.2.1",
-  "./js/views-inicio.js?v=4.2.1",
-  "./js/views-partidos.js?v=4.2.1",
-  "./js/views-tabla.js?v=4.2.1",
-  "./js/views-stats.js?v=4.2.1",
-  "./js/app.js?v=4.2.1",
-  "./js/firebase.js?v=4.2.1",
-  "./js/pwa.js?v=4.2.1",
-  "./js/notifications.js?v=4.2.1",
+  "./css/base.css?v=4.2.2",
+  "./css/layout.css?v=4.2.2",
+  "./css/components.css?v=4.2.2",
+  "./css/responsive.css?v=4.2.2",
+  "./js/config.js?v=4.2.2",
+  "./js/data.js?v=4.2.2",
+  "./js/utils.js?v=4.2.2",
+  "./js/scoring.js?v=4.2.2",
+  "./js/views-inicio.js?v=4.2.2",
+  "./js/views-partidos.js?v=4.2.2",
+  "./js/views-tabla.js?v=4.2.2",
+  "./js/views-stats.js?v=4.2.2",
+  "./js/app.js?v=4.2.2",
+  "./js/firebase.js?v=4.2.2",
+  "./js/pwa.js?v=4.2.2",
+  "./js/notifications.js?v=4.2.2",
   "./img/copa-fifa.png",
   "./img/reglas-premios.png",
   "./img/trionda.png",
@@ -72,10 +33,29 @@ const APP_SHELL = [
   "./icons/icon-maskable-512.png"
 ];
 
+async function cacheAppShell() {
+  const cache = await caches.open(CACHE_NAME);
+  const results = await Promise.allSettled(
+    APP_SHELL.map(async url => {
+      const response = await fetch(url, { cache: "reload" });
+      if (!response.ok) throw new Error(`${url} -> ${response.status}`);
+      await cache.put(url, response);
+    })
+  );
+
+  const failed = results
+    .map((result, index) => ({ result, url: APP_SHELL[index] }))
+    .filter(item => item.result.status === "rejected");
+
+  if (failed.length) {
+    console.warn("Algunos archivos no se pudieron precachear, pero la actualización continuará:", failed.map(f => f.url));
+  }
+}
+
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL))
+    cacheAppShell()
+      .catch(error => console.warn("Precache incompleto:", error))
       .then(() => self.skipWaiting())
   );
 });
@@ -110,7 +90,12 @@ function isVersionFile(url) {
 
 async function networkFirst(request) {
   try {
-    return await fetch(request, { cache: "no-store" });
+    const response = await fetch(request, { cache: "no-store" });
+    if (response?.ok && request.method === "GET") {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone()).catch(() => {});
+    }
+    return response;
   } catch (error) {
     const cached = await caches.match(request);
     return cached || caches.match("./offline.html");
@@ -153,6 +138,41 @@ self.addEventListener("fetch", event => {
   }
 
   event.respondWith(cacheFirst(request));
+});
+
+function getNotificationFromPayload(payload = {}) {
+  const notification = payload.notification || {};
+  const data = payload.data || payload;
+  const webpushNotification = payload.webpush?.notification || {};
+  const title = notification.title || webpushNotification.title || data.title || "Quiniela Mundial 2026";
+
+  return {
+    title,
+    options: {
+      body: notification.body || webpushNotification.body || data.body || "Tienes una nueva notificación.",
+      icon: data.icon || webpushNotification.icon || "./icons/icon-192.png",
+      badge: data.badge || webpushNotification.badge || "./icons/icon-192.png",
+      tag: data.tag || webpushNotification.tag || "quiniela-mundial-2026",
+      data: {
+        url: data.url || payload.fcmOptions?.link || payload.webpush?.fcm_options?.link || "./",
+        ...data
+      },
+      renotify: true
+    }
+  };
+}
+
+self.addEventListener("push", event => {
+  let payload = {};
+
+  try {
+    payload = event.data ? event.data.json() : {};
+  } catch (_) {
+    payload = { data: { body: event.data ? event.data.text() : "" } };
+  }
+
+  const { title, options } = getNotificationFromPayload(payload);
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener("notificationclick", event => {

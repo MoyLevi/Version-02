@@ -1,8 +1,5 @@
-// Firebase Cloud Messaging service worker compatibility file.
-//
-// La app registra ./service-worker.js como service worker principal y ahí vive
-// toda la lógica PWA + FCM. Este archivo existe para compatibilidad con Firebase,
-// navegadores y pruebas que buscan el nombre estándar firebase-messaging-sw.js.
-// No contiene claves privadas.
+// Archivo de compatibilidad para Firebase Cloud Messaging.
+// La app usa service-worker.js como service worker principal.
+// Este archivo existe para herramientas que buscan el nombre estándar.
 
 importScripts("./service-worker.js");

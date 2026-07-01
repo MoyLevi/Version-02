@@ -1,9 +1,9 @@
 {
-  "version": "4.2.1",
+  "version": "4.2.2",
   "date": "2026-06-30",
   "notes": [
-    "Integración Firebase Cloud Messaging para notificaciones Push reales.",
-    "Preparado workflow GitHub Actions para avisos automáticos 15 minutos antes de partidos Knockout.",
-    "Registro de tokens en Firestore sin incluir claves privadas en el proyecto."
+    "Corrección del flujo de actualización PWA para mostrar nuevamente el aviso de Actualizar app.",
+    "Service Worker más resistente: la actualización no falla si un archivo del precaché tiene problemas.",
+    "Push de Firebase preparado sin depender de scripts externos durante la instalación del Service Worker."
   ]
 }

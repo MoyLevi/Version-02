@@ -1,10 +1,10 @@
 (() => {
-  const APP_VERSION = "4.2.1";
+  const APP_VERSION = "4.2.2";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
-  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.1";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.2";
   const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
 
   let deferredInstallPrompt = null;
