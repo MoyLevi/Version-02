@@ -1,11 +1,12 @@
 (() => {
-  const APP_VERSION = "4.2.2";
+  const APP_VERSION = "4.2.3";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
-  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.2";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.3";
   const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
+  const UPDATE_APPLIED_VERSION_KEY = "quiniela-pwa-update-applied-version";
 
   let deferredInstallPrompt = null;
   let swRegistration = null;
@@ -111,6 +112,23 @@
     return sessionStorage.getItem(UPDATE_DISMISSED_VERSION_KEY) === String(version || "");
   }
 
+  function markUpdateApplied(version) {
+    const safeVersion = String(version || APP_VERSION);
+    localStorage.setItem(UPDATE_APPLIED_VERSION_KEY, safeVersion);
+    sessionStorage.setItem(UPDATE_APPLIED_VERSION_KEY, safeVersion);
+  }
+
+  function wasUpdateApplied(version) {
+    const safeVersion = String(version || APP_VERSION);
+    return localStorage.getItem(UPDATE_APPLIED_VERSION_KEY) === safeVersion ||
+      sessionStorage.getItem(UPDATE_APPLIED_VERSION_KEY) === safeVersion;
+  }
+
+  function shouldShowUpdatePrompt(version) {
+    const safeVersion = String(version || APP_VERSION);
+    return !wasUpdateDismissed(safeVersion) && !wasUpdateApplied(safeVersion);
+  }
+
   function hidePanel() {
     document.getElementById("pwaPanel")?.classList.add("pwa-hidden");
   }
@@ -137,6 +155,8 @@
     if (refreshing) return;
 
     refreshing = true;
+    const versionBeingApplied = activeUpdateVersion || APP_VERSION;
+    markUpdateApplied(versionBeingApplied);
     sessionStorage.setItem(UPDATE_RELOAD_KEY, "1");
     hidePanel();
 
@@ -196,7 +216,7 @@
       if (!response.ok) return;
       const info = await response.json();
 
-      if (info?.version && compareVersions(info.version, APP_VERSION) > 0 && !wasUpdateDismissed(info.version)) {
+      if (info?.version && compareVersions(info.version, APP_VERSION) > 0 && shouldShowUpdatePrompt(info.version)) {
         showPanel({
           title: `Nueva versión ${info.version}`,
           message: "Ya hay una actualización lista. Puedes aplicarla sin reinstalar la app.",
@@ -411,6 +431,7 @@
 
   navigator.serviceWorker?.addEventListener("controllerchange", () => {
     if (sessionStorage.getItem(UPDATE_RELOAD_KEY) !== "1") return;
+    markUpdateApplied(activeUpdateVersion || APP_VERSION);
     sessionStorage.removeItem(UPDATE_RELOAD_KEY);
     window.location.reload();
   });
@@ -425,7 +446,7 @@
           if (!newWorker) return;
 
           newWorker.addEventListener("statechange", () => {
-            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            if (newWorker.state === "installed" && navigator.serviceWorker.controller && shouldShowUpdatePrompt(APP_VERSION)) {
               showPanel({
                 title: "Nueva versión lista",
                 message: "Hay mejoras disponibles. Actualiza sin reinstalar la app.",
@@ -437,7 +458,7 @@
           });
         });
 
-        if (swRegistration.waiting && navigator.serviceWorker.controller) {
+        if (swRegistration.waiting && navigator.serviceWorker.controller && shouldShowUpdatePrompt(APP_VERSION)) {
           showPanel({
             title: "Nueva versión lista",
             message: "Hay mejoras disponibles. Actualiza sin reinstalar la app.",

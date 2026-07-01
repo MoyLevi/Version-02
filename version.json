@@ -1,9 +1,9 @@
 {
-  "version": "4.2.2",
+  "version": "4.2.3",
   "date": "2026-06-30",
   "notes": [
-    "Corrección del flujo de actualización PWA para mostrar nuevamente el aviso de Actualizar app.",
-    "Service Worker más resistente: la actualización no falla si un archivo del precaché tiene problemas.",
-    "Push de Firebase preparado sin depender de scripts externos durante la instalación del Service Worker."
+    "Corrección para que el aviso de actualización no se repita después de aplicar la misma versión.",
+    "La app marca la versión aplicada antes de recargar y evita volver a mostrar el mismo prompt.",
+    "Se mantiene Firebase Push y el flujo automático preparado."
   ]
 }
