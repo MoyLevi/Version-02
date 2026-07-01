@@ -1,0 +1,14 @@
+{
+  "name": "quiniela-mundial-2026-pwa-notifications",
+  "version": "4.2.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "send-notifications": "node scripts/send-notifications.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "luxon": "^3.5.0",
+    "papaparse": "^5.4.1"
+  }
+}

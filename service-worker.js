@@ -1,4 +1,43 @@
-const APP_VERSION = "4.1.5";
+importScripts("https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.5/firebase-messaging-compat.js");
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC66nMOwuwAZ-m2EIq6ckI8ktOmwIDF1p0",
+  authDomain: "quiniela-mundial-2026-pwa.firebaseapp.com",
+  projectId: "quiniela-mundial-2026-pwa",
+  storageBucket: "quiniela-mundial-2026-pwa.firebasestorage.app",
+  messagingSenderId: "467730515210",
+  appId: "1:467730515210:web:ae987030b92167bf5f26f3",
+  measurementId: "G-KL3SL8TDXD"
+};
+
+try {
+  firebase.initializeApp(firebaseConfig);
+  const messaging = firebase.messaging();
+
+  messaging.onBackgroundMessage(payload => {
+    const notification = payload.notification || {};
+    const data = payload.data || {};
+    const title = notification.title || data.title || "Quiniela Mundial 2026";
+    const options = {
+      body: notification.body || data.body || "Tienes una nueva notificación.",
+      icon: data.icon || "./icons/icon-192.png",
+      badge: data.badge || "./icons/icon-192.png",
+      tag: data.tag || "quiniela-mundial-2026",
+      data: {
+        url: data.url || "./",
+        ...data
+      },
+      renotify: true
+    };
+
+    self.registration.showNotification(title, options);
+  });
+} catch (error) {
+  console.warn("Firebase Messaging no pudo iniciar en el service worker:", error);
+}
+
+const APP_VERSION = "4.2.1";
 const CACHE_PREFIX = "quiniela-mundial-2026";
 const CACHE_NAME = `${CACHE_PREFIX}-v${APP_VERSION}`;
 
@@ -9,20 +48,22 @@ const APP_SHELL = [
   "./manifest.json",
   "./version.json",
   "./favicon.png",
-  "./css/base.css?v=4.1.5",
-  "./css/layout.css?v=4.1.5",
-  "./css/components.css?v=4.1.5",
-  "./css/responsive.css?v=4.1.5",
-  "./js/config.js?v=4.1.5",
-  "./js/data.js?v=4.1.5",
-  "./js/utils.js?v=4.1.5",
-  "./js/scoring.js?v=4.1.5",
-  "./js/views-inicio.js?v=4.1.5",
-  "./js/views-partidos.js?v=4.1.5",
-  "./js/views-tabla.js?v=4.1.5",
-  "./js/views-stats.js?v=4.1.5",
-  "./js/app.js?v=4.1.5",
-  "./js/pwa.js?v=4.1.5",
+  "./css/base.css?v=4.2.1",
+  "./css/layout.css?v=4.2.1",
+  "./css/components.css?v=4.2.1",
+  "./css/responsive.css?v=4.2.1",
+  "./js/config.js?v=4.2.1",
+  "./js/data.js?v=4.2.1",
+  "./js/utils.js?v=4.2.1",
+  "./js/scoring.js?v=4.2.1",
+  "./js/views-inicio.js?v=4.2.1",
+  "./js/views-partidos.js?v=4.2.1",
+  "./js/views-tabla.js?v=4.2.1",
+  "./js/views-stats.js?v=4.2.1",
+  "./js/app.js?v=4.2.1",
+  "./js/firebase.js?v=4.2.1",
+  "./js/pwa.js?v=4.2.1",
+  "./js/notifications.js?v=4.2.1",
   "./img/copa-fifa.png",
   "./img/reglas-premios.png",
   "./img/trionda.png",
@@ -117,12 +158,17 @@ self.addEventListener("fetch", event => {
 self.addEventListener("notificationclick", event => {
   event.notification.close();
 
+  const targetUrl = event.notification?.data?.url || "./";
+
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
       for (const client of clientList) {
-        if ("focus" in client) return client.focus();
+        if ("focus" in client) {
+          if ("navigate" in client) client.navigate(targetUrl);
+          return client.focus();
+        }
       }
-      if (clients.openWindow) return clients.openWindow("./");
+      if (clients.openWindow) return clients.openWindow(targetUrl);
       return null;
     })
   );

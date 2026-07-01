@@ -1,0 +1,34 @@
+name: Notificaciones Knockout
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  enviar-notificaciones:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Enviar notificaciones programadas
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          # Alternativa: puedes usar solo FIREBASE_SERVICE_ACCOUNT_JSON con el JSON completo.
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          KNOCKOUT_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2YHMj7nASBNVX0vpYD3P0Uz41gHRsf4D52qu94vfmUX-vZtjN0NV0ONBI6WPWFJx81a1msQB8Xfy1/pub?gid=965041697&single=true&output=csv"
+          APP_URL: "https://moylevi.github.io/Version-02/"
+          TIME_ZONE: "America/Mexico_City"
+          NOTIFICATION_MINUTES_BEFORE: "15"
+        run: npm run send-notifications

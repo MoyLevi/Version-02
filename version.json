@@ -1,11 +1,9 @@
 {
-  "version": "4.1.5",
-  "build": "415",
-  "release": "2026-06-29",
-  "name": "Quiniela Mundial 2026 PWA",
+  "version": "4.2.1",
+  "date": "2026-06-30",
   "notes": [
-    "Corrección de visualización de penales en Pronósticos del Partido",
-    "Los ceros de penales ya no se muestran cuando el pick no tuvo penales",
-    "El punto de penales KO sólo cuenta si los penales coinciden exactamente"
+    "Integración Firebase Cloud Messaging para notificaciones Push reales.",
+    "Preparado workflow GitHub Actions para avisos automáticos 15 minutos antes de partidos Knockout.",
+    "Registro de tokens en Firestore sin incluir claves privadas en el proyecto."
   ]
 }

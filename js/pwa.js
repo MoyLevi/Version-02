@@ -1,10 +1,10 @@
 (() => {
-  const APP_VERSION = "4.1.5";
+  const APP_VERSION = "4.2.1";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
-  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.1.5";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.1";
   const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
 
   let deferredInstallPrompt = null;
@@ -273,6 +273,59 @@
     }
   }
 
+
+  function isFirebaseReady() {
+    return Boolean(window.QuinielaFirebase?.messaging && window.QuinielaFirebase?.db);
+  }
+
+  async function saveFcmToken(token) {
+    if (!token || !window.QuinielaFirebase?.db) return false;
+
+    const db = window.QuinielaFirebase.db;
+    const collection = window.QuinielaFirebase.tokenCollection || "fcmTokens";
+
+    await db.collection(collection).doc(token).set({
+      token,
+      enabled: true,
+      appVersion: APP_VERSION,
+      platform: navigator.platform || "",
+      userAgent: navigator.userAgent || "",
+      language: navigator.language || "es-MX",
+      pageUrl: location.href,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    localStorage.setItem("quiniela-fcm-token", token);
+    return true;
+  }
+
+  async function registerFcmToken() {
+    if (!isFirebaseReady()) {
+      throw new Error("Firebase Messaging o Firestore no está disponible.");
+    }
+
+    const messaging = window.QuinielaFirebase.messaging;
+    const token = await messaging.getToken({
+      vapidKey: window.QuinielaFirebase.vapidKey,
+      serviceWorkerRegistration: swRegistration
+    });
+
+    if (!token) {
+      throw new Error("Firebase no regresó token para este dispositivo.");
+    }
+
+    await saveFcmToken(token);
+
+    messaging.onMessage(payload => {
+      const title = payload?.notification?.title || payload?.data?.title || "Quiniela Mundial 2026";
+      const body = payload?.notification?.body || payload?.data?.body || "Nueva notificación disponible.";
+      showLocalNotification(title, body);
+    });
+
+    return token;
+  }
+
   function scheduleNextReminder() {
     clearTimeout(reminderTimer);
 
@@ -314,13 +367,26 @@
 
     if (permission === "granted") {
       localStorage.setItem(NOTIFICATION_KEY, "1");
-      scheduleNextReminder();
-      showPanel({
-        title: "Avisos activados",
-        message: "La app quedó preparada para avisarte antes de los partidos mientras esté activa o instalada.",
-        mode: "manual",
-        smallNote: "Para push reales aunque la app esté cerrada se conectará Firebase Cloud Messaging en una siguiente etapa."
-      });
+
+      try {
+        await registerFcmToken();
+        scheduleNextReminder();
+        showPanel({
+          title: "Notificaciones Push activadas",
+          message: "Este dispositivo ya quedó registrado para recibir avisos 15 minutos antes de los partidos.",
+          mode: "manual",
+          smallNote: "Los envíos automáticos se harán desde GitHub Actions leyendo la tabla Knockout."
+        });
+      } catch (error) {
+        console.warn("No se pudo registrar FCM:", error);
+        scheduleNextReminder();
+        showPanel({
+          title: "Avisos locales activados",
+          message: "El permiso quedó activo, pero no se pudo registrar Firebase en este dispositivo.",
+          mode: "manual",
+          smallNote: "Revisa Firestore, los scripts de Firebase o prueba nuevamente después de publicar la versión."
+        });
+      }
     } else {
       showPanel({
         title: "Permiso no activado",
@@ -382,6 +448,11 @@
         }
 
         await swRegistration.update();
+
+        if (("Notification" in window) && Notification.permission === "granted") {
+          registerFcmToken().catch(error => console.warn("No se pudo refrescar token FCM:", error));
+        }
+
         await checkForNewVersion();
         setTimeout(showInstallHelpIfNeeded, 1400);
         setInterval(checkForNewVersion, 10 * 60 * 1000);
@@ -402,6 +473,7 @@
     version: APP_VERSION,
     checkForNewVersion,
     enableNotifications,
+    registerFcmToken,
     scheduleNextReminder
   };
 })();
