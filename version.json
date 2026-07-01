@@ -1,9 +1,11 @@
 {
-  "version": "4.2.4",
+  "version": "4.2.6",
   "date": "2026-06-30",
   "notes": [
-    "Corrección del flujo posterior a actualización.",
-    "Después de aplicar una nueva versión, la app vuelve a mostrar el aviso para activar notificaciones si todavía no se han concedido.",
-    "El aviso de actualización no se repite para la misma versión."
+    "Corrección segura del flujo PWA y avisos.",
+    "Firebase Push ya no registra tokens automáticamente al cargar la app.",
+    "El botón Activar avisos repara o registra el token solo cuando el usuario lo solicita.",
+    "Se restaura el aviso de instalación cuando el navegador lo permite.",
+    "Se evita que fallas de FCM o Firestore congelen la quiniela."
   ]
 }
