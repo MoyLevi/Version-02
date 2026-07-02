@@ -1,15 +1,15 @@
 (() => {
-  const APP_VERSION = "4.2.7";
+  const APP_VERSION = "4.2.8";
   const VERSION_URL = `./version.json?ts=${Date.now()}`;
   const INSTALL_HELP_KEY = "quiniela-pwa-install-help-dismissed";
   const NOTIFICATION_KEY = "quiniela-pwa-local-notifications-enabled";
   const NOTIFIED_MATCHES_KEY = "quiniela-pwa-notified-matches";
   const NOTIFICATION_PROMPT_DISMISSED_KEY = "quiniela-pwa-notification-prompt-dismissed";
   const POST_UPDATE_NOTIFY_PROMPT_KEY = "quiniela-pwa-show-notifications-after-update";
-  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.7";
+  const UPDATE_RELOAD_KEY = "quiniela-pwa-update-reload-v4.2.8";
   const UPDATE_DISMISSED_VERSION_KEY = "quiniela-pwa-update-dismissed-version";
   const UPDATE_APPLIED_VERSION_KEY = "quiniela-pwa-update-applied-version";
-  const PWA_MIGRATION_KEY = "quiniela-pwa-migration-v4.2.7";
+  const PWA_MIGRATION_KEY = "quiniela-pwa-migration-v4.2.8";
   const FCM_TOKEN_KEY = "quiniela-fcm-token";
   const FCM_TOKEN_CONFIRMED_VERSION_KEY = "quiniela-fcm-token-confirmed-version";
   const FCM_REGISTERING_KEY = "quiniela-fcm-registering";
@@ -291,7 +291,7 @@
   function runPwaMigration() {
     if (localStorage.getItem(PWA_MIGRATION_KEY) === "1") return;
 
-    // v4.2.7: limpiamos banderas viejas que podían dejar al usuario en limbo:
+    // v4.2.8: limpiamos banderas viejas que podían dejar al usuario en limbo:
     // sin prompt de instalación y sin prompt para reparar avisos.
     localStorage.removeItem(INSTALL_HELP_KEY);
     localStorage.removeItem(NOTIFICATION_PROMPT_DISMISSED_KEY);

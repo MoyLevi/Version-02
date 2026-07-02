@@ -1,11 +1,13 @@
 {
-  "version": "4.2.7",
-  "date": "2026-06-30",
+  "version": "4.2.8",
+  "date": "2026-07-01",
   "notes": [
-    "Corrección segura del manejo de tokens FCM.",
-    "Los tokens ya no se tratan como de un solo uso.",
-    "La prueba Push conserva tokens válidos y solo reporta inválidos con logs claros.",
-    "La lectura de tokens ahora acepta documentos activos aunque no tengan enabled=true explícito.",
-    "Se agregan logs por token para distinguir envíos exitosos, errores temporales y tokens inválidos."
+    "Notificaciones automáticas Knockout listas para producción.",
+    "Tiempo configurable con NOTIFICATION_MINUTES_BEFORE, por defecto 15 minutos.",
+    "Ventana de tolerancia configurable con NOTIFICATION_WINDOW_MINUTES, por defecto 5 minutos.",
+    "Mensajes personalizables desde scripts/send-notifications.js.",
+    "Anti-duplicados reforzado por tipo de notificación, IDPartido y minutos antes.",
+    "Logs más claros en GitHub Actions.",
+    "Se conserva el envío de pruebas personalizadas."
   ]
 }

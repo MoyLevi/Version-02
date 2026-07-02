@@ -31,4 +31,5 @@ jobs:
           APP_URL: "https://moylevi.github.io/Version-02/"
           TIME_ZONE: "America/Mexico_City"
           NOTIFICATION_MINUTES_BEFORE: "15"
+          NOTIFICATION_WINDOW_MINUTES: "5"
         run: npm run send-notifications
