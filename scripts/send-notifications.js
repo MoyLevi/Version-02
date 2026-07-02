@@ -72,11 +72,32 @@ async function fetchKnockoutRows() {
   return parsed.data || [];
 }
 
-async function getTokens(db) {
-  const snapshot = await db.collection(TOKEN_COLLECTION).where("enabled", "==", true).get();
-  return snapshot.docs
-    .map(doc => doc.data()?.token || doc.id)
-    .filter(Boolean);
+function isTokenInvalidError(error) {
+  const code = String(error?.code || "");
+  const message = String(error?.message || "");
+  return (
+    code === "messaging/registration-token-not-registered" ||
+    code === "messaging/invalid-registration-token" ||
+    code.includes("registration-token-not-registered") ||
+    code.includes("invalid-registration-token") ||
+    message.includes("registration-token-not-registered") ||
+    message.includes("Requested entity was not found")
+  );
+}
+
+async function getActiveTokenDocs(db) {
+  const snapshot = await db.collection(TOKEN_COLLECTION).get();
+  const docs = snapshot.docs
+    .map(doc => {
+      const data = doc.data() || {};
+      const token = String(data.token || doc.id || "").trim();
+      const enabled = data.enabled !== false;
+      return { id: doc.id, ref: doc.ref, token, enabled, data };
+    })
+    .filter(item => item.token && item.enabled);
+
+  console.log(`Documentos en ${TOKEN_COLLECTION}: ${snapshot.size}. Tokens activos utilizables: ${docs.length}.`);
+  return docs;
 }
 
 function buildMessage(row, matchId, matchTime) {
@@ -112,9 +133,10 @@ async function sendReminder(db, messaging, row, matchTime) {
   const sent = await sentRef.get();
   if (sent.exists) return { skipped: true, reason: "ya enviado", matchId };
 
-  const tokens = await getTokens(db);
-  if (!tokens.length) return { skipped: true, reason: "sin tokens", matchId };
+  const tokenDocs = await getActiveTokenDocs(db);
+  if (!tokenDocs.length) return { skipped: true, reason: "sin tokens", matchId };
 
+  const tokens = tokenDocs.map(item => item.token);
   const message = buildMessage(row, matchId, matchTime);
   const response = await messaging.sendEachForMulticast({
     tokens,
@@ -136,17 +158,35 @@ async function sendReminder(db, messaging, row, matchTime) {
     }
   });
 
-  const invalidTokens = [];
+  const invalidTokenDocs = [];
   response.responses.forEach((item, index) => {
-    const code = item.error?.code || "";
-    if (code.includes("registration-token-not-registered") || code.includes("invalid-registration-token")) {
-      invalidTokens.push(tokens[index]);
+    const tokenDoc = tokenDocs[index];
+    const shortToken = `${tokenDoc.token.slice(0, 12)}...${tokenDoc.token.slice(-8)}`;
+
+    if (!item.error) {
+      console.log(`✅ ${matchId} -> token ${shortToken}: enviado.`);
+      return;
+    }
+
+    const code = item.error.code || "sin-codigo";
+    const message = item.error.message || "";
+    console.warn(`❌ ${matchId} -> token ${shortToken}: ${code} ${message}`);
+
+    if (isTokenInvalidError(item.error)) {
+      invalidTokenDocs.push(tokenDoc);
     }
   });
 
-  await Promise.all(invalidTokens.map(token =>
-    db.collection(TOKEN_COLLECTION).doc(token).set({ enabled: false, disabledAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true })
-  ));
+  if (invalidTokenDocs.length) {
+    await Promise.all(invalidTokenDocs.map(item =>
+      item.ref.set({
+        enabled: false,
+        disabledAt: admin.firestore.FieldValue.serverTimestamp(),
+        disabledReason: "invalid-token-match-reminder"
+      }, { merge: true })
+    ));
+    console.log(`Tokens inválidos desactivados: ${invalidTokenDocs.length}`);
+  }
 
   await sentRef.set({
     matchId,

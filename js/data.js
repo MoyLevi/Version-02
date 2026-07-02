@@ -1,5 +1,5 @@
 
-const CACHE_TABLAS_FIJAS_VERSION = "v4.2.6";
+const CACHE_TABLAS_FIJAS_VERSION = "v4.2.7";
 
 function getCacheTablaFijaKey(nombre){
     return `quiniela_${CACHE_TABLAS_FIJAS_VERSION}_${nombre}`;

@@ -1,11 +1,11 @@
 {
-  "version": "4.2.6",
+  "version": "4.2.7",
   "date": "2026-06-30",
   "notes": [
-    "Corrección segura del flujo PWA y avisos.",
-    "Firebase Push ya no registra tokens automáticamente al cargar la app.",
-    "El botón Activar avisos repara o registra el token solo cuando el usuario lo solicita.",
-    "Se restaura el aviso de instalación cuando el navegador lo permite.",
-    "Se evita que fallas de FCM o Firestore congelen la quiniela."
+    "Corrección segura del manejo de tokens FCM.",
+    "Los tokens ya no se tratan como de un solo uso.",
+    "La prueba Push conserva tokens válidos y solo reporta inválidos con logs claros.",
+    "La lectura de tokens ahora acepta documentos activos aunque no tengan enabled=true explícito.",
+    "Se agregan logs por token para distinguir envíos exitosos, errores temporales y tokens inválidos."
   ]
 }
